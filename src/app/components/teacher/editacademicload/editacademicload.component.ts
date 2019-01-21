@@ -98,7 +98,7 @@ export class EditacademicloadComponent implements OnInit {
   saveSchedule(event){
     event.preventDefault();
     console.log(this.academicload)
-    this._academicloadService.updateAc(this.academicload).subscribe(resp=>{
+    this._academicloadService.Update(this.academicload).subscribe(resp=>{
       console.log(resp)
     })
   }

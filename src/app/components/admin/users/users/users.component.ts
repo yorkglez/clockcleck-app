@@ -41,7 +41,7 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(){
-    this._usersService.deleteUser(this.user['idUser']).subscribe(data=>{
+    this._usersService.Delete(this.user['idUser']).subscribe(data=>{
       if(data.success){
         this.users.splice(this.users.indexOf(this.user),1)
       }
