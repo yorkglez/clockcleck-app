@@ -1,0 +1,54 @@
+.pagination-container{
+  display: flex;
+  justify-content: center;
+  margin: 0 10px 0 10px;
+}
+
+.pagination /deep/ .ngx-pagination .current{
+    background: #d03a9f4;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 7px 14px;
+    height: 100%;
+  }
+  .pagination /deep/ .ngx-pagination li a{
+    text-decoration: none;
+    border-radius: 8px;
+    padding: 7px 14px;
+    height: 100%;
+  }
+/*  .pagination /deep/ .ngx-pagination{
+
+    height: 45px;
+    background-color: #fff;
+  }
+  .pagination /deep/ .ngx-pagination li {
+    border: 1px solid #dee2e6;
+    height: 100%;
+    margin: 0
+
+  }*/
+/*  .pagination /deep/ .ngx-pagination .pagination-next {
+    border-radius: 0 10px 10px 0;
+  }
+  .pagination /deep/ .ngx-pagination .pagination-previous {
+    border-radius: 10px 0px 0 10px;
+  }
+  .pagination /deep/ .ngx-pagination .pagination-previous  {
+    border: 1px solid #dee2e6;
+    height: 100%;
+    margin: 0
+  }
+  .pagination /deep/ .ngx-pagination .pagination-previous .disabled span {
+    color: red;
+  }
+  .pagination /deep/ .ngx-pagination .disabled  {
+    position: relative;
+    top: -6px;
+  }
+  .pagination /deep/ .ngx-pagination li a{
+    text-decoration: none;
+    padding: 10px 15px;
+    height: 100%;
+
+  }*/

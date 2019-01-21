@@ -1,0 +1,117 @@
+<!-- navbar -->
+<app-navadmin></app-navadmin>
+<!-- content -->
+<div class="content animated fadeIn">
+  <!-- menu -->
+  <form class="options-panel">
+    <div class="form-row align-items-end">
+      <div class= "form-group col-sm-12 col-12 col-md-auto">
+          <h1 class="title">Usuarios</h1>
+      </div>
+      <div class="form-group col-12 col-sm-auto col-md-auto">
+        <button class="btn btn-success col-sd-2" routerLink="/createuser"><i class="fas fa-user-plus"></i> Nuevo usuario</button>
+      </div>
+      <div class="form-group col-8 col-sm-5 col-md-auto search-container">
+        <input class="btn-search form-control mr-sm-2"
+        type="search"
+        placeholder="Buscar..."
+        aria-label="Search"
+        (keyup.enter)="searchUser(searchText.value,type.value)"
+        #searchText>
+        <button class="btn-clear" (click)="searchText.value = ''; searchUser(searchText.value,type.value)">
+         <i class="fa fa-times"></i>
+       </button>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary my-2 my-sm-0" (click)="searchUser(searchText.value,type.value)"><i class="fas fa-search"></i></button>
+      </div>
+      <!-- select type -->
+      <div class="form-group  col-md-2 col-sm-2">
+        <select id="showType" class="form-control custom-select" (change)="getType(type.value)" #type>
+          <option value="all" selected>Mostrar todo</option>
+          <option value="admin" >Admin</option>
+          <option value="normal">Normal</option>
+        </select>
+      </div>
+    </div>
+  </form>
+  <!-- loader  -->
+  <app-loader></app-loader>
+  <div class="content-bod">
+    <!-- table -->
+    <div class="table-responsive-md ">
+      <table class="table table-sm" *ngIf="users.length > 0">
+        <thead>
+          <tr class="tb-head">
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Email</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Extension</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users | paginate: { itemsPerPage: 25, currentPage: p }; let i = index; let l = count ">
+            <th>{{user.name}}</th>
+            <td>{{user.lastname}}</td>
+            <td>{{user.email}}</td>
+            <td>
+              <!-- show user type  -->
+              <span *ngIf="user.type == 'admin'" class="badge badge-success">Admin</span>
+              <span *ngIf="user.type == 'normal'" class="badge badge-info">Normal</span>
+            </td>
+            <td>{{user.extensionName}}</td>
+            <td>
+              <div class="accions-content">
+                <button class="btn btn-warning" (click)="editUser(user)"><i class="fas fa-pencil-alt"></i> <span> Editar</span></button>
+                <button class="btn btn-danger" data-toggle="modal" data-target="#modalDelete"  (click)="getId(user)" #deleteUser><i class="fas fa-trash-alt"></i> <span> Eliminar</span></button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- alerts -->
+    <div class="alert alert-info" role="alert" *ngIf="searchAlert">
+        <i class="fas fa-info-circle"></i> No se encontraron resultados con el termino: <b>{{ter}}</b>
+    </div>
+    <!-- pagiantion settings -->
+    <div class="pagination-container"   *ngIf="users.length > 0" #pagination>
+      <!-- <div class="showing">
+        Mostrando <b>{{pagination.pageCount}}</b> de <b>{{users.length}}</b> usuarios
+      </div> -->
+      <pagination-controls  class="Pagination pagination justify-content-center"
+      (pageChange)="p = $event"
+      previousLabel="Anterior"
+      nextLabel="Siguiente"
+      screenReaderPaginationLabel="Pagination">
+      </pagination-controls>
+    </div>
+  </div>
+
+  <!-- <app-alerts [type]="type" [message]= "message" [alertVisible]="alertVisible"  ></app-alerts> -->
+
+
+</div>
+
+<!-- modalal for delete accion -->
+<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalCenterTitle">Estas seguro?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Si eliminas este usuario, no podras deshacer esta accion!.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="deleteUser()" data-dismiss="modal">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>

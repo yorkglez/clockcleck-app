@@ -1,0 +1,6 @@
+{
+    "require": {
+        "spipu/html2pdf": "5.*",
+        "fzaninotto/faker": "^1.8"
+    }
+}

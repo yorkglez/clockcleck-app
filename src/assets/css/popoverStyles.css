@@ -1,0 +1,7 @@
+.popover-container {
+  padding: 5px; }
+  .popover-container .popper-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    background-color: none; }
+  .popover-container .popover-body {
+    font-size: 16px; }

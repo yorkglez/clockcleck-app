@@ -1,0 +1,55 @@
+/*fonts import*/
+@import url("https://fonts.googleapis.com/css?family=Oswald");
+sellect:hover {
+  background-color: #d2224e; }
+
+.content {
+  position: relative;
+  top: 70px;
+  padding: 1px;
+  border: 1px solid rgba(128, 128, 128, 0.4);
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.85);
+  -webkit-box-shadow: 5px 5px 5px rgba(128, 128, 128, 0.5);
+  box-shadow: 5px 5px 5px rgba(128, 128, 128, 0.5);
+  margin-bottom: 50px; }
+  .content .options-panel {
+    position: relative;
+    border-radius: 10px 10px 0px  0px;
+    background-color: #435d7d;
+    padding-top: 10px;
+    padding-left: 5px;
+    margin-bottom: -12px;
+    height: auto; }
+    .content .options-panel label {
+      color: white;
+      padding: 0;
+      margin: 0; }
+  .content .content-header {
+    padding: 10px 0 10px 20px;
+    background-color: #435d7d;
+    border-radius: 10px 10px 0px  0px; }
+  .content h1.title {
+    position: relative;
+    padding-left: 10px;
+    margin-right: 5px;
+    bottom: -10px;
+    font-family: "Oswald", sans-serif;
+    letter-spacing: 0.05em;
+    color: white; }
+  .content .content-body {
+    padding: 25px; }
+  .content .alert {
+    margin: 20px; }
+
+@media (min-width: 768px) {
+  .content {
+    width: auto; } }
+
+@media (min-width: 992px) {
+  .content {
+    width: auto; } }
+
+@media (min-width: 1200px) {
+  .content {
+    min-width: 1200px; } }

@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat')
+
+/*Background colors */
+// $backColor: #e93b3b
+$backColor: #d11141
+// $backColor: #222831
+
+$borderColor: #292929
+
+header
+  position: absolute
+  width: 100%
+  top: 0
+  left: 0
+  background-color: white
+//  padding-bottom: 800px
+
+.nav-scroll
+  transition: all 0.5s ease
+  .header-banner
+    display: none
+.header-banner
+  display: flex
+  justify-content: center
+  width: 100%
+  height: 80px
+  img
+    width: 50%
+    height: 100%
+.navbar
+  position: fixed
+  z-index: 9999
+  background-color: $backColor
+  border-bottom: 1px solid rgba($borderColor,0.3)
+  box-sizing: border-box
+  //position: relative
+  height: 50px
+  width: 100%
+  // transition: all 0.5s ease
+  .navbar-toggler
+    i
+      color: white
+  .navbody
+    position: relative
+    bottom: 0
+    box-sizing: border-box
+
+.navbar-nav
+  bottom: 0
+  font-family: Prime
+  text-transform: uppercase
+  font-weight:  500
+  letter-spacing: 1px
+  // transform:  translate(-50%,-50%)
+  *
+    box-sizing: border-box
+    // transition: all 0.35s ease
+  .nav-item
+    position: relative
+    // margin: 2px
+    list-style: outside none none
+    transition: .5s
+    padding: 2px 10px
+
+    &:hover
+      color: blue
+      background: rgba(#393e46,0.2)
+      transition: transform .5s
+    .nav-link
+      color: white
+      font-family: 'Montserrat', sans-serif
+      font-weight:  600
+      &:hover
+
+      &::before
+        content: ''
+        position: absolute
+        top: 0
+        left: 0
+        width: 100%
+        height: 2px
+        background: white
+        overflow: hidden
+        z-index: 1
+        transform: scaleX(0)
+        transform-origin: right
+        transition: transform .5s
+      &:hover::before
+        transform: scaleX(1)
+        transform-origin: left
+      &::after
+        content: ''
+        position: absolute
+        bottom: 0
+        right: 0
+        width: 100%
+        height: 2px
+        background: white
+        overflow: hidden
+        z-index: 1
+        transform: scaleX(0)
+        transform-origin: left
+        transition: transform .5s
+      &:hover::after
+        transform: scaleX(1)
+        transform-origin: right
+.collapse
+  background-color: $backColor
+
+    //   // background: rgba(white,0.1)
+    //   border-bottom: 3px solid white
+    //   box-sizing: border-box
+    //   &:last-child
+    //     border: none
+
+.active
+  // border-bottom: 3px solid white
+  // box-sizing: border-box
+.dropdown-menu
+  background-color: $backColor
+  a
+    color: white
+  //   &:hover
+  //     background-color: white
+  //     color: black

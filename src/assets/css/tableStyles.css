@@ -1,0 +1,57 @@
+/*fonts imports*/
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+#showType {
+  margin-left: 5px; }
+
+table thead {
+  font-family: "Roboto", sans-serif;
+  height: 50px;
+  padding: 10px 0px; }
+  table thead .tb-head {
+    background-color: #435d7d; }
+  table thead th {
+    color: white;
+    vertical-align: middle;
+    padding: 5px; }
+
+table tbody tr {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3); }
+  table tbody tr:hover {
+    cursor: pointer;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.6);
+    border-top: 1px solid rgba(0, 0, 0, 0.6);
+    background-color: rgba(128, 128, 128, 0.2); }
+  table tbody tr .accions-content button {
+    margin-right: 10px; }
+
+table, td, th {
+  border: none; }
+
+.search-container {
+  position: relative; }
+  .search-container .btn-clear {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: none;
+    border: none;
+    height: 100%;
+    width: auto;
+    margin-right: 15px; }
+    .search-container .btn-clear:hover {
+      cursor: pointer; }
+    .search-container .btn-clear i {
+      color: gray; }
+
+/*Responsive */
+@media (min-width: 576px) {
+  .btn span {
+    display: none; } }
+
+@media (min-width: 768px) {
+  .btn span {
+    display: none; } }
+
+@media (min-width: 992px) {
+  .btn span {
+    display: inline; } }

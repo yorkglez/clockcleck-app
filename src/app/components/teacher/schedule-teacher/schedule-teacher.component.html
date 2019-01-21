@@ -1,0 +1,41 @@
+<!-- navbar -->
+<app-navteacher></app-navteacher>
+<!-- content -->
+<div class="content animated fadeIn">
+  <!-- header -->
+  <div class="content-header">
+    <h1 class="title">Horario</h1>
+  </div>
+  <!-- body -->
+  <div class="content-ody">
+    <div class="table-responsive-sm">
+      <table class="table table-sm" *ngIf="schedule">
+        <thead>
+          <tr class="tb-head">
+          <th scope="col">Hora</th>
+          <th scope="col">Lunes</th>
+          <th scope="col">Martes</th>
+          <th scope="col">Miercoles</th>
+          <th scope="col">Jueves</th>
+          <th scope="col">Viernes</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr  *ngFor="let hour of hours; let i = index">
+          <th class="th-hours" scope="row">{{hour}}</th>
+          <td *ngIf="i != bTime">{{lunes[i]}}</td>
+          <td *ngIf="i != bTime">{{martes[i]}}</td>
+          <td *ngIf="i != bTime">{{miercoles[i]}}</td>
+          <td *ngIf="i != bTime">{{jueves[i]}}</td>
+          <td *ngIf="i != bTime">{{viernes[i]}}</td>
+          <td class="td-break" *ngIf="i == bTime" colspan="5">RECESO</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- alert -->
+    <div class="alert alert-info" role="alert"  *ngIf="!schedule">
+      <i class="fas fa-info-circle"></i> Aun no has realizado tu carga horaria.
+    </div>
+  </div>
+</div>

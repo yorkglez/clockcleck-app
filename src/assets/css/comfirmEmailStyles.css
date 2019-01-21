@@ -1,0 +1,27 @@
+.navbar {
+  background-color: #d11141;
+  border-bottom: 1px solid rgba(41, 41, 41, 0.4);
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+  height: 50px;
+  color: white; }
+
+.confirm-container {
+  position: relative;
+  top: 150px;
+  width: 550px;
+  height: auto;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  padding: 20px 50px;
+  margin: auto; }
+  .confirm-container .form button {
+    height: 60px;
+    margin-top: 2px; }
+  .confirm-container .confirm-header {
+    margin-bottom: 10px; }
+    .confirm-container .confirm-header .title {
+      text-align: center;
+      color: #d11141;
+      font-weight: 400; }

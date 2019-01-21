@@ -1,0 +1,183 @@
+<!-- navbar -->
+<app-navadmin></app-navadmin>
+<!-- content -->
+<div class="content animated fadeIn">
+  <!-- header -->
+  <div class="content-header">
+    <h1 class="title">Perfil</h1>
+  </div>
+  <!-- body -->
+  <div class="content-body">
+    <!-- table -->
+    <div class="table-container">
+      <table class="table table-sm mx-auto">
+        <tbody>
+          <tr >
+            <th class="info-title">Nombre</th>
+            <td *ngIf="isEditable" class="form-editable">
+              <input
+              type="text"
+              class="form-control"
+              name="name"
+              ngModel [(ngModel)]="data.name"
+              #name="ngModel">
+              <div class="edit-icon">
+                <i *ngIf="isEditable" class="fas fa-edit"></i>
+              </div>
+            </td>
+            <td *ngIf="!isEditable">{{porfileInfo.name}}</td>
+          </tr>
+          <tr>
+            <th class="title">Apellidos</th>
+            <td *ngIf="!isEditable">{{porfileInfo.lastname}}</td>
+            <td *ngIf="isEditable" class="form-editable">
+              <input
+              type="text"
+              class="form-control"
+              name="lastname"
+              ngModel [(ngModel)]="data.lastname"
+              #lastname="ngModel">
+              <div class="edit-icon">
+                <i *ngIf="isEditable" class="fas fa-edit"></i>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th class="title">Email</th>
+            <td *ngIf="!isEditable">{{porfileInfo.email}}</td>
+            <td *ngIf="isEditable" class="form-editable">
+              <!-- <div> -->
+              <input pattern="^[a-z0-9._+%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+              (focusout)="validateEmail(email.value)"
+              type="email"
+              class="form-control input-porfileInfo invalid-input"
+              name="email"
+              ngModel [(ngModel)]="data.email"
+              #email="ngModel"
+              [ngClass]="{'is-invalid': !emailisValid, 'is-valid': emailisValid}"
+              [email]="data.email !==''" required>
+              <div class="edit-icon">
+                <i *ngIf="isEditable" class="fas fa-edit"></i>
+              </div>
+
+              <div class="invalid-feedback" *ngIf="data.email ==''">
+                Porfavor escriba un email.
+              </div>
+              <!-- <div class="valid-feedback" *ngIf="emailValid" >
+              El email es valido.
+            </div> -->
+            <div *ngIf="!emailisValid && email.valid" class="invalid-feedback">
+              Este email ya existe, porfavor escribe uno valido.
+            </div>
+            <div *ngIf="email.errors?.email " class="invalid-feedback">Escribe un email valido.</div>
+
+            <!-- <input  (focusout)="validateEmail(email.value)"  type="email" class="input-porfileInfo" name="email"  ngModel [(ngModel)]="data.email" #email="ngModel">
+            <div class="invalid-feedback">
+            Porfavor escriba un email.
+          </div>
+          <div *ngIf="!emailValid" class="invalid">
+          Este email ya existe, porfavor escribe uno valido.
+        </div> -->
+        <!-- </div> -->
+      </td>
+    </tr>
+    <tr>
+      <th class="title">Tipo</th>
+      <td>{{porfileInfo.type}}</td>
+    </tr>
+    <tr>
+      <th class="title">Extension</th>
+      <td>{{porfileInfo.extensionName}}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<!-- buttons -->
+<div class="form-row">
+  <div class="col-md-auto mb-2">
+    <button type="button" [disabled]="!isEditable" (click)="saveChanges()" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar cambios</button>
+  </div>
+  <div class="col-md-auto mb-2">
+    <button type="button" (click)="editPorfile()" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> Editar</button>
+  </div>
+  <!-- change password buton -->
+  <div class="col-md-auto mb-2">
+    <button type="button" (click)="showChangePass()" class="btn btn-info"><i class="fas fa-key"></i> Cambiar contraseña</button>
+  </div>
+</div>
+
+<!-- password change -->
+<div class="password-container" *ngIf="changePass">
+  <form class="needs-validation"  #form="ngForm"  novalidate >
+    <h4>Cambiar contraseña</h4>
+    <hr>
+    <!-- old password -->
+    <div class="form-group">
+      <label>Contraseña actual</label>
+      <input
+      type="password"
+      class="form-control"
+      name="oldpassword"
+      ngModel [(ngModel)]="model.oldpassword"
+      #oldpassword="ngModel"
+      [ngClass]="{'is-invalid': form.submitted && oldpassword.invalid || oldpassword.errors?.minlength}"
+      minlength="6"
+      required>
+      <div *ngIf="oldpassword.invalid && oldpassword.errors?.minlength" class="invalid-feedback invalid min-password" >
+        La contraseña debe contener un minimo de 6 caracteres.
+      </div>
+      <div  *ngIf="form.submitted && oldpassword.errors?.required" class="invalid-feedback">
+        Porfavor escriba su contraseña.
+      </div>
+    </div>
+    <!-- new password -->
+    <div class="form-group">
+      <label for="newpassword">Contraseña</label>
+      <input type="password"
+      class="form-control invalid-input"
+      name="newpassword"
+      ngModel [(ngModel)]="model.newpassword"
+      #newpassword="ngModel"
+      [ngClass]="{'is-invalid': form.submitted && newpassword.invalid || newpassword.errors?.minlength || !passwordsisValid && newpassword.dirty,
+      'is-valid': passwordsisValid && repeatpassword.valid}" required minlength="6"/>
+      <div  *ngIf="form.submitted && newpassword.errors?.required" class="invalid-feedback">
+        Porfavor escriba una nueva contraseña actual.
+      </div>
+      <div *ngIf="newpassword.invalid && newpassword.errors?.minlength" class="invalid-feedback invalid min-password" >
+        La contraseña debe contener un minimo de 6 caracteres.
+      </div>
+    </div>
+    <!-- input repeat password -->
+    <div class="form-group">
+      <label for="repeat-password">Repetir contraseña</label>
+      <input (focusout)="validatePasswords(newpassword.value, repeatpassword.value)"
+      type="password"
+      class="form-control invalid-input"
+      name="repeatpassword"
+      ngModel [(ngModel)]="model.repeatpassword"
+      #repeatpassword="ngModel"
+      [ngClass]="{'is-invalid':form.submitted && repeatpassword.invalid || repeatpassword.errors?.minlength || !passwordsisValid && newpassword.dirty ,
+      'is-valid': passwordsisValid && repeatpassword.valid || passwordsisValid && newpassword.valid && repeatpassword.valid }" required minlength="6">
+      <div  *ngIf="form.submitted && repeatpassword.errors?.required" class="invalid-feedback">
+        Porfavor repita su nueva contrasena.
+      </div>
+      <div *ngIf="repeatpassword.invalid && repeatpassword?.errors.minlength" class="invalid-feedback invalid min-password" >La contrasena debe contener un minimo de 6 caracteres.</div>
+      <div *ngIf="!passwordsisValid" class="invalid-feedback">Las contraseñas no coinciden.</div>
+      <div *ngIf="passwordsisValid" class="valid-feedback">Las contraseñas coinciden.</div>
+    </div>
+    <button [disabled] = "!passwordsisValid"
+    type="submit"
+    (click)="changePassword(oldpassword.value ,newpassword.value)"
+    class="btn btn-primary">
+    <i class="fas fa-save"></i> Cambiar
+  </button>
+</form>
+</div>
+
+<!-- alerts -->
+<app-alerts [type]="type" [message]= "message" [alertVisible]="alertisVisible"  ></app-alerts>
+<!-- <div class="alert alert-success" role="alert" *ngIf="alertPass">
+Su contrasena ha sido cambiada correctamente.
+</div> -->
+</div>
+</div>

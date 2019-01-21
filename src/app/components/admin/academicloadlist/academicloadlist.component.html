@@ -1,0 +1,131 @@
+<!-- navbar -->
+<app-navadmin></app-navadmin>
+<!-- content -->
+<div class="content animated fadeIn">
+  <!-- menu -->
+  <form class="options-panel ">
+    <div class="form-row align-items-end">
+      <div class= "form-group col-sm-12 col-2 col-md-auto">
+        <h1 class="title">Cargas horarias</h1>
+      </div>
+      <div class="form-group col-8 col-sm-5 col-md-auto search-container">
+        <input class="btn-search form-control mr-sm-2"
+        type="search"
+        placeholder="Buscar..."
+        aria-label="Search"
+        (keyup.enter)="Search(searchText.value,extension.value)"
+        #searchText>
+        <button class="btn-clear" (click)="searchText.value = ''; Search(searchText.value,extension.value)">
+         <i class="fa fa-times"></i>
+       </button>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary my-2 my-sm-0" (click)="Search(searchText.value,extension.value)"><i class="fas fa-search"></i></button>
+      </div>
+      <!-- select extension -->
+      <div class="form-group col-md-2 col-sm-4">
+        <select class="form-control custom-select" (change)="Search(searchText.value,extension.value)"   name="extension" ngModel [(ngModel)]="model.extension" #extension="ngModel">
+          <option *ngFor="let extension of extensions let index = index;"   [value]="extension.idExtension">{{extension.name}}</option>
+        </select>
+      </div>
+      <!-- <div class="form-group col-md-2">
+        <label for="showType">Carreras</label>
+        <ng-select
+        [items]="carers"
+        bindLabel="alias"
+        bindValue="codeCarer"
+        name="carersSelect"
+        ngModel [(ngModel)]="model.carersSelect"
+        #carersSelect ="ngModel"
+        required>
+      </ng-select>
+     </div> -->
+    </div>
+  </form>
+  <!-- table -->
+  <div class="table-responsive-md">
+    <table class="table table-sm" *ngIf="aclist.length > 0">
+      <thead>
+        <tr class="tb-head">
+          <th scope="col">Codigo</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ac of aclist | paginate: { itemsPerPage: 10, currentPage: p }; let i = index ">
+          <th>{{ac.codeTeacher}}</th>
+          <td>{{ac.teacherName}}</td>
+          <td>
+            <div class="accions-content">
+              <button class="btn btn-primary" data-toggle="modal" (click)="getSchedule(ac)"  data-target="#modalDelete"><i class="far fa-eye"></i><span> Mostrar horario</span></button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- alerts -->
+  <div class="alert alert-info" role="alert" *ngIf="aclist.length == 0 && !searchAlert">
+    <i class="fas fa-exclamation-circle"></i> No hay registros en la base de datos.
+  </div>
+  <div class="alert alert-info" role="alert" *ngIf="searchAlert">
+      <i class="fas fa-info-circle"></i> No se encontraron resultados con el termino: <b>{{ter}}</b>
+  </div>
+  <!-- pagination -->
+  <div class="pagination-container"   *ngIf="aclist.length > 0">
+    <!-- <div class="showing">
+      Mostrando <b>{{itemsPerPage}}</b> de <b>{{rowCont}}</b> materias
+    </div> -->
+    <!-- pagiantion settings -->
+    <pagination-controls class="Pagination pagination justify-content-center"  (pageChange)="p = $event"
+                          previousLabel="Anterior"
+                          nextLabel="Siguiente"
+                          screenReaderPaginationLabel="Pagination">
+    </pagination-controls>
+  </div>
+</div>
+<!-- modalal for delete accion -->
+<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalCenterTitle">Horario de: {{teacherName}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- table for schedule -->
+        <table class="table table-sm" *ngIf="existsSchedule" style="min-width: auto;">
+          <thead>
+            <tr class="tb-head">
+            <th scope="col">Hora</th>
+            <th scope="col">Lunes</th>
+            <th scope="col">Martes</th>
+            <th scope="col">Miercoles</th>
+            <th scope="col">Jueves</th>
+            <th scope="col">Viernes</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr  *ngFor="let hour of hours; let i = index">
+            <th class="th-hours" scope="row">{{hour}}</th>
+            <td *ngIf="i != bTime">{{lunes[i]}}</td>
+            <td *ngIf="i != bTime">{{martes[i]}}</td>
+            <td *ngIf="i != bTime">{{miercoles[i]}}</td>
+            <td *ngIf="i != bTime">{{jueves[i]}}</td>
+            <td *ngIf="i != bTime">{{viernes[i]}}</td>
+            <td class="td-break" *ngIf="i == bTime" colspan="5">RECESO</td>
+          </tr>
+          </tbody>
+        </table>
+        <!-- alerts -->
+        <div class="alert alert-info" role="alert" *ngIf="!existsSchedule">
+            <i class="fas fa-info-circle"></i> No existe un horario registrado para este docente.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

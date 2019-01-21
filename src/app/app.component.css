@@ -1,0 +1,29 @@
+*{
+  padding: 0;
+}
+.container-fluid{
+  display: flex;
+  /* margin-left: 20px; */
+  /* justify-content: center; */
+}
+.container-fluid{
+    transition: all 0.5s ease;
+}
+
+@media (min-width: 768px) {
+  .container-fluid{
+    margin-left: 20px;
+  }
+ }
+
+@media (min-width: 992px) {
+  .container-fluid{
+    justify-content: center;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container-fluid{
+    justify-content: center;
+  }
+}

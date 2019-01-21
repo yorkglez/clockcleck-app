@@ -1,0 +1,132 @@
+<div id="wrapper"  [ngClass]="{toggled: showSidebar}">
+
+  <div id="sidebar-wrapper" class="side side-sticky shift" [ngClass]="{sidemenu: !showSidebar && sidebar}"   *ngIf="sidebar">
+    <!-- sidebar -->
+    <ul class="sidebar-nav">
+      <!-- <div class="sidebar-brand">
+          Logo
+      </div> -->
+      <div class="user-container">
+        <div class="imguser-content">
+          <img src="assets/images/user.png" alt="">
+        </div>
+        <div class="user-info">
+          <!-- <p>LALALALALALALAfffffffDDDDDDDDfff<i class="fas fa-check-circle"></i></p> -->
+          <p>{{username}} <i class="fas fa-check-circle"></i></p>
+          <a (click)="logout()" class="logout-link"><i class="fas fa-power-off"></i> Cerrar sesion</a>
+        </div>
+        <div>
+          <button  (click)="toggledSidebar()" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+      </div>
+      <!-- toggler -->
+      <li class="nav-item selected bar-toggler" routerLinkActive="active"  *ngIf="sidebar && !showSidebar">
+        <a  (click)="toggledSidebar()" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </a>
+      </li>
+      <!-- users -->
+      <li *ngIf="admin" class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/users">
+          <i class="fas fa-users-cog"></i> <span> Usuarios</span></a>
+          <div class="arrow"></div>
+        <!-- submenu -->
+        <ul class="sub-nav">
+          <li><a class="nav-lin"  routerLink="/users"><i class="fas fa-users-cog"></i> Listar usuarios</a></li>
+          <li><a class="nav-lin" routerLink="/createuser"><i class="fas fa-users-cog"></i> Anadir usuarios</a></li>
+        </ul>
+      </li>
+      <!-- teachers -->
+      <li *ngIf="admin" class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/teachers"><i class="fas fa-graduation-cap"></i> <span> Docentes</span></a>
+      </li>
+      <!-- reports -->
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/reports"><i class="fas fa-file-alt"></i> <span> Reportes</span></a>
+      </li>
+      <!-- attendances -->
+      <!-- <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" href="#"><i class="fas fa-check-double"></i> Asistencias</a>
+      </li> -->
+      <!-- carers -->
+      <li *ngIf="admin" class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/carers"><i class="fas fa-check-double"></i> <span> Carreras</span></a>
+        <div class="arrow"></div>
+        <!-- submenu -->
+        <ul class="sub-nav">
+          <li><a class="nav-lin" routerLink="/carers"><i class="fas fa-users-cog"></i> Listar carreras</a></li>
+          <li><a class="nav-lin" routerLink="/createcarer"><i class="fas fa-users-cog"></i> Anadir carreras</a></li>
+        </ul>
+      </li>
+
+      <!-- subjects -->
+      <li *ngIf="admin" class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/subjects"><i class="fas fa-book"></i> <span> Materias</span></a>
+        <div class="arrow"></div>
+        <!-- submenu -->
+        <ul class="sub-nav">
+          <li><a class="nav-lin" routerLink="/subjects"><i class="fas fa-users-cog"></i> Listar materias</a></li>
+          <li><a class="nav-lin" routerLink="/createsubject"><i class="fas fa-users-cog"></i> Anadir materias</a></li>
+        </ul>
+      </li>
+      <!-- extensions -->
+      <li *ngIf="admin" class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/extensions"><i class="far fa-list-alt"></i> <span> Extensiones</span></a>
+        <div class="arrow"></div>
+        <!-- submenu -->
+        <ul class="sub-nav">
+          <li><a class="nav-lin" routerLink="/extensions"><i class="fas fa-users-cog"></i> Listar extensiones</a></li>
+          <li><a class="nav-lin" routerLink="/createextension"><i class="fas fa-users-cog"></i> Anadir extensiones</a></li>
+        </ul>
+      </li>
+      <!-- academicloads -->
+      <li *ngIf="admin" class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/academicloadlist"><i class="far fa-calendar-alt"></i> <span> Cargas horarias</span></a>
+      </li>
+      <!-- porfile -->
+      <li *ngIf="admin" class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/porfile"><i class="fas fa-user-alt"></i> <span> Perfil</span></a>
+      </li>
+      <!-- Config -->
+      <li *ngIf="admin" class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/config"><i class="fas fa-cog"></i> <span> Configuracion</span></a>
+      </li>
+
+      <!-- temp -->
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/confirmemail', 'teacher', '12token', '1414' ]"><i class="fas fa-cog"></i> tex</a>
+      </li>
+      <!-- support -->
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" href="#"><i class="far fa-question-circle"></i> <span> Soporte</span></a>
+      </li>
+      <!-- logout -->
+      <li class="nav-item selected" routerLinkActive="active"  *ngIf="sidebar && !showSidebar">
+        <a (click)="logout()" style="cursor: pointer;">
+          <i class="fas fa-power-off"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="page-content" >
+    <div class="container-fluid ">
+      <router-outlet  (activate)='onActivate()'></router-outlet>
+      <!-- Footer -->
+      <footer class="page-footer font-small blue">
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2018 Copyright:
+          <a href="https://mdbootstrap.com/education/bootstrap/"> malastaeras.com</a>
+        </div>
+      </footer>
+    </div>
+
+  </div>
+  <!-- <button  *ngIf="sidebar && !showSidebar" (click)="toggledSidebar()" class="btn-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <i class="fas fa-bars"></i>
+  </button> -->
+
+</div>

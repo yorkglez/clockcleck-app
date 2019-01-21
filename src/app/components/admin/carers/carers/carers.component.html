@@ -1,0 +1,115 @@
+<app-navadmin></app-navadmin>
+<!-- content -->
+<div class="content animated fadeIn">
+  <!-- menu -->
+  <form class="options-panel">
+    <div class="form-row align-items-end">
+      <div class= "form-group col-sm-12 col-2 col-md-auto">
+        <h1 class="title">Carreras</h1>
+      </div>
+      <!-- create carer -->
+      <div class="form-group col-2 col-sm-auto col-md-auto">
+        <button class="btn btn-success col-sd-2" [routerLink]="['/createcarer']"><i class="fas fa-plus"></i> Nueva carrera </button>
+      </div>
+      <!-- search -->
+      <div class="form-group col-8 col-sm-5 col-md-auto search-container">
+        <input class="form-control"
+        type="search" placeholder="Buscar..."
+        aria-label="Search"
+        (keyup.enter)="Search(searchText.value,extension.value,status.value)"
+        #searchText>
+        <button class="btn-clear" (click)="searchText.value = ''; Search(searchText.value,extension.value,status.value)">
+         <i class="fa fa-times"></i>
+       </button>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary my-2 my-sm-0" (click)="Search(searchText.value,extension.value,status.value)"><i class="fas fa-search"></i></button>
+      </div>
+      <!-- extension -->
+      <div class="form-group  col-md-2 col-sm-4">
+        <select id="showExtension" (change)="showBy(extension.value,status.value)" class="form-control custom-select"  name="extension"  ngModel [(ngModel)]="model.extension" #extension="ngModel">
+          <option  *ngFor="let extension of extensions;" [value]="extension.idExtension">{{extension.name}}</option>
+        </select>
+      </div>
+      <div class="form-group col-md-2 col-sm-4">
+        <select  (change)="showBy(extension.value,status.value)" class="form-control custom-select" name="status" #status>
+          <option value="active" selected>Activos</option>
+          <option value="inactive">Inactivos</option>
+        </select>
+      </div>
+    </div>
+  </form>
+  <!-- loader  -->
+  <app-loader></app-loader>
+  <!-- table -->
+  <div class="table-responsive-md">
+    <table class="table table-sm" *ngIf="carers.length > 0">
+      <thead>
+        <tr class="tb-head">
+          <th scope="col">Codigo</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Alias</th>
+          <th scope="col">Extension</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let carer of carers | paginate: { itemsPerPage: 25, currentPage: p }; let i = index ">
+          <th scope="row">{{carer.codeCarer}}</th>
+          <td>{{carer.name}}</td>
+          <td>{{carer.alias}}</td>
+          <td>{{carer.extensionName}}</td>
+          <td>
+            <div class="accions-content">
+              <button class="btn btn-warning" (click)="Edit(carer)"><i class="fas fa-pencil-alt"></i> <span> Editar</span></button>
+              <button *ngIf="carer.status =='0'"  (click)="Activate(carer)"   class="btn btn-success" ><i class="fas fa-check"></i> <span> Activar</span></button>
+              <button *ngIf="carer.status =='1'"  class="btn btn-danger" data-toggle="modal" data-target="#modalDelete"  (click)="getId(carer)"  #deleteUser><i class="fas fa-trash-alt"></i> <span> Eliminar</span></button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- alerts -->
+  <div class="alert alert-info" role="alert" *ngIf="carers.length == 0 && !searchAlert">
+      <i class="fas fa-info-circle"></i> No hay registros en la base de datos.
+  </div>
+  <div class="alert alert-info" role="alert" *ngIf="searchAlert">
+      <i class="fas fa-info-circle"></i> No se encontraron resultados con el termino: <b>{{ter}}</b>
+  </div>
+  <!-- pagination -->
+  <div class="pagination-container"   *ngIf="carers.length > 0">
+    <!-- <div class="showing">
+      Mostrando <b>{{itemsPerPage}}</b> de <b>{{rowCont}}</b> materias
+    </div> -->
+    <!-- pagiantion settings -->
+    <pagination-controls class="Pagination pagination justify-content-center"  (pageChange)="p = $event"
+    previousLabel="Anterior"
+    nextLabel="Siguiente"
+    screenReaderPaginationLabel="Pagination"
+    *ngIf="carers.length > 0"
+    >
+  </pagination-controls>
+</div>
+</div>
+
+<!-- modalal for delete accion -->
+<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalCenterTitle">Estas seguro? <i class="fas fa-exclamation-triangle"></i></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Si eliminas esta carrera sera dada de baja en el sistema!.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="Delete()"  data-dismiss="modal">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+// .table-container
+//   width: 650px
+//   border-top: 1px solid black
+//   border-bottom: 1px solid black
+//   margin-bottom: 10px
+//   table
+//     width: 90%
+//     tr
+//       background-color: none
+//     .title
+//       width: 120px
+//
+
+.password-container
+  position: relative
+  width: 450px
+  padding: 20px
+  border: 1px solid rgba(gray,0.3)
+  border-radius: 10px
+
+.is-valid
+  color: green
+
+.is-invalid
+  border: none
+
+.form-editable
+  position: relative
+  border-bottom: 1px solid rgba(black,0.5)
+  .edit-icon
+    position: absolute
+    top: 5px
+    right: 0
+    height: 100%
+    width: auto
+    margin-right: 15px
+
+.table-container
+  table
+    tr
+      width: auto
+      .title
+        width: 100px
+
+      .is-invalid
+        color: red
+        box-shadow: none
+        border: none
+      .form-control
+        border: none
+        margin: 0
+        padding: 0
+        border-radius: 0
+        width: auto
+        &:focus
+          box-shadow: none
+
+@media (min-width: 1200px)
+  .content
+    min-width: 800px

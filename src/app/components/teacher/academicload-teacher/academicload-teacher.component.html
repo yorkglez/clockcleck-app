@@ -1,0 +1,197 @@
+<!-- navbar teacher -->
+<app-navteacher></app-navteacher>
+<!-- content -->
+<div class="content animated fadeIn">
+  <!-- header -->
+  <div class="content-header">
+    <h1 class="title">Carga horaria</h1>
+  </div>
+  <!-- body -->
+  <div class="content-body">
+    <form  (ngSubmit)="form.valid && addSubject(form)" #form="ngForm" class="needs-validation" novalidate>
+      <!-- {{form.value | json}} -->
+      <!-- select day -->
+      <div class="form-row">
+        <div class="form-group col-md-auto mb-2">
+          <label for="day">Dia</label>
+          <select name="day"
+          ngModel [(ngModel)]="model.day"
+          #day="ngModel"
+          class="form-control custom-select"
+          [ngClass]="{'is-invalid':form.submitted && day.invalid && model.day != null}"
+          required>
+          <option *ngFor="let day of days;" [value]="day">{{day}}</option>
+        </select>
+        <div class="invalid-feedback">
+          Porfavor seleccione un dia
+        </div>
+      </div>
+      <!-- select subject -->
+      <div class="form-group col-md-2 mb-2">
+        <label for="nameSubject">Materia</label>
+        <ng-select
+        name="nameSubject"
+        ngModel [(ngModel)]="model.nameSubject"
+        #nameSubject ="ngModel"
+        (change)="getSelectedSubject(nameSubject.value)"
+        [ngClass]="{'is-invalid':form.submitted && nameSubject.invalid  && model.nameSubject != null}"
+        placeholder = "Selecionar Materia"
+        required>
+          <ng-option *ngFor="let subject  of subjects let idx=index" [value]="idx" >{{subject.name}}</ng-option>
+        </ng-select>
+        <div class="invalid-feedback">
+          Porfavor seleccione una materia.
+        </div>
+      </div>
+      <!-- select carer -->
+      <div class="form-group col-md-2 mb-2">
+        <label for="day">Carreras</label>
+        <ng-select
+        name="alias"
+        ngModel [(ngModel)]="model.alias"
+        #alias ="ngModel"
+        (change)="getSelectedCarer(alias.value)"
+        [ngClass]="{'is-invalid':form.submitted && alias.invalid && model.alias != null}"
+        placeholder = "Seleccionar carrera"
+        required>
+          <ng-option *ngFor="let carer  of carers let idx=index" [value]="idx" >{{carer.alias}}</ng-option>
+        </ng-select>
+        <div class="invalid-feedback">
+          Porfavor seleccione una carrera.
+        </div>
+      </div>
+      <!-- select start time -->
+      <div class="form-group col-md-auto mb-3">
+        <label for="start_time">Hora de entrada</label>
+        <select
+        class="form-control custom-select"
+        name="startTime" ngModel
+        [(ngModel)]="model.startTime"
+        #startTime="ngModel"
+        [ngClass]="{'is-invalid':form.submitted && startTime.invalid && model.startTime != null}" required>
+        <ng-container *ngFor="let hour of hours   let i=index" >
+          <option  (click)="sliceHours(i)" [value]="hour.value" >
+            {{hour.hour}}
+          </option>
+        </ng-container>
+      </select>
+      <div class="invalid-feedback">
+        Porfavor seleccione una hora de entrada.
+      </div>
+    </div>
+    <!-- select end time -->
+    <div class="form-group col-md-auto mb-3">
+      <label for="end_time">Hora de salida</label>
+      <select   class="form-control custom-select"
+      name="endTime"
+      ngModel [(ngModel)]="model.endTime"
+      #endTime="ngModel"
+       [ngClass]="{'is-invalid':form.submitted && endTime.invalid && model.endTime != null}"
+       required>
+        <ng-container *ngFor="let hour of hours | slice:etSlice; let i=idx" >
+          <option [value]="hour.value" >
+            {{hour.hour}}
+          </option>
+        </ng-container>
+      </select>
+      <div class="invalid-feedback">
+        Porfavor seleccione una hora salida.
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row align-items-end">
+    <!-- select semester -->
+    <div class="form-group col-md-1 ">
+      <label for="end_time">Semestre</label>
+      <select class="form-control custom-select"
+      name="semester"
+      ngModel [(ngModel)]="model.semester"
+      #semester="ngModel"
+      [ngClass]="{'is-invalid':form.submitted && semester.invalid}"
+      required>
+        <ng-container *ngFor="let semester of semesters let i=index" >
+          <option [value]="semester" selected>{{semester}}</option>
+        </ng-container>
+      </select>
+      <div class="invalid-feedback">
+        Porfavor seleccione un semestre.
+      </div>
+    </div>
+    <!-- textarea ojetive -->
+    <div class="form-group col-md-4">
+      <label for="exampleFormControlTextarea1">Objetivo</label>
+      <textarea name="objetive" ngModel [(ngModel)]="model.objetive"   #objetive ="ngModel" class="form-control" rows="2" style="height:38px; resize: none;" ></textarea>
+    </div>
+    <!-- add subject button -->
+    <div class="form-group col-md-auto mb-3 col-sm-auto">
+      <button (click)="addSubject(form)" type="submit"
+       class="btn"
+       [ngClass]="{'btn-success': !isEditable,'btn-primary': isEditable}">
+         <i class="fas fa-plus"></i>
+         <span *ngIf="!isEditable"> Agregar</span>
+         <span *ngIf="isEditable"> Actualizar</span>
+       </button>
+    </div>
+    <!-- generate shedule button -->
+    <div class="form-group col-md-auto mb-3 col-sm-auto">
+      <button (click)="saveSchedule($event)"  class="btn btn-primary"><i class="fas fa-save"></i> Guardar cambios</button>
+    </div>
+  </div>
+</form>
+<!-- table for create schedule -->
+<table class="table table-sm table-editable">
+  <thead>
+    <tr class="tb-head">
+      <th scope="col">Materia</th>
+      <th scope="col">Carrera</th>
+      <th scope="col">Dia</th>
+      <th scope="col">Hora de entrada</th>
+      <th scope="col">Hora de salida</th>
+      <th scope="col">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- old ac -->
+    <tr *ngFor="let ac of academicload let idx=index">
+      <th>{{ac.nameSubject}}</th>
+      <td>{{ac.alias}}</td>
+      <td>{{ac.day}}</td>
+      <td>{{ac.startTime}}</td>
+      <td>{{ac.endTime}}</td>
+      <td>
+        <div class="accions-content">
+          <button class="btn btn-danger" data-toggle="modal" data-target="#modalDelete"  (click)="getId(ac)"  #deleteItem><i class="fas fa-trash-alt">
+          </i> <span> Eliminar</span>
+        </button>
+        <button class="btn btn-warning"  (click)="Edit(idx)"  #edit><i class="fas fa-pencil-alt"></i>
+          <span> Editar</span>
+        </button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+<!-- modalal for delete accion -->
+<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalCenterTitle">Estas seguro? <i class="fas fa-exclamation-triangle"></i></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Si eliminas esta materia sera eliminada de tu carga horaria!.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger"  (click)="Delete()"  data-dismiss="modal">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>

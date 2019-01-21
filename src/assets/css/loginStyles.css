@@ -1,0 +1,97 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:400");
+label {
+  font-family: "Roboto", sans-serif; }
+
+/*Background colors */
+header {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: white; }
+
+.log-invalid {
+  border-color: red; }
+
+.error {
+  color: red;
+  margin-bottom: 5px; }
+
+.navbar {
+  background-color: #d11141;
+  border-bottom: 1px solid rgba(41, 41, 41, 0.4);
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+  height: 50px;
+  color: white; }
+
+.login-container {
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  -webkit-box-shadow: 10px 5px 5px rgba(128, 128, 128, 0.5);
+  box-shadow: 10px 5px 5px rgba(128, 128, 128, 0.5);
+  width: 550px;
+  height: auto;
+  margin: auto;
+  top: 100px; }
+  .login-container .header {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    width: 100%;
+    height: 120px;
+    background-color: #d11141;
+    border-radius: 8px 8px 0 0; }
+    .login-container .header img {
+      position: absolute;
+      top: -40px;
+      width: 160px; }
+  .login-container .body {
+    padding: 10px 0px; }
+    .login-container .body .btn-login {
+      height: 50px; }
+    .login-container .body h1 {
+      text-align: center;
+      color: #d11141;
+      font-weight: 500;
+      font-family: "Roboto", sans-serif; }
+    .login-container .body input {
+      height: 40px;
+      border: none;
+      border-bottom: 2px solid gray;
+      border-radius: 0; }
+      .login-container .body input:focus {
+        border-color: #d11141;
+        -webkit-box-shadow: none;
+        box-shadow: none; }
+    .login-container .body label {
+      font-weight: 600; }
+    .login-container .body .forgot-container {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center; }
+      .login-container .body .forgot-container a {
+        width: auto; }
+
+.form-group {
+  position: relative; }
+  .form-group .icon {
+    position: absolute;
+    bottom: 0;
+    margin-left: 5px; }

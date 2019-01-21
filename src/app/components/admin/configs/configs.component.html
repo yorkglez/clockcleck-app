@@ -1,0 +1,106 @@
+<app-navadmin></app-navadmin>
+<!-- content -->
+<div class="content animated fadeIn">
+  <!-- header -->
+  <div class="content-header">
+    <h1 class="title">Configuracion</h1>
+  </div>
+  <!-- body -->
+  <div class="content-body">
+    <!-- table -->
+    <table class="table table-sm table-striped">
+      <tbody>
+        <tr>
+          <th>Hora de entrada</th>
+          <td *ngIf="!editable">{{configData.startTime}}</td>
+          <td *ngIf="editable">
+            <input type="text"
+            class="form-control"
+            name="startTime"
+            maxlength="5"
+            (keypress)="validateHour(startTime)"
+            [value]="time"
+            ngModel [(ngModel)]="data.startTime"
+            #startTime="ngModel">
+          </td>
+        </tr>
+        <tr>
+          <th>Hora de salidad</th>
+          <td *ngIf="!editable">{{configData.endTime}}</td>
+          <td *ngIf="editable">
+            <input type="time"
+            class="form-control"
+            maxlength="5"
+            name="endTime"
+            ngModel [(ngModel)]="data.endTime"
+            #endTime="ngModel">
+          </td>
+        </tr>
+        <tr>
+          <th>Duraccion de modulos</th>
+          <td *ngIf="!editable">{{configData.durationModule}} minutos</td>
+          <td *ngIf="editable">
+            <input type="number"
+            pattern="[0-9]{2}"
+            maxlength="2"
+            class="form-control"
+            name="durationModule"
+            ngModel [(ngModel)]="data.durationModule"
+            #durationModule="ngModel">
+          </td>
+        </tr>
+        <tr>
+          <th>Inicio de receso</th>
+          <td *ngIf="!editable">{{configData.sbreakTime}}</td>
+          <td *ngIf="editable">
+            <input type="text"
+            class="form-control"
+            maxlength="5"
+            name="sbreakTime"
+            ngModel [(ngModel)]="data.sbreakTime"
+            #sbreakTime="ngModel">
+          </td>
+        </tr>
+        <tr>
+          <th>Fin de receso</th>
+          <td *ngIf="!editable">{{configData.ebreakTime}}</td>
+          <td *ngIf="editable">
+            <input type="text"
+            class="form-control"
+            maxlength="5"
+            name="ebreakTime"
+            ngModel
+            [(ngModel)]="data.ebreakTime"
+            #ebreakTime="ngModel">
+          </td>
+        </tr>
+        <tr>
+          <th>Duraccion de receso</th>
+          <td *ngIf="!editable">{{configData.durationBreak}} minutos</td>
+          <td *ngIf="editable">
+            <input type="number"
+            class="form-control"
+            pattern="[0-9]{2}"
+            maxlength="2"
+            name="durationBreak"
+            ngModel [(ngModel)]="data.durationBreak"
+            #durationBreak="ngModel">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- buttons -->
+    <div class="form-row">
+      <div class="col-md-auto mb-2">
+          <button type="button" [disabled]="!editable" (click)="saveChanges()" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+      </div>
+      <div class="col-md-auto mb-2">
+          <button type="button" (click)="Edit()" class="btn btn-info"><i class="fa fa-pencil" aria-hidden="true"></i> Editar</button>
+      </div>
+      <!-- change password buton -->
+      <div class="col-md-auto mb-2">
+          <button type="button" (click)="newConfig()" class="btn btn-warning"><i class="fa fa-key" aria-hidden="true"></i> Nueva configuraccion</button>
+      </div>
+    </div>
+  </div>
+</div>

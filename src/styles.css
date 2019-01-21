@@ -1,0 +1,88 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* @import "~@ng-select/ng-select/themes/material.theme.css"; */
+@import "~@ng-select/ng-select/themes/default.theme.css";
+*{
+  padding: 0;
+  margin: 0;
+}
+.container-fluid{
+  padding: 0;
+  margin: 0;
+  height: auto;
+  width: 100%;
+}
+/* Animations */
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.fast {
+  -webkit-animation-duration: 0.4s;
+  animation-duration: 0.4s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  animation-name: fadeIn;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] { -moz-appearance:textfield; }
+
+/*Loader*/
+.loader-container{
+  position: fixed;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  top: 30%;
+  left: 40%;
+  /* background: red; */
+  width: auto;
+  height: 150px;
+
+}
+.load-text{
+  font-weight: 600;
+}
+.loader{
+  /* background: red; */
+  border: 10px solid #f3f3f3;
+  border-top: 10px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+  /* top: 50%; */
+  /* left: 50%; */
+  /* position: fixed; */
+  /* margin-top: -9em; */
+  /* margin-left:  -15em; */
+}
+@keyframes spin {
+  0%{transform: rotate(0deg);}
+  100%{transform: rotate(360deg);}
+}

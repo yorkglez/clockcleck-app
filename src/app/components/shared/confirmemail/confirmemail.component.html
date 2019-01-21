@@ -1,0 +1,62 @@
+<nav class="navbar navbar-expand-lg">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand">
+    Control de asistencias
+  </a>
+  <div class="collapse navbar-collapse" id="navbarNav">
+
+  </div>
+  <span>Create by york</span>
+</nav>
+
+ <div class="confirm-container">
+   <div class="confirm-header"> <h2 class="title">Confirmar Email</h2></div>
+
+   <div class="alert alert-info" role="alert" *ngIf="!comfirmComple">
+     <i class="fas fa-info"></i>
+     Para confirmar su email, escriba su nueva contrasena.
+   </div>
+
+   <div class="alert alert-success" role="alert" *ngIf="comfirmComple">
+     <i class="fas fa-check"></i>
+     Su email ha sido confirmado y su contraseña ha sido cambiada correctamente, haz click en finalizar para iniciar sesion.
+     <a routerLink="/login">Finalizar</a>
+   </div>
+
+   <!-- form -->
+   <form class="form" (ngSubmit)="form.valid && changePassword(form)" #form="ngForm" class="needs-validation" novalidate *ngIf="!comfirmComple">
+     <!-- {{form.value | json}} -->
+     <!-- input password -->
+     <div class="form-group">
+       <label for="password">Contraseña</label>
+       <input type="password"
+              class="form-control invalid-input"
+              name="password"
+              ngModel [(ngModel)]="model.password"
+              #password="ngModel"
+              [ngClass]="{'is-invalid': form.submitted && password.invalid  || password.invalid && password.dirty || !passwordsValid,'is-valid': passwordsValid  && password.valid}"  minlength="6" required/>
+         <div  *ngIf="form.submitted && password.errors?.required" class="invalid-feedback">
+           Porfavor escriba una contraseña.
+         </div>
+         <div *ngIf="password.invalid && password.errors.minlength" class="invalid-feedback" >La contrasena debe contener un minimo de 6 caracteres.</div>
+     </div>
+     <!-- input repeat password -->
+     <div class="form-group">
+       <label for="repeat-password">Repetir contraseña</label>
+       <input (focusout)="validatePasswords(password.value, repeatpassword.value)" type="password" class="form-control invalid-input" name="repeatpassword"  ngModel [(ngModel)]="model.repeatpassword" #repeatpassword="ngModel"
+         [ngClass]="{'is-invalid':form.submitted && repeatpassword.invalid || repeatpassword.invalid &&  repeatpassword.dirty || !passwordsValid, 'is-valid': passwordsValid  && repeatpassword.valid}"  minlength="6" required>
+         <div  *ngIf="form.submitted && repeatpassword.errors?.required" class="invalid-feedback">
+           Porfavor escriba una contrasña.
+         </div>
+         <div *ngIf="repeatpassword.invalid && repeatpassword.errors.minlength" class="invalid-feedback" >La contrasena debe contener un minimo de 6 caracteres.</div>
+         <div *ngIf="!passwordsValid" class="invalid-feedback">Las contrasenas no coinciden.</div>
+     </div>
+     <div class="row">
+       <div class="col-md-6 mx-auto">
+           <button type="submit" class="btn-lg btn-block btn btn-success">Continuar</button>
+       </div>
+   </div>
+   </form>
+ </div>
