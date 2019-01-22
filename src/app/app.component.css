@@ -33,10 +33,11 @@
   z-index:  2000;
   background-color:  #212f3d;
   width: 100%;
+  padding-top: 10px;
 }
 
 #wrapper{
-  margin-bottom: 70px;
+  margin-bottom: 50px;
 }
 
 .footer-nav{
@@ -50,8 +51,13 @@
   list-style: none;
   padding: 0 20px;
 }
+
+.footer-item span{
+  font-weight: 600;
+}
+
 .footer-item a{
   text-decoration: none;
   color: white;
-  font-weight: bold;
+  font-weight: 600;
 }
