@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SubjectsService } from '../../../../services/subjects.service';
 import { Router } from '@angular/router';
+import { LoaderService } from '../../../../services/loader.service';
 
 @Component({
   selector: 'app-subjects',
@@ -23,19 +24,25 @@ export class SubjectsComponent implements OnInit {
   message: string
   // rowCont: number
   // itemsPerPage: number = 10
-  constructor(private _subjectsService: SubjectsService, private router: Router) { }
+  constructor(private _subjectsService: SubjectsService,
+    private router: Router,
+    private _loaderService: LoaderService) { }
 
   ngOnInit() {
     this.getSubjects('1','')
   }
+
   Edit(code){
     this.id = code
     this.router.navigate(['/editsubject',this.id])
   }
+
   getId(subject){
     this.subject = subject;
   }
+
   getSubjects(status,ter){
+   this._loaderService.display(true)
     this.searchAlert = false
     this._subjectsService.getSubjects(status,ter).subscribe(data=>{
       if(!data && ter != ''){
@@ -47,9 +54,10 @@ export class SubjectsComponent implements OnInit {
         this.subjects = []
       else
         this.subjects = data
-      // this.rowCont = this.subjects.length
+        this._loaderService.display(false)
      })
   }
+
   deleteSubject(){
     this._subjectsService.changeStatus(this.subject['codeSubject'],'0').subscribe(data=>{
       if(data){

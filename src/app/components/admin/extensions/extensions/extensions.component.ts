@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ExtensionsService } from '../../../../services/extensions.service';
 import { Router } from '@angular/router';
+import { LoaderService } from '../../../../services/loader.service';
 
 @Component({
   selector: 'app-extensions',
@@ -19,10 +20,16 @@ export class ExtensionsComponent implements OnInit {
   extensions = []
   extension:any[]
   itemsPerPage: number = 10
-  constructor(private _extensionsService: ExtensionsService, private router: Router) { }
+  constructor(private _extensionsService: ExtensionsService,
+     private router: Router,
+     private _loaderService: LoaderService) { }
 
   ngOnInit() {
-    this._extensionsService.getExtensions('1').subscribe(data=>{this.extensions = data})
+   this._loaderService.display(true)
+    this._extensionsService.getExtensions('1').subscribe(data=>{
+      this.extensions = data
+      this._loaderService.display(false)
+    })
   }
   getId(extension){
     this.extension = extension;
@@ -32,6 +39,7 @@ export class ExtensionsComponent implements OnInit {
   }
   Search(ter, type){
     this.searchAlert = false
+    this._loaderService.display(true)
     this._extensionsService.Search(ter, type).subscribe(
       data=>{
         if(!data){
@@ -42,7 +50,7 @@ export class ExtensionsComponent implements OnInit {
         else
             this.extensions = data
         })
-
+        this._loaderService.display(false)
       }
 
 

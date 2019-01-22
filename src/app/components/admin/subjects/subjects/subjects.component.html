@@ -45,61 +45,64 @@
         </div>
       </div>
     </form>
-    <!-- table subjects -->
-    <div class="table-responsive-md">
-      <table class="table table-hover table-sm" *ngIf="subjects.length > 0">
-        <thead>
-          <tr class="tb-head">
-            <th scope="col">Codigo</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Creditos</th>
-            <th scope="col">Secuencia</th>
-            <th scope="col">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let subject of subjects | paginate: { itemsPerPage: 25, currentPage: p }; let i = index ">
-            <th>{{subject.codeSubject}}</th>
-            <td>{{subject.name}}</td>
-            <td>{{subject.credits}}</td>
-            <td>
-              <!-- show sequence  -->
-              <span *ngIf="subject.sequence == '1'" class="badge badge-primary">Si</span>
-              <span *ngIf="subject.sequence == '0'" class="badge badge-secondary">No</span>
-            </td>
-            <td>
-              <div class="accions-content">
-                <button class="btn btn-warning" (click)="Edit(subject.codeSubject)"><i class="fas fa-pencil-alt"></i> <span> Editar</span></button>
-                <button *ngIf="subject.status == '0'"  (click)="Activate(subject)"   class="btn btn-success" ><i class="fas fa-check"></i> <span> Activar</span></button>
-                <button *ngIf="subject.status == '1'"  class="btn btn-danger" data-toggle="modal" data-target="#modalDelete"  (click)="getId(subject)"  #deleteUser><i class="fas fa-trash-alt"></i> <span> Eliminar</span></button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="content-table">
+      <!-- loader  -->
+      <app-loader></app-loader>
+      <!-- table subjects -->
+      <div class="table-responsive-md">
+        <table class="table table-hover table-sm" *ngIf="subjects.length > 0">
+          <thead>
+            <tr class="tb-head">
+              <th scope="col">Codigo</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Creditos</th>
+              <th scope="col">Secuencia</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let subject of subjects | paginate: { itemsPerPage: 25, currentPage: p }; let i = index ">
+              <th>{{subject.codeSubject}}</th>
+              <td>{{subject.name}}</td>
+              <td>{{subject.credits}}</td>
+              <td>
+                <!-- show sequence  -->
+                <span *ngIf="subject.sequence == '1'" class="badge badge-primary">Si</span>
+                <span *ngIf="subject.sequence == '0'" class="badge badge-secondary">No</span>
+              </td>
+              <td>
+                <div class="accions-content">
+                  <button class="btn btn-warning" (click)="Edit(subject.codeSubject)"><i class="fas fa-pencil-alt"></i> <span> Editar</span></button>
+                  <button *ngIf="subject.status == '0'"  (click)="Activate(subject)"   class="btn btn-success" ><i class="fas fa-check"></i> <span> Activar</span></button>
+                  <button *ngIf="subject.status == '1'"  class="btn btn-danger" data-toggle="modal" data-target="#modalDelete"  (click)="getId(subject)"  #deleteUser><i class="fas fa-trash-alt"></i> <span> Eliminar</span></button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-    <!-- if subjects don't exist -->
-    <div class="alert alert-info" role="alert" *ngIf="subjects.length == 0 && !searchAlert">
-      <i class="fas fa-info-circle"></i> No hay registros en la base de datos.
+      <!-- if subjects don't exist -->
+      <div class="alert alert-info" role="alert" *ngIf="subjects.length == 0 && !searchAlert">
+        <i class="fas fa-info-circle"></i> No hay registros en la base de datos.
+      </div>
+      <div class="alert alert-info" role="alert" *ngIf="searchAlert">
+        <i class="fas fa-info-circle"></i> No se encontraron resultados con el termino: <b>{{ter}}</b>
+      </div>
+      <!-- pagiantion settings -->
+      <div class="pagination-container"   *ngIf="subjects.length > 0">
+        <!-- <div class="showing">
+          Mostrando <b>{{itemsPerPage}}</b> de <b>{{rowCont}}</b> materias
+        </div> -->
+        <pagination-controls
+        class="Pagination pagination justify-content-center"
+        (pageChange)="p = $event"
+        previousLabel="Anterior"
+        nextLabel="Siguiente"
+        screenReaderPaginationLabel="Pagination">
+      </pagination-controls>
+      </div>
     </div>
-    <div class="alert alert-info" role="alert" *ngIf="searchAlert">
-      <i class="fas fa-info-circle"></i> No se encontraron resultados con el termino: <b>{{ter}}</b>
-    </div>
-  <!-- pagiantion settings -->
-  <div class="pagination-container"   *ngIf="subjects.length > 0">
-    <!-- <div class="showing">
-      Mostrando <b>{{itemsPerPage}}</b> de <b>{{rowCont}}</b> materias
-    </div> -->
-    <pagination-controls
-    class="Pagination pagination justify-content-center"
-    (pageChange)="p = $event"
-    previousLabel="Anterior"
-    nextLabel="Siguiente"
-    screenReaderPaginationLabel="Pagination">
-  </pagination-controls>
-  </div>
-
 </div>
 
 <!-- modalal for delete accion -->

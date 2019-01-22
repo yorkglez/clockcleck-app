@@ -8,6 +8,8 @@
   </div>
   <!-- body -->
   <div class="content-body">
+    <!-- alerts -->
+    <app-alerts [type]="type" [message]= "message" [alertVisible]="alertisVisible"  ></app-alerts>
     <!-- table -->
     <div class="table-container">
       <table class="table table-sm mx-auto">
@@ -95,7 +97,7 @@
 <!-- buttons -->
 <div class="form-row">
   <div class="col-md-auto mb-2">
-    <button type="button" [disabled]="!isEditable" (click)="saveChanges()" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar cambios</button>
+    <button type="button" *ngIf="isEditable" (click)="saveChanges()" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar cambios</button>
   </div>
   <div class="col-md-auto mb-2">
     <button type="button" (click)="editPorfile()" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> Editar</button>
@@ -173,9 +175,6 @@
   </button>
 </form>
 </div>
-
-<!-- alerts -->
-<app-alerts [type]="type" [message]= "message" [alertVisible]="alertisVisible"  ></app-alerts>
 <!-- <div class="alert alert-success" role="alert" *ngIf="alertPass">
 Su contrasena ha sido cambiada correctamente.
 </div> -->

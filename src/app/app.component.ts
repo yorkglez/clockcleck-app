@@ -19,10 +19,11 @@ import {
 })
 export class AppComponent  implements OnInit {
   title = 'app';
+  username:string
   showSidebar: boolean = false
   sidebar: boolean = false
-  username:string
   admin: boolean = false
+  date = new Date()
   constructor(private _authService: AuthService, private router: Router){
 
   }

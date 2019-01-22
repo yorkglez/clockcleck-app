@@ -15,9 +15,15 @@ export class ConfigsComponent implements OnInit {
   isNewconfig: boolean = false
   emailValid: boolean = true
   alertPass: boolean = false
+  alertisVisible: boolean = false
+  type: string
+  message: string
   constructor(private _configService: ConfigService) { }
 
   ngOnInit() {
+    this.getData()
+  }
+  getData(){
     this._configService.getConfig().subscribe(data=>{
       this.configData = data
       console.log(this.configData)
@@ -29,7 +35,6 @@ export class ConfigsComponent implements OnInit {
       this.data['durationBreak'] = data['durationBreak']
     })
   }
-
   Edit(){
     if(this.isEditable)
       this.isEditable = false
@@ -49,7 +54,18 @@ export class ConfigsComponent implements OnInit {
       if(resp){
         this.isEditable = false;
         this.isNewconfig = false;
+        this.getData()
+        this.type  = "success"
+        this.message = 'La cofiguracion se ha guardado correctamente.'
       }
+      else{
+        this.type  = "error"
+        this.message = 'No se ha poodido guardar.'
+      }
+      this.alertisVisible = true
+      setTimeout(() => {
+        this.alertisVisible = false
+      }, 2000)
     })
   }
 
@@ -59,7 +75,18 @@ export class ConfigsComponent implements OnInit {
       if(resp){
         this.isEditable = false;
         this.isNewconfig = false;
+        this.getData()
+        this.type  = "success"
+        this.message = 'La configuracion ha sido actualizada!.'
       }
+      else{
+        this.type  = "error"
+        this.message = 'No se ha poodido actualizar.'
+      }
+      this.alertisVisible = true
+      setTimeout(() => {
+        this.alertisVisible = false
+      }, 2000)
     })
   }
 
