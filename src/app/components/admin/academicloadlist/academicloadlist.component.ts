@@ -62,16 +62,16 @@ export class AcademicloadlistComponent implements OnInit {
     })
   }
   getSchedule(ac){
-
-    this._scheduleService.getScheduleConfig(ac.codeTeacher).subscribe(data=>{
-      this.hours  = data.hours
-      this.bTime = data.breakTime
-    })
     this._scheduleService.getScheduleTeacherbyId(ac.codeTeacher).subscribe(data=>{
       if(!data){
         this.existsSchedule = false
       }
       else{
+        this._scheduleService.getScheduleConfig(ac.codeTeacher).subscribe(data=>{
+          this.hours  = data.hours
+          this.bTime = data.breakTime
+        })
+
         this.teacherName = ac.teacherName
         this.lunes = data.lunes
         this.martes = data.martes

@@ -26,14 +26,15 @@
           #code="ngModel"
           (focusout)="validateCode(code.value)"
           (keypress)="addCharater(code.value)"
-          [ngClass]="{'is-invalid':form.submitted && code.invalid || model.code == null && code.touched || !codeValid && code.dirty || code.invalid && code.dirty,
+          [ngClass]="{'is-invalid':form.submitted && code.invalid || model.code == '' && code.dirty || !codeValid && code.valid || code.invalid && code.dirty,
            'is-valid': code.valid && code.dirty && codeValid }"
           required>
-          <!-- 'is-valid': code.valid && code.dirty && codeValid, 'is-invalid':form.submitted && code.invalid || code.invalid && code.touched|| !codeValid || model.code =='' -->
-          <div class="invalid-feedback" *ngIf="form.submitted && code.invalid || model.code == '' && code.dirty ">
+          <!-- [ngClass]="{'is-invalid':formSq.submitted && codeSq.invalid && subjects.code != null  || subjects.code == '' && codeSq.dirty ||  !secodeValid ,
+          'is-valid': codeSq.valid && codeSq.dirty && secodeValid }" -->
+          <div class="invalid-feedback" *ngIf="form.submitted && code.invalid || model.code == '' && code.touched ">
             Porfavor escriba un codigo.
           </div>
-          <div class="valid-feedback" *ngIf="codeValid ">
+          <div class="valid-feedback" *ngIf="codeValid">
             Codigo valido.
           </div>
           <div class="invalid-feedback" *ngIf="code.invalid && code.dirty && model.code != ''">
@@ -73,11 +74,28 @@
         <!-- <label for="">Secuencia</label> -->
         <div class="form-group col-md-4">
           <div class="custom-control custom-radio custom-control-inline">
-            <input [disabled] ="!codeValid" type="radio" id="customRadio1" name="sequence" class="custom-control-input" value="true" (change)="checkSequence(sequence.value)" ngModel #sequence="ngModel">
+            <input [disabled] ="!codeValid"
+            type="radio" id="customRadio1"
+            name="sequence"
+            class="custom-control-input"
+            [value]="true"
+            (change)="checkSequence(sequence.value)"
+            [(ngModel)]="radio"
+            #sequence="ngModel">
             <label class="custom-control-label" for="customRadio1">Secuencia</label>
          </div>
+         <!-- radio without squence -->
          <div class="custom-control custom-radio custom-control-inline">
-           <input type="radio" id="customRadio2" name="sequence" class="custom-control-input" value="false" (change)="checkSequence(sequence.value)" ngModel #sequence="ngModel">
+           <input type="radio"
+           id="customRadio2"
+           name="sequence"
+           class="custom-control-input"
+           [value]="false"
+           (change)="checkSequence(sequence.value)"
+           [(ngModel)]="radio"
+           #sequence="ngModel"
+           checked
+           >
            <label class="custom-control-label" for="customRadio2">Sin secuencia</label>
          </div>
         </div>
@@ -104,7 +122,7 @@
             [(ngModel)]="subjects.code"
             #codeSq="ngModel"
             (focusout)="validateCodeSc(codeSq.value)"
-            (keypress)="addCharater(codeSq)"
+            (keypress)="addCharaterSq(codeSq.value)"
             [ngClass]="{'is-invalid':formSq.submitted && codeSq.invalid && subjects.code != null  || subjects.code == '' && codeSq.dirty ||  !secodeValid ,
             'is-valid': codeSq.valid && codeSq.dirty && secodeValid }"
             required>

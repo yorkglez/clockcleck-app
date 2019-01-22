@@ -11,8 +11,8 @@ import { HelpersService } from '../../../../services/helpers.service';
         ]
 })
 export class CreateSubjectComponent implements OnInit {
-  model = {}
-  subjects = {}
+  model = {"code":''}
+  subjects = {"code":''}
   subjectsList = []
   idx: number
   isSequence: boolean = true
@@ -24,6 +24,7 @@ export class CreateSubjectComponent implements OnInit {
   secCode: string = '';
   type: string
   message: string
+  radio
   constructor(private _subjectsService: SubjectsService,
               private _helpersService: HelpersService,) { }
 
@@ -41,7 +42,7 @@ export class CreateSubjectComponent implements OnInit {
           this.message = 'La materia se ha guardado correctamente.'
           form.resetForm()
           this.subjectsList = []
-          this.model = {}
+          this.model = {"code":''}
           this.isSequence = false
         }else{
           this.type  = "error"
@@ -55,7 +56,7 @@ export class CreateSubjectComponent implements OnInit {
     }
   }
   checkSequence(sequence){
-
+    console.log(this.radio)
     if (sequence == 'true' && (this.model['code'] != undefined  && this.model['name'] != undefined && this.model['credits'] != undefined)) {
       this.subjectsList.push(this.model)
       this.isSequence = true
@@ -65,7 +66,7 @@ export class CreateSubjectComponent implements OnInit {
   }
   addSubject(){
     this.subjectsList.push(this.subjects)
-    this.subjects = {}
+    this.subjects = {"code":''}
   }
   deleteItem(idx){
     this.subjectsList.splice(this.subjectsList.indexOf(idx),1)
@@ -82,14 +83,16 @@ export class CreateSubjectComponent implements OnInit {
     this.subjectsList[idx].code = this.subjects['code']
     this.subjectsList[idx].name = this.subjects['name']
     this.subjectsList[idx].credits = this.subjects['credits']
-    this.subjects = {}
+    this.subjects = {"code":''}
     this.updateItems = false
   }
   addCharater(code){
-    console.log(code.name)
-    // code.value = 'hola'
-    // if(code.length == 3)
-    //   this.model['code'] = code + '-'
+    if(code.length == 3)
+      this.model['code'] = code + '-'
+  }
+  addCharaterSq(code){
+    if(code.length == 3)
+      this.subjects['code'] = code + '-'
   }
   validateCode(code){
       this.code = code
@@ -144,6 +147,4 @@ export class CreateSubjectComponent implements OnInit {
     else
       this.secodeValid = false
   }
-
-
 }

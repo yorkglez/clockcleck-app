@@ -27,39 +27,43 @@
       $stmt = $this->connect()->prepare($sql);
       $stmt->bindParam(':code',$code,PDO::PARAM_STR);
       $stmt->execute();
-
-      $this->config = $stmt->fetch(PDO::FETCH_ASSOC);
-      $this->closeConnection();
-    //  print_r($this->config);
-      $startTime = strtotime($this->config['startTime']);
-      $endTime = strtotime($this->config['endTime']);
-      $durationModule = $this->config['durationModule'];
-      $sbreakTime = $this->config['sbreakTime'];
-      $durationBreak = $this->config['durationBreak'];
-      $modules = (round(abs($endTime - $startTime) / 60) - $durationBreak) / $durationModule;
-      for ($i=0; $i <$modules+1 ; $i++) {
-        if(date("H:i",$startTime) ==  $sbreakTime){
-          $endTime =  date("H:i", strtotime('+'.$durationBreak.' minutes', $startTime));
-          $this->breakTime = ($i);
+      if($stmt->rowCount() > 0){
+        $this->config = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->closeConnection();
+      //  print_r($this->config);
+        $startTime = strtotime($this->config['startTime']);
+        $endTime = strtotime($this->config['endTime']);
+        $durationModule = $this->config['durationModule'];
+        $sbreakTime = $this->config['sbreakTime'];
+        $durationBreak = $this->config['durationBreak'];
+        $modules = (round(abs($endTime - $startTime) / 60) - $durationBreak) / $durationModule;
+        for ($i=0; $i <$modules+1 ; $i++) {
+          if(date("H:i",$startTime) ==  $sbreakTime){
+            $endTime =  date("H:i", strtotime('+'.$durationBreak.' minutes', $startTime));
+            $this->breakTime = ($i);
+          }
+          else
+            $endTime =  date("H:i", strtotime('+'.$durationModule.' minutes', $startTime));
+          if($startTime < strtotime('12:00'))
+            $tm = ' AM';
+          else
+            $tm = ' PM';
+          if($startTime < strtotime('10:00'))
+            $st = substr(date("H:i",$startTime),1);
+          else if(strtotime($endTime) < strtotime('10:00'))
+            $et = substr($endTime,1);
+          else
+            $st = date("H:i",$startTime);
+          $et = $endTime;
+          $hours[] = $st.$tm.' - '.$endTime.$tm;
+          $startTime =  strtotime($endTime);
         }
-        else
-          $endTime =  date("H:i", strtotime('+'.$durationModule.' minutes', $startTime));
-        if($startTime < strtotime('12:00'))
-          $tm = ' AM';
-        else
-          $tm = ' PM';
-        if($startTime < strtotime('10:00'))
-          $st = substr(date("H:i",$startTime),1);
-        else if(strtotime($endTime) < strtotime('10:00'))
-          $et = substr($endTime,1);
-        else
-          $st = date("H:i",$startTime);
-        $et = $endTime;
-        $hours[] = $st.$tm.' - '.$endTime.$tm;
-        $startTime =  strtotime($endTime);
+        $array['hours'] = $hours;
+        $array['breakTime'] = $this->breakTime;
       }
-      $array['hours'] = $hours;
-      $array['breakTime'] = $this->breakTime;
+      else
+        $array = false;
+
       return json_encode($array);
     }
     /**

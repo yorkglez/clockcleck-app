@@ -35,7 +35,7 @@
   </form>
   <!-- alerts -->
   <div class="alert alert-info" role="alert" *ngIf="extensions.length == 0 && !searchAlert">
-    No hay registros en la base de datos.
+    <i class="fas fa-info-circle"></i> No hay registros en la base de datos.
   </div>
   <div class="alert alert-info" role="alert" *ngIf="searchAlert">
       <i class="fas fa-info-circle"></i> No se encontraron resultados con el termino: <b>{{ter}}</b>
