@@ -3,7 +3,8 @@
   border-right: 1px solid rgba(128, 128, 128, 0.4); }
 
 td {
-  border-right: 1px solid rgba(128, 128, 128, 0.4); }
+  border-right: 1px solid rgba(128, 128, 128, 0.4);
+  text-align: center; }
 
 .td-break {
   text-align: center; }

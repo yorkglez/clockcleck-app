@@ -16,7 +16,7 @@
         type="search"
         placeholder="Buscar..."
         aria-label="Search"
-        (keyup.enter)="searchUser(searchText.value,type.value)"
+        (keypress)="searchUser(searchText.value,type.value)"
         #searchText>
         <button class="btn-clear" (click)="searchText.value = ''; searchUser(searchText.value,type.value)">
          <i class="fa fa-times"></i>

@@ -13,7 +13,7 @@
         type="search"
         placeholder="Buscar..."
         aria-label="Search"
-        (keyup.enter)="Search(searchText.value,extension.value)"
+        (keypress)="Search(searchText.value,extension.value)"
         #searchText>
         <button class="btn-clear" (click)="searchText.value = ''; Search(searchText.value,extension.value)">
          <i class="fa fa-times"></i>

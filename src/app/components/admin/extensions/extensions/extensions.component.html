@@ -15,7 +15,7 @@
         <input class="form-control"
         type="search" placeholder="Buscar..."
         aria-label="Search"
-        (keyup.enter)="Search(searchText.value,type.value)"
+        (keypress)="Search(searchText.value,type.value)"
         #searchText>
         <button class="btn-clear" (click)="searchText.value = ''; Search(searchText.value,type.value)">
          <i class="fa fa-times"></i>
