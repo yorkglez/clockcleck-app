@@ -9,8 +9,6 @@ import {HttpClientModule} from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule} from '@angular/forms';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
-import { AdminComponent } from './components/admin/admin/admin.component';
-import { HomeComponent } from './components/admin/home/home.component';
 import { AuthService } from './services/auth.service';
 
 /*guards*/
@@ -73,8 +71,6 @@ import { LoaderComponent } from './components/shared/loader/loader.component';
   declarations: [
     AppComponent,
     LoginComponent,
-    AdminComponent,
-    HomeComponent,
     NavadminComponent,
     LogoutComponent,
     UsersComponent,
@@ -125,10 +121,7 @@ import { LoaderComponent } from './components/shared/loader/loader.component';
     PopoverModule,
     // BrowserAnimationsModule,
     // ToastModule.forRoot(),
-    RouterModule.forRoot([{
-      path:'hom',
-      component: HomeComponent
-    },
+    RouterModule.forRoot([
     {
       path:'login',
       component: LoginComponent,
@@ -137,11 +130,6 @@ import { LoaderComponent } from './components/shared/loader/loader.component';
     {
       path:'logout',
       component: LogoutComponent
-    },
-    {
-      path:'homeadmin',
-      component: AdminComponent,
-      // canActivate: [AuthGuard]
     },
     //Admin
     {

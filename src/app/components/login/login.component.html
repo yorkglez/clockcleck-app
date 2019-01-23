@@ -6,7 +6,8 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand">
-      Control de asistencias
+      <span>Control de asistencias</span>
+      <span>Administrador</span>
     </a>
     <div class="collapse navbar-collapse" id="navbarNav">
 
@@ -14,54 +15,60 @@
     <span>Create by york</span>
   </nav>
 </header>
+<!-- container -->
 <div class="login-container">
-  <div class="header">
-    <img src="assets/images/logocc.png" alt="logo">
-  </div>
-  <div class="body">
-    <h1>Iniciar sesión</h1>
-    <form  (ngSubmit)="loginUser()" #form="ngForm">
-      <!-- input email -->
-      <div class="row col-md-10 mx-auto form-group" >
-        <label for="email">Email</label>
-        <!-- <div class="icon"><i class="fas fa-user"></i></div> -->
-        <input type="email"
-        class="form-control log-invalid"
-        name="email"
-        aria-describedby="emailHelp"
-        [(ngModel)]="model.email"
-        #email="ngModel"
-        [ngClass]="{'is-invalid':form.submitted && email.invalid,'log-invalid': form.submitted && email.invalid}" required>
-        <div class="invalid-feedback">
-          Porfavor escriba su email.
-        </div>
-        <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-      </div>
-      <!-- input password -->
-      <div class="row col-md-10 mx-auto form-group">
-        <label for="exampleInputPassword1">Contraseña</label>
-        <input type="password"
-        class="form-control"
-        name="password"
-        [(ngModel)]="model.password"
-        #password="ngModel"
-        [ngClass]="{'is-invalid':form.submitted && password.invalid}"
-        required>
-        <div class="invalid-feedback">
-          Porfavor escriba su contraseña.
-        </div>
-      </div>
-      <!-- forgot password -->
-      <div class="forgot-container row col-md-10 mx-auto form-group">
-        <a routerLink="/forgotpassword">Olvidaste tu contraseña?</a>
-      </div>
-      <div class="error row col-md-10 mx-auto"  *ngIf="isError">No se pudo iniciar sesion, verifique su email o contrasena.</div>
-      <div class="row">
-        <div class="col-md-6 mx-auto">
-            <button type="" class="btn-login btn-lg btn-block btnlogin form-control btn btn-danger">Acceder</button>
-        </div>
+  <!-- content -->
+  <div class="login-content">
+    <!-- header -->
+    <div class="header">
+      <img src="assets/images/logocc.png" alt="logo">
     </div>
-    </form>
+    <!-- body -->
+    <div class="body">
+      <h1>Iniciar sesión</h1>
+      <!-- form -->
+      <form  (ngSubmit)="loginUser()" #form="ngForm">
+        <!-- input email -->
+        <div class="row col-md-10 mx-auto form-group" >
+          <label for="email">Email</label>
+          <!-- <div class="icon"><i class="fas fa-user"></i></div> -->
+          <input type="email"
+          class="form-control log-invalid"
+          name="email"
+          aria-describedby="emailHelp"
+          [(ngModel)]="model.email"
+          #email="ngModel"
+          [ngClass]="{'is-invalid':form.submitted && email.invalid,'log-invalid': form.submitted && email.invalid}" required>
+          <div class="invalid-feedback">
+            Porfavor escriba su email.
+          </div>
+          <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+        </div>
+        <!-- input password -->
+        <div class="row col-md-10 mx-auto form-group">
+          <label for="exampleInputPassword1">Contraseña</label>
+          <input type="password"
+          class="form-control"
+          name="password"
+          [(ngModel)]="model.password"
+          #password="ngModel"
+          [ngClass]="{'is-invalid':form.submitted && password.invalid}"
+          required>
+          <div class="invalid-feedback">
+            Porfavor escriba su contraseña.
+          </div>
+        </div>
+        <!-- forgot password -->
+        <div class="forgot-container row col-md-10 mx-auto form-group">
+          <a routerLink="/forgotpassword">Olvidaste tu contraseña?</a>
+        </div>
+        <div class="error row col-md-10 mx-auto"  *ngIf="isError">No se pudo iniciar sesion, verifique su email o contraseña.</div>
+        <div class="row">
+          <div class="col-md-6 mx-auto">
+              <button type="" class="btn-login btn-lg btn-block btnlogin form-control btn btn-danger">Acceder</button>
+          </div>
+      </div>
+      </form>
+    </div>
   </div>
-
 </div>

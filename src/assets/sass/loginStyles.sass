@@ -13,6 +13,7 @@ $borderColor: #292929
 //   background: pink
 
 
+
 header
   position: absolute
   width: 100%
@@ -36,6 +37,14 @@ header
   color: white
 
 .login-container
+  // display: flex
+  // justify-content: center
+  // align-items: center
+  // width: 900px
+  // height: 100%
+  // background: red
+
+.login-content
   position: relative
   background-color: rgba(#fff,0.85)
   border: 1px solid rgba(black,0.3)
@@ -43,8 +52,8 @@ header
   box-shadow: 10px 5px 5px rgba(gray,0.5)
   width: 550px
   height: auto
-  margin: auto
-  top: 100px
+  top: 150px
+  right: 50px
   .header
     position: relative
     display: flex
@@ -62,11 +71,13 @@ header
     padding: 10px 0px
     .btn-login
       height: 50px
-    h1
+    .title-login
       text-align: center
       color: $backColor
       font-weight: 500
       font-family: $font
+      // span
+      //   font-size: 30px
     input
       height: 40px
       border: none
@@ -93,3 +104,7 @@ header
     position: absolute
     bottom: 0
     margin-left: 5px
+
+footer
+  background: red
+  display: none

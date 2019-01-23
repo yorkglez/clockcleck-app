@@ -1,7 +1,7 @@
 body {
   overflow-x: hidden; }
 
-#wrapper {
+#wrapper.dropdown {
   padding-left: 50px;
   -webkit-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
@@ -9,6 +9,9 @@ body {
 
 #wrapper.toggled {
   padding-left: 300px; }
+
+#wrapper {
+  padding-left: 0; }
 
 .sidemenu .user-container {
   display: none; }

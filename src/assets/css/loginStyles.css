@@ -26,7 +26,7 @@ header {
   height: 50px;
   color: white; }
 
-.login-container {
+.login-content {
   position: relative;
   background-color: rgba(255, 255, 255, 0.85);
   border: 1px solid rgba(0, 0, 0, 0.3);
@@ -35,9 +35,9 @@ header {
   box-shadow: 10px 5px 5px rgba(128, 128, 128, 0.5);
   width: 550px;
   height: auto;
-  margin: auto;
-  top: 100px; }
-  .login-container .header {
+  top: 150px;
+  right: 50px; }
+  .login-content .header {
     position: relative;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -52,31 +52,31 @@ header {
     height: 120px;
     background-color: #d11141;
     border-radius: 8px 8px 0 0; }
-    .login-container .header img {
+    .login-content .header img {
       position: absolute;
       top: -40px;
       width: 160px; }
-  .login-container .body {
+  .login-content .body {
     padding: 10px 0px; }
-    .login-container .body .btn-login {
+    .login-content .body .btn-login {
       height: 50px; }
-    .login-container .body h1 {
+    .login-content .body .title-login {
       text-align: center;
       color: #d11141;
       font-weight: 500;
       font-family: "Roboto", sans-serif; }
-    .login-container .body input {
+    .login-content .body input {
       height: 40px;
       border: none;
       border-bottom: 2px solid gray;
       border-radius: 0; }
-      .login-container .body input:focus {
+      .login-content .body input:focus {
         border-color: #d11141;
         -webkit-box-shadow: none;
         box-shadow: none; }
-    .login-container .body label {
+    .login-content .body label {
       font-weight: 600; }
-    .login-container .body .forgot-container {
+    .login-content .body .forgot-container {
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;
@@ -86,7 +86,7 @@ header {
       -webkit-box-align: center;
       -ms-flex-align: center;
       align-items: center; }
-      .login-container .body .forgot-container a {
+      .login-content .body .forgot-container a {
         width: auto; }
 
 .form-group {
@@ -95,3 +95,7 @@ header {
     position: absolute;
     bottom: 0;
     margin-left: 5px; }
+
+footer {
+  background: red;
+  display: none; }

@@ -12,7 +12,8 @@ import {
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css','../assets/css/sidebarStyles.css']
+  styleUrls: ['./app.component.css',
+  '../assets/css/sidebarStyles.css']
  //  animations: [
  //   // animation triggers go here
  // ]
@@ -38,6 +39,7 @@ export class AppComponent  implements OnInit {
       this.sidebar = false
     if(type == 'admin')
       this.admin = true
+    // this.sidebar = true
   }
   ngOnInit(){
 

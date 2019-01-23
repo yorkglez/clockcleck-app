@@ -1,5 +1,5 @@
-<div id="wrapper"  [ngClass]="{toggled: showSidebar}">
-
+<div id="wrapper" class="hide-wrapper"   [ngClass]="{toggled: showSidebar, 'dropdown': !showSidebar && sidebar}">
+  <!-- sidebar -->
   <div id="sidebar-wrapper" class="side side-sticky shift" [ngClass]="{sidemenu: !showSidebar && sidebar}"   *ngIf="sidebar">
     <!-- sidebar -->
     <ul class="sidebar-nav">
@@ -111,32 +111,22 @@
       </li>
     </ul>
   </div>
-
-  <div class="page-content" >
+  <!-- content -->
+  <div class="page-content">
+    <!-- container -->
     <div class="container-fluid ">
       <router-outlet  (activate)='onActivate()'></router-outlet>
-
     </div>
-
+    <!-- Footer -->
+    <footer class="page-footer">
+      <!-- Items -->
+      <ul class="footer-nav">
+        <li class="footer-item"><span>Clock Check </span>© {{date| date:'yyyy'}}</li>
+        <li class="footer-item">Desarrollado por: <a href=""> Malastareas</a></li>
+      </ul>
+    </footer>
   </div>
-
   <!-- <button  *ngIf="sidebar && !showSidebar" (click)="toggledSidebar()" class="btn-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <i class="fas fa-bars"></i>
   </button> -->
-
 </div>
-<!-- Footer -->
-<footer class="page-footer">
-  <!-- Copyright -->
-  <ul class="footer-nav">
-    <li class="footer-item"><span>Clock Check </span>© {{date| date:'yyyy'}}</li>
-    <li class="footer-item">Desarrollado por: <a href=""> Malastareas</a></li>
-  </ul>
-  <!-- <div class="footer-copyright text-center py-3">
-    Clock Check © {{date| date:'yyyy'}}
-  </div>
-  <div>
-      Desarrollado por:
-      <a href="https://mdbootstrap.com/education/bootstrap/"> Malastareas</a>
-  </div> -->
-</footer>

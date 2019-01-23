@@ -8,11 +8,13 @@ $backColor: #d11141
 $borderColor: #292929
 
 header
-  position: absolute
+  position: fixed
+  z-index: 10000
   width: 100%
   top: 0
   left: 0
   background-color: white
+  box-sizing: border-box
 //  padding-bottom: 800px
 
 .nav-scroll
@@ -28,10 +30,9 @@ header
     width: 50%
     height: 100%
 .navbar
-  position: fixed
-  z-index: 9999
-  background-color: $backColor
-  border-bottom: 1px solid rgba($borderColor,0.3)
+  background-color: rgba($backColor,0.95)
+  // border-bottom: 1px solid rgba($borderColor,0.3)
+  border-bottom: 1px solid rgba(black,0.4)
   box-sizing: border-box
   //position: relative
   height: 50px

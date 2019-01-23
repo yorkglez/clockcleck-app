@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['../../../assets/css/loginStyles.css','../../../assets/css/navbarStyles.css']
+  styleUrls: ['../../../assets/css/loginStyles.css']
 })
 export class LoginComponent implements OnInit {
   model= {}
