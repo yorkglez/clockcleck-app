@@ -9,7 +9,7 @@
 .container-fluid{
   padding: 0;
   margin: 0;
-  height: auto;
+  /* height: auto; */
   width: 100%;
 }
 /* Animations */
