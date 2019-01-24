@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-loginteacher',
@@ -10,7 +11,12 @@ import { AuthService } from '../../../services/auth.service';
 export class LoginteacherComponent implements OnInit {
   model= {}
   error: boolean = false
-  constructor(private _authService: AuthService, private router: Router) { }
+  constructor(private _authService: AuthService,
+              private router: Router,
+              private _titleService: Title
+              ) {
+               this._titleService.setTitle('Iniciar sesion docente')
+              }
 
   ngOnInit() {
     this._authService.isLoggedIn().subscribe(resp=> {

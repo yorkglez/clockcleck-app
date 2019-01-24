@@ -5,6 +5,7 @@ import { CarersService } from '../../../../services/carers.service';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HelpersService } from '../../../../services/helpers.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-edit-carers',
@@ -20,7 +21,10 @@ export class EditCarersComponent implements OnInit {
               private activatedRoute:ActivatedRoute,
               private _carersService: CarersService,
               private _helpersService: HelpersService,
-              private router: Router) { }
+              private router: Router,
+              private _titleService: Title) {
+                this._titleService.setTitle('Editar carrera')
+               }
 
   ngOnInit() {
       this._extensionsService.getExtension().subscribe(data=>{this.extensions = data})

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SubjectsService } from '../../../../services/subjects.service';
 import { Router } from '@angular/router';
 import { LoaderService } from '../../../../services/loader.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-subjects',
@@ -26,7 +27,10 @@ export class SubjectsComponent implements OnInit {
   // itemsPerPage: number = 10
   constructor(private _subjectsService: SubjectsService,
     private router: Router,
-    private _loaderService: LoaderService) { }
+    private _loaderService: LoaderService,
+    private _titleService: Title ) {
+      this._titleService.setTitle('Materias')
+    }
 
   ngOnInit() {
     this.getSubjects('1','')

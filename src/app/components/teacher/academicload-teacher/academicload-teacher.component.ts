@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { NgSelectConfig } from '@ng-select/ng-select';
 import { SubjectsService, SubjectList } from '../../../services/subjects.service';
 import { CarersService } from '../../../services/carers.service';
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-academicload-teacher',
   templateUrl: './academicload-teacher.component.html',
@@ -35,7 +36,10 @@ export class AcademicloadTeacherComponent implements OnInit {
       private _academicloadService: AcademicloadTeacherService,
       private _subjectsService: SubjectsService,
       private _carersService: CarersService,
-    ) {
+      private _titleService: Title
+    )
+    {
+      this._titleService.setTitle('Carga horaria')
       this.config.notFoundText = 'No se encontraron resultados';
      }
 

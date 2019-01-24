@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ScheduleService,Hour,Schedule, Sc } from '../../../services/schedule.service';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -20,7 +21,10 @@ export class ScheduleTeacherComponent implements OnInit {
   jueves  = []
   viernes  = []
   bTime: number
-  constructor(private _scheduleService: ScheduleService) { }
+  constructor(private _scheduleService: ScheduleService,
+              private _titleService: Title) {
+                this._titleService.setTitle('Horario')
+  }
 
   ngOnInit() {
     this._scheduleService.getScheduleConfig('1414').subscribe(data=>{

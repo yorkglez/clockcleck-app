@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { UserService ,Porfile } from '../../../services/user.service';
 import { HelpersService } from '../../../services/helpers.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-porfile',
@@ -24,7 +25,10 @@ export class PorfileComponent implements OnInit {
 
   constructor(private _authService: AuthService,
     private _userService: UserService,
-    private _helpersService: HelpersService) { }
+    private _helpersService: HelpersService,
+    private _titleService: Title) {
+      this._titleService.setTitle('Perfil')
+    }
 
   ngOnInit() {
     this._userService.getPorfile().subscribe(data=>{

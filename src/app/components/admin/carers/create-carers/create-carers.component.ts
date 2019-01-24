@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { ExtensionsService } from '../../../../services/extensions.service';
 import { CarersService } from '../../../../services/carers.service';
 import { HelpersService } from '../../../../services/helpers.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-create-carers',
@@ -21,8 +22,10 @@ export class CreateCarersComponent implements OnInit {
   constructor(private http: HttpClient,
               private _carersService: CarersService,
               private _extensionsService: ExtensionsService,
-              private _helpersService: HelpersService
-    ) { }
+              private _helpersService: HelpersService,
+              private _titleService: Title) {
+                this._titleService.setTitle('Nueva carrera')
+              }
 
   ngOnInit() {
     this._extensionsService.getExtension().subscribe(data=>{this.extensions = data})

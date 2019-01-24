@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title }     from '@angular/platform-browser';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
 import {
@@ -25,10 +26,18 @@ export class AppComponent  implements OnInit {
   sidebar: boolean = false
   admin: boolean = false
   date = new Date()
-  constructor(private _authService: AuthService, private router: Router){
+  constructor(private _authService: AuthService,
+              private _titleService: Title,
+              private router: Router){
 
   }
+
+  public setTitle( newTitle: string) {
+    this._titleService.setTitle( newTitle );
+  }
+
   onActivate() {
+    this.title = 'hello World!'
     // console.log(localStorage)
     this.username = localStorage.getItem('username')
     let type = localStorage.getItem('type')

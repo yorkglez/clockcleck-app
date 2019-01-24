@@ -5,12 +5,15 @@
   <!-- menu -->
   <form class="options-panel">
     <div class="form-row align-items-end">
+      <!-- title -->
       <div class= "form-group col-sm-12 col-12 col-md-auto">
           <h1 class="title">Usuarios</h1>
       </div>
+      <!-- new user -->
       <div class="form-group col-12 col-sm-auto col-md-auto">
         <button class="btn btn-success col-sd-2" routerLink="/createuser"><i class="fas fa-user-plus"></i> Nuevo usuario</button>
       </div>
+      <!-- search -->
       <div class="form-group col-8 col-sm-5 col-md-auto search-container">
         <input class="btn-search form-control mr-sm-2"
         type="search"
@@ -22,6 +25,7 @@
          <i class="fa fa-times"></i>
        </button>
       </div>
+      <!-- buton search -->
       <div class="form-group">
         <button class="btn btn-primary my-2 my-sm-0" (click)="searchUser(searchText.value,type.value)"><i class="fas fa-search"></i></button>
       </div>

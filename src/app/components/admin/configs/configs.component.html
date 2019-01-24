@@ -10,84 +10,114 @@
     <!-- alerts -->
     <app-alerts [type]="type" [message]= "message" [alertVisible]="alertisVisible"  ></app-alerts>
     <!-- table -->
-    <table class="table table-sm table-striped">
-      <tbody>
-        <tr>
-          <th>Hora de entrada</th>
-          <td *ngIf="!isEditable">{{configData.startTime}}</td>
-          <td *ngIf="isEditable">
-            <input type="time"
-            class="form-control"
-            name="startTime"
-            ngModel [(ngModel)]="data.startTime"
-            #startTime="ngModel"
-          >
-          </td>
-        </tr>
-        <tr>
-          <th>Hora de salidad</th>
-          <td *ngIf="!isEditable">{{configData.endTime}}</td>
-          <td *ngIf="isEditable">
-            <input type="time"
-            class="form-control"
-            ngModel [(ngModel)]="data.endTime"
-            name="endTime"
-            #endTime="ngModel"
-            >
-          </td>
-        </tr>
-        <tr>
-          <th>Duraccion de modulos</th>
-          <td *ngIf="!isEditable">{{configData.durationModule}} minutos</td>
-          <td *ngIf="isEditable">
-            <input type="number"
-            pattern="[0-9]{2}"
-            maxlength="2"
-            class="form-control"
-            name="durationModule"
-            ngModel [(ngModel)]="data.durationModule"
-            #durationModule="ngModel">
-          </td>
-        </tr>
-        <tr>
-          <th>Inicio de receso</th>
-          <td *ngIf="!isEditable">{{configData.sbreakTime}}</td>
-          <td *ngIf="isEditable">
-            <input type="time"
-            class="form-control"
-            maxlength="5"
-            ngModel [(ngModel)]="data.sbreakTime"
-            name="sbreakTime"
-            #sbreakTime="ngModel">
-          </td>
-        </tr>
-        <tr>
-          <th>Fin de receso</th>
-          <td *ngIf="!isEditable">{{configData.ebreakTime}}</td>
-          <td *ngIf="isEditable">
-            <input type="time"
-            class="form-control"
-            maxlength="5"
-            name="ebreakTime"
-            ngModel [(ngModel)]="data.ebreakTime"
-            #ebreakTime="ngModel">
-          </td>
-        </tr>
-        <tr>
-          <th>Duraccion de receso</th>
-          <td *ngIf="!isEditable">{{configData.durationBreak}} minutos</td>
-          <td *ngIf="isEditable">
-            <input type="number"
-            class="form-control"
-            pattern="[0-9]{2}"
-            maxlength="2"
-            name="durationBreak"
-            ngModel [(ngModel)]="data.durationBreak"
-            #durationBreak="ngModel">
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-container">
+      <table class="table table-sm">
+        <tbody>
+          <tr>
+            <th>Hora de entrada</th>
+            <td *ngIf="!isEditable">{{configData.startTime}}</td>
+            <td *ngIf="isEditable" class="form-editable">
+              <!-- input startTime -->
+              <input type="time"
+              class="form-control"
+              name="startTime"
+              ngModel [(ngModel)]="data.startTime"
+              #startTime="ngModel">
+              <!-- icon editable -->
+              <div class="edit-icon">
+                <i *ngIf="isEditable" class="fas fa-edit"></i>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>Hora de salidad</th>
+            <td *ngIf="!isEditable">{{configData.endTime}}</td>
+            <td *ngIf="isEditable" class="form-editable">
+              <!-- input endTime -->
+              <input type="time"
+              class="form-control"
+              ngModel [(ngModel)]="data.endTime"
+              name="endTime"
+              #endTime="ngModel">
+              <!-- icon editable -->
+              <div class="edit-icon">
+                <i *ngIf="isEditable" class="fas fa-edit"></i>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>Duraccion de modulos</th>
+            <td *ngIf="!isEditable">{{configData.durationModule}} minutos</td>
+            <td *ngIf="isEditable" class="form-editable">
+              <!-- input durationModule -->
+              <input type="number"
+              pattern="[0-9]{2}"
+              maxlength="2"
+              class="form-control"
+              name="durationModule"
+              ngModel [(ngModel)]="data.durationModule"
+              #durationModule="ngModel">
+              <!-- icon editable -->
+              <div class="edit-icon">
+                <i *ngIf="isEditable" class="fas fa-edit"></i>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>Inicio de receso</th>
+            <td *ngIf="!isEditable">{{configData.sbreakTime}}</td>
+            <td *ngIf="isEditable" class="form-editable">
+              <!-- input sbreakTime -->
+              <input type="time"
+              class="form-control"
+              maxlength="5"
+              ngModel [(ngModel)]="data.sbreakTime"
+              name="sbreakTime"
+              #sbreakTime="ngModel">
+              <!-- icon editable -->
+              <div class="edit-icon">
+                <i *ngIf="isEditable" class="fas fa-edit"></i>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>Fin de receso</th>
+            <td *ngIf="!isEditable">{{configData.ebreakTime}}</td>
+            <td *ngIf="isEditable" class="form-editable">
+              <!-- input ebreakTime -->
+              <input type="time"
+              class="form-control"
+              maxlength="5"
+              name="ebreakTime"
+              ngModel [(ngModel)]="data.ebreakTime"
+              #ebreakTime="ngModel">
+              <!-- icon editable -->
+              <div class="edit-icon">
+                <i *ngIf="isEditable" class="fas fa-edit"></i>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>Duraccion de receso</th>
+            <td *ngIf="!isEditable">{{configData.durationBreak}} minutos</td>
+            <td *ngIf="isEditable" class="form-editable">
+              <!-- input durationBreak -->
+              <input type="number"
+              class="form-control"
+              pattern="[0-9]{2}"
+              maxlength="2"
+              name="durationBreak"
+              ngModel [(ngModel)]="data.durationBreak"
+              #durationBreak="ngModel">
+              <!-- icon editable -->
+              <div class="edit-icon">
+                <i *ngIf="isEditable" class="fas fa-edit"></i>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <!-- buttons -->
     <div class="form-row">
       <div class="col-md-auto mb-2">

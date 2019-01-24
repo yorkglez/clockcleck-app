@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { TeachersService } from '../../../../services/teachers.service';
 import { NgForm } from '@angular/forms';
 import { HelpersService } from '../../../../services/helpers.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-edit-teacher',
@@ -23,7 +24,10 @@ export class EditTeacherComponent implements OnInit {
               private _teachersService: TeachersService,
               private activatedRoute:ActivatedRoute,
               private _helpersService: HelpersService,
-              private router: Router) { }
+              private router: Router,
+              private _titleService: Title) {
+                this._titleService.setTitle('Editar docente')
+              }
 
   ngOnInit() {
     this._extensionsService.getExtension().subscribe(data=>{this.extensions = data})

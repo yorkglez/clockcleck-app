@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfigService, Config } from '../../../services/config.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-configs',
   templateUrl: './configs.component.html',
-  styleUrls:['../../../../assets/css/panelStyles.css']
+  styleUrls:['../../../../assets/css/panelStyles.css',
+              '../../../../assets/css/porfileStyles.css'
+]
 })
 export class ConfigsComponent implements OnInit {
   configData:any = []
@@ -18,7 +21,10 @@ export class ConfigsComponent implements OnInit {
   alertisVisible: boolean = false
   type: string
   message: string
-  constructor(private _configService: ConfigService) { }
+  constructor(private _configService: ConfigService,
+              private _titleService: Title) {
+                this._titleService.setTitle('Configuracion')
+   }
 
   ngOnInit() {
     this.getData()

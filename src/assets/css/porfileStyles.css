@@ -32,6 +32,7 @@
     box-shadow: none;
     border: none; }
   .table-container table tr .form-control {
+    background: none;
     border: none;
     margin: 0;
     padding: 0;

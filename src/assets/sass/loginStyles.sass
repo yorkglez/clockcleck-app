@@ -12,8 +12,6 @@ $borderColor: #292929
 // .page-content
 //   background: pink
 
-
-
 header
   position: absolute
   width: 100%
@@ -35,6 +33,12 @@ header
   position: relative
   height: 50px
   color: white
+  .createby
+    font-weight: 500
+    a
+      color: white
+      font-weight: 600
+      text-decoration: none
 
 .login-container
   // display: flex
@@ -46,8 +50,8 @@ header
 
 .login-content
   position: relative
-  background-color: rgba(#fff,0.85)
-  border: 1px solid rgba(black,0.3)
+  background-color: #fff
+  border: 1px solid rgba(black,0.4)
   border-radius: 8px
   box-shadow: 10px 5px 5px rgba(gray,0.5)
   width: 550px
@@ -79,6 +83,7 @@ header
       // span
       //   font-size: 30px
     input
+      background: none
       height: 40px
       border: none
       border-bottom: 2px solid gray
@@ -106,5 +111,4 @@ header
     margin-left: 5px
 
 footer
-  background: red
   display: none

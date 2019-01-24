@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title }     from '@angular/platform-browser';
 import { UsersService } from '../../../../services/users.service';
 import { Router } from '@angular/router';
 import { LoaderService } from '../../../../services/loader.service';
@@ -27,8 +28,11 @@ export class UsersComponent implements OnInit {
   alertisVisible: boolean = false
 
   constructor(private _usersService: UsersService,
-    private _loaderService: LoaderService,
-    private router: Router) { }
+              private _loaderService: LoaderService,
+              private _titleService: Title,
+              private router: Router) {
+                this._titleService.setTitle('Usuarios')
+              }
 
 
   ngOnInit() {
@@ -47,7 +51,7 @@ export class UsersComponent implements OnInit {
       }
     })
   }
-  //* functions *//
+
   getId(user){
     this.user = user;
   }

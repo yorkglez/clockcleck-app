@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ExtensionsService } from '../../../../services/extensions.service';
 import { Router } from '@angular/router';
 import { LoaderService } from '../../../../services/loader.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-extensions',
@@ -22,7 +23,10 @@ export class ExtensionsComponent implements OnInit {
   itemsPerPage: number = 10
   constructor(private _extensionsService: ExtensionsService,
      private router: Router,
-     private _loaderService: LoaderService) { }
+     private _loaderService: LoaderService,
+     private _titleService: Title) {
+       this._titleService.setTitle('Extensiones')
+      }
 
   ngOnInit() {
    this._loaderService.display(true)

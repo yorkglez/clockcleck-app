@@ -4,6 +4,7 @@ import { SubjectsService } from '../../../../services/subjects.service';
 import { Router } from '@angular/router';
 import { HelpersService } from '../../../../services/helpers.service';
 import { NgForm } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-edit-subject',
@@ -31,7 +32,10 @@ export class EditSubjectComponent implements OnInit {
   constructor(private _subjectsService: SubjectsService,
               private activatedRoute:ActivatedRoute,
               private _helpersService: HelpersService,
-              private router: Router) { }
+              private router: Router,
+              private _titleService: Title) {
+                this._titleService.setTitle('Ediar materia')
+              }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe( params => {

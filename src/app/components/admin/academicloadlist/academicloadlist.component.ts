@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AcademicloadTeacherService } from '../../../services/academicload-teacher.service';
 import { ScheduleService,Hour,Schedule  } from '../../../services/schedule.service';
 import { ExtensionsService } from '../../../services/extensions.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-academicloadlist',
@@ -33,7 +34,10 @@ export class AcademicloadlistComponent implements OnInit {
   itemsPerPage: number = 10
   constructor(private _academicloadteacherService: AcademicloadTeacherService,
               private _scheduleService: ScheduleService,
-              private _extensionsService: ExtensionsService) { }
+              private _extensionsService: ExtensionsService,
+              private _titleService: Title) {
+                this._titleService.setTitle('Horarios')
+              }
 
   ngOnInit() {
     this._academicloadteacherService.getAcademicloadList().subscribe(data=>{

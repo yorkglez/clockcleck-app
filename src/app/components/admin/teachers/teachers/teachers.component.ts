@@ -3,6 +3,7 @@ import { TeachersService } from '../../../../services/teachers.service';
 import { NgForm } from '@angular/forms';
 import { ExtensionsService } from '../../../../services/extensions.service';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-teachers',
   templateUrl: './teachers.component.html',
@@ -26,7 +27,9 @@ export class TeachersComponent implements OnInit {
   model = {}
   constructor(private _teachersService: TeachersService,
               private _extensionsService: ExtensionsService,
-              private router: Router) { }
+              private router: Router,
+              private _titleService: Title) {
+                this._titleService.setTitle('Docentes')}
 
   ngOnInit() {
     this._extensionsService.getExtension().subscribe(data=>{this.extensions = data})

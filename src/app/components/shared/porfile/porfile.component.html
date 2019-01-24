@@ -17,12 +17,14 @@
           <tr >
             <th class="info-title">Nombre</th>
             <td *ngIf="isEditable" class="form-editable">
+              <!-- input name -->
               <input
               type="text"
               class="form-control"
               name="name"
               ngModel [(ngModel)]="data.name"
               #name="ngModel">
+              <!-- icon editable -->
               <div class="edit-icon">
                 <i *ngIf="isEditable" class="fas fa-edit"></i>
               </div>
@@ -33,12 +35,14 @@
             <th class="title">Apellidos</th>
             <td *ngIf="!isEditable">{{porfileInfo.lastname}}</td>
             <td *ngIf="isEditable" class="form-editable">
+              <!-- input lastname -->
               <input
               type="text"
               class="form-control"
               name="lastname"
               ngModel [(ngModel)]="data.lastname"
               #lastname="ngModel">
+                  <!-- icon editable -->
               <div class="edit-icon">
                 <i *ngIf="isEditable" class="fas fa-edit"></i>
               </div>
@@ -48,7 +52,7 @@
             <th class="title">Email</th>
             <td *ngIf="!isEditable">{{porfileInfo.email}}</td>
             <td *ngIf="isEditable" class="form-editable">
-              <!-- <div> -->
+              <!-- input email -->
               <input pattern="^[a-z0-9._+%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
               (focusout)="validateEmail(email.value)"
               type="email"
@@ -58,6 +62,7 @@
               #email="ngModel"
               [ngClass]="{'is-invalid': !emailisValid, 'is-valid': emailisValid}"
               [email]="data.email !==''" required>
+                <!-- icon editable -->
               <div class="edit-icon">
                 <i *ngIf="isEditable" class="fas fa-edit"></i>
               </div>

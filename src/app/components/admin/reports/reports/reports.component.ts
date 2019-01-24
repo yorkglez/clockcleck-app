@@ -12,6 +12,7 @@ import { CarersService } from '../../../../services/carers.service';
 import {PopoverModule} from "ngx-popover";
 import { HttpClient } from '@angular/common/http';
 import { SubjectsService } from '../../../../services/subjects.service';
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
@@ -59,7 +60,10 @@ export class ReportsComponent implements OnInit {
               private _extensionsService: ExtensionsService,
               private _carersService: CarersService,
               private _subjectsService: SubjectsService,
-              private http: HttpClient) { }
+              private http: HttpClient,
+              private _titleService: Title) {
+                  this._titleService.setTitle('Reportes')
+               }
 
   ngOnInit() {
     console.log('hola')

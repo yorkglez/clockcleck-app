@@ -25,11 +25,17 @@ header {
   position: relative;
   height: 50px;
   color: white; }
+  .navbar .createby {
+    font-weight: 500; }
+    .navbar .createby a {
+      color: white;
+      font-weight: 600;
+      text-decoration: none; }
 
 .login-content {
   position: relative;
-  background-color: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(0, 0, 0, 0.3);
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.4);
   border-radius: 8px;
   -webkit-box-shadow: 10px 5px 5px rgba(128, 128, 128, 0.5);
   box-shadow: 10px 5px 5px rgba(128, 128, 128, 0.5);
@@ -66,6 +72,7 @@ header {
       font-weight: 500;
       font-family: "Roboto", sans-serif; }
     .login-content .body input {
+      background: none;
       height: 40px;
       border: none;
       border-bottom: 2px solid gray;
@@ -97,5 +104,4 @@ header {
     margin-left: 5px; }
 
 footer {
-  background: red;
   display: none; }

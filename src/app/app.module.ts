@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
@@ -25,6 +25,7 @@ import { TeacherService } from './services/teacher.service';
 import { LogoutComponent } from './components/shared/logout/logout.component';
 import { UsersComponent } from './components/admin/users/users/users.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 //import {PopoverModule} from 'ngx-bootstrap';
 
 import { CreateUserComponent } from './components/admin/users/create-user/create-user.component';
@@ -32,7 +33,6 @@ import { EditUserComponent } from './components/admin/users/edit-user/edit-user.
 import { CreateTeacherComponent } from './components/admin/teachers/create-teacher/create-teacher.component';
 import { EditTeacherComponent } from './components/admin/teachers/edit-teacher/edit-teacher.component';
 import { TeachersComponent } from './components/admin/teachers/teachers/teachers.component';
-import { SearchUsersComponent } from './components/admin/users/search-users/search-users.component';
 import { ReportsComponent } from './components/admin/reports/reports/reports.component';
 import { UsersTableComponent } from './components/admin/users/shared/users-table/users-table.component';
 import { UserFormComponent } from './components/admin/users/shared/user-form/user-form.component';
@@ -70,6 +70,7 @@ import { LoaderComponent } from './components/shared/loader/loader.component';
 @NgModule({
   declarations: [
     AppComponent,
+    AngularFontAwesomeModule,
     LoginComponent,
     NavadminComponent,
     LogoutComponent,
@@ -79,7 +80,6 @@ import { LoaderComponent } from './components/shared/loader/loader.component';
     CreateTeacherComponent,
     EditTeacherComponent,
     TeachersComponent,
-    SearchUsersComponent,
     ReportsComponent,
     UsersTableComponent,
     UserFormComponent,
@@ -140,12 +140,6 @@ import { LoaderComponent } from './components/shared/loader/loader.component';
     {
       path:'createuser',
       component: CreateUserComponent,
-      canActivate: [AdminGuard]
-
-    },
-    {
-      path:'searchuser/:ter',
-      component: SearchUsersComponent,
       canActivate: [AdminGuard]
 
     },

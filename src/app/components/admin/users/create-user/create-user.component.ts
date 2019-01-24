@@ -4,6 +4,7 @@ import { UsersService } from '../../../../services/users.service';
 import { NgForm } from '@angular/forms';
 import { ExtensionsService } from '../../../../services/extensions.service';
 import { HelpersService } from '../../../../services/helpers.service';
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-create-user',
   templateUrl: './create-user.component.html',
@@ -20,9 +21,9 @@ export class CreateUserComponent implements OnInit {
   constructor(private http: HttpClient,
               private _usersService: UsersService,
               private _extensionsService: ExtensionsService,
-              private _helpersService: HelpersService
-  ) {
-
+              private _helpersService: HelpersService,
+              private _titleService: Title) {
+                this._titleService.setTitle('Nuevo usuario')
       }
 
   ngOnInit() {

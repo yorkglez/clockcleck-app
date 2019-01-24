@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SubjectsService } from '../../../../services/subjects.service';
 import { NgForm } from '@angular/forms';
 import { HelpersService } from '../../../../services/helpers.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-create-subject',
@@ -26,7 +27,10 @@ export class CreateSubjectComponent implements OnInit {
   message: string
   radio
   constructor(private _subjectsService: SubjectsService,
-              private _helpersService: HelpersService,) { }
+              private _helpersService: HelpersService,
+              private _titleService: Title) {
+                this._titleService.setTitle('Nueva materia')
+              }
 
   ngOnInit() {
   }

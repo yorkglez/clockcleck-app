@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ExtensionsService } from '../../../../services/extensions.service';
 import { NgForm } from '@angular/forms';
 import { HelpersService } from '../../../../services/helpers.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-editextension',
@@ -19,7 +20,10 @@ export class EditextensionComponent implements OnInit {
   constructor(private _extensionsService: ExtensionsService,
               private activatedRoute:ActivatedRoute,
               private _helpersService: HelpersService,
-              private router: Router) { }
+              private router: Router,
+              private _titleService: Title) { 
+                this._titleService.setTitle('Editar extension')
+              }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe( params => {

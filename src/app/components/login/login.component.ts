@@ -3,6 +3,7 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { map } from 'rxjs/operators';
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,7 +14,10 @@ export class LoginComponent implements OnInit {
   isError: boolean = false
   constructor(private _authService: AuthService,
               private router: Router,
-              private _userService: UserService) {}
+              private _userService: UserService,
+              private _titleService: Title) {
+                 this._titleService.setTitle('Iniciar sesion usuario')
+              }
 
   ngOnInit(){
       this._authService.isLoggedIn().subscribe(resp=> {

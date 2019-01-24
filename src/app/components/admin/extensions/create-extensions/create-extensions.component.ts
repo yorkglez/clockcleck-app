@@ -3,6 +3,7 @@ import { ExtensionsService } from '../../../../services/extensions.service';
 import { HttpClient } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { HelpersService } from '../../../../services/helpers.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-create-extensions',
@@ -18,7 +19,10 @@ export class CreateExtensionsComponent implements OnInit {
 
   constructor(
               private _extensionsService: ExtensionsService,
-              private _helpersService: HelpersService) { }
+              private _helpersService: HelpersService,
+              private _titleService: Title) {
+                this._titleService.setTitle('Nueva extension')
+              }
 
   ngOnInit() {
 

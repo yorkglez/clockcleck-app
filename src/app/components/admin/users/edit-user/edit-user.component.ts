@@ -6,6 +6,7 @@ import { NgForm } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators   } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-edit-user',
@@ -25,13 +26,16 @@ export class EditUserComponent implements OnInit {
               private _extensionsService: ExtensionsService,
               private activatedRoute:ActivatedRoute,
               private _usersService: UsersService,
-              private router: Router) {}
+              private router: Router,
+              private _titleService: Title) {
+                this._titleService.setTitle('Editar usuario')
+              }
 
   ngOnInit() {
     this._extensionsService.getExtension().subscribe(data=>{this.extensions = data})
     this.activatedRoute.params.subscribe( params => {
       this.id = params['id']
-      this._usersService.getUserbyId(this.id).subscribe(data=>{
+      this._usersService.getDatabyId(this.id).subscribe(data=>{
          this.model['name'] =  data.name
          this.model['lastname'] =  data.lastname
          this.model['email'] = data.email

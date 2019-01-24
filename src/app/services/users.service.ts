@@ -30,7 +30,7 @@ export class UsersService {
   getUserbyType(type:string): Observable<User[]>{
     return this.http.get<User[]>('api/queries/User/getDatabyType.php',{params:{type:type}})
   }
-  getUserbyId(id:string): Observable<User>{
+  getDatabyId(id:string): Observable<User>{
     return this.http.get<User>('api/queries/User/getUser.php',{params:{id:id}})
   }
   // checkEmail(email){

@@ -1,18 +1,10 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:400");
-.navbar {
-  background-color: #d11141;
-  border-bottom: 1px solid rgba(41, 41, 41, 0.4);
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  position: relative;
-  height: 50px;
-  color: white; }
-
 .confirm-container {
   position: relative;
   top: 150px;
   width: 550px;
   height: auto;
+  background-color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.3);
   -webkit-box-shadow: 10px 5px 5px rgba(128, 128, 128, 0.5);
   box-shadow: 10px 5px 5px rgba(128, 128, 128, 0.5);

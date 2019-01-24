@@ -3,6 +3,7 @@ import { CarersService, Carer } from '../../../../services/carers.service';
 import { Router } from '@angular/router';
 import { ExtensionsService } from '../../../../services/extensions.service';
 import { LoaderService } from '../../../../services/loader.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-carers',
@@ -30,7 +31,10 @@ export class CarersComponent implements OnInit {
   constructor(private _carersService: CarersService,
               private _loaderService: LoaderService,
               private router: Router,
-              private _extensionsService: ExtensionsService) { }
+              private _extensionsService: ExtensionsService,
+              private _titleService: Title) {
+                this._titleService.setTitle('Carreras')
+              }
 
   ngOnInit() {
     this._loaderService.display(true)

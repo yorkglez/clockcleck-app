@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PorfileService } from '../../../services/porfile.service';
 import { HelpersService } from '../../../services/helpers.service';
 import { TeacherService } from '../../../services/teacher.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-porfile-teacher',
@@ -22,7 +23,11 @@ export class PorfileTeacherComponent implements OnInit {
   message: string
   constructor(private _porfileService: PorfileService,
               private _helpersService: HelpersService,
-              private _teacherService: TeacherService) { }
+              private _teacherService: TeacherService,
+              private _titleService: Title
+            ) {
+              this._titleService.setTitle('Perfil')
+            }
 
   ngOnInit() {
     this.getPorfileInfo()
