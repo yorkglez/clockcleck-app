@@ -47,37 +47,39 @@
   // {
   // 	echo "E-Mail enviado";
   // }
-  echo '
-    <h2>Clock Check</h2>
-    <h3>Bienvenid@: teacher name a la plataforma!</h3>
-    <p><b>Correo:</b> emal@</p>
-    <p>Si este no es tu correo haz caso omiso de este este correo y contactate con el administrador de la plataforma para que cambie el correo.</p>
-    <p>Para poder activar tu cuenta es necesario validar tu correo, haz clic en el siguiente boton para ser enviado a la pagina de activacion.</p>
-    <a href=""
-
-    style="
-    text-decoration: none;
-    background-color: #28a745;
-    border-color: #1e7e34;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    border: 1px solid transparent;
-    color: white;
-    font-weight: 400;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    padding: .600rem .85rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    border-radius: .25rem;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-        "
-    >Activar cuenta</a>
-
-
-  ';
+  //
+  //
+  // echo '
+  //   <h2>Clock Check</h2>
+  //   <h3>Bienvenid@: teacher name a la plataforma!</h3>
+  //   <p><b>Correo:</b> emal@</p>
+  //   <p>Si este no es tu correo haz caso omiso de este este correo y contactate con el administrador de la plataforma para que cambie el correo.</p>
+  //   <p>Para poder activar tu cuenta es necesario validar tu correo, haz clic en el siguiente boton para ser enviado a la pagina de activacion.</p>
+  //   <a href=""
+  //
+  //   style="
+  //   text-decoration: none;
+  //   background-color: #28a745;
+  //   border-color: #1e7e34;
+  //   -webkit-user-select: none;
+  //   -moz-user-select: none;
+  //   -ms-user-select: none;
+  //   user-select: none;
+  //   border: 1px solid transparent;
+  //   color: white;
+  //   font-weight: 400;
+  //   text-align: center;
+  //   white-space: nowrap;
+  //   vertical-align: middle;
+  //   padding: .600rem .85rem;
+  //   font-size: 1rem;
+  //   line-height: 1.5;
+  //   border-radius: .25rem;
+  //   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  //       "
+  //   >Activar cuenta</a>
+  //
+  //
+  // ';
 
  ?>

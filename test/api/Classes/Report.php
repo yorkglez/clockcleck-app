@@ -2,8 +2,12 @@
   /**
    *
    */
-   // require '../../vendor/autoload.php';
+   require '../../vendor/autoload.php';
    // use Spipu\Html2Pdf\Html2Pdf;
+
+   use PhpOffice\PhpSpreadsheet\Spreadsheet;
+   use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
    require('../../libs/fpdf/fpdf.php');
    require_once('Connection.php');
    date_default_timezone_set('America/Mexico_City');
@@ -28,6 +32,94 @@
         else
           $fetch = false;
         return  json_encode($fetch);
+      }
+
+      public function generateReportExcel($values){
+
+
+        $spreadsheet = new Spreadsheet(); //Call class
+        $sheet = $spreadsheet->getActiveSheet(); //Activate sheet
+        /* Styles */
+        $styleTitle = array(
+          'font'  => array(
+            'bold'  => true,
+            'color' => array('rgb' => '#000000'),
+            'size'  => 14,
+            'name'  => 'Arial'
+          ),
+          'alignment' => array(
+            'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+          )
+        );
+        $styleSubtitle = array(
+          'font'  => array(
+            'bold'  => false,
+            'color' => array('rgb' => '#000000'),
+            'size'  => 12,
+            'name'  => 'Arial'
+          ),
+          'alignment' => array(
+            'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+          )
+        );
+        /* Header doc */
+        $sheet->mergeCells('A1:O1'); //Combinate cells
+        $sheet->setCellValue('A1', 'INSTITUTO TECNOLOGICO JOSE MARIO MOLINA PASQUEL Y HENRIQUEZ'); //Set value cell
+        $sheet->getStyle('A1')->applyFromArray($styleTitle); //Apply styles
+        // $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); //Apply styles
+        $sheet->mergeCells('A2:O2'); //Combinate cells
+        $sheet->setCellValue('A2', 'Reporte De asistencia personal docente Campus Tala'); //Set value cell
+        $sheet->getStyle('A2')->applyFromArray($styleSubtitle); //Apply styles
+
+        $sheet->mergeCells('A3:O3'); //Combinate cells
+        if($values['week'] != 'null')
+          $sheet->setCellValue('A3', 'Periodo 2018 al 2019 '.$this->dataBetween($values['week']));
+        else
+          $sheet->setCellValue('A3', 'Periodo 2018 al 2019 typereport del '.date("d-m-Y",strtotime($values['startDate'])).' al '.date("d-m-Y",strtotime($values['endDate'])));
+        $sheet->getStyle('A3')->applyFromArray($styleSubtitle); //Apply styles
+
+        $sheet->setCellValue('A4','Extension:');
+        $sheet->setCellValue('B4','Tala');
+        $sheet->setCellValue('C4','Tipo de reporte:');
+        $sheet->setCellValue('D4',' Por materia');
+        $sheet->setCellValue('E4','Docente:');
+        $sheet->setCellValue('F4','Juan Luis Rivaz');
+        $sheet->setCellValue('G4','Fecha: ');
+        $sheet->setCellValue('H4',$this->getDatetimeNow('date'));
+        $sheet->setCellValue('I4','Hora: ');
+        $sheet->setCellValue('J4',$this->getDatetimeNow('time'));
+
+        /* Header table */
+        $sheet->setCellValue('A6', 'Departamento');
+        $sheet->setCellValue('B6', 'Docente');
+        // $sheet->getColumnDimension('A')->setAutoSize(true);
+        $sheet->setCellValue('C5', 'Hora');
+        $sheet->mergeCells('C5:D5'); //Combinate cells
+
+        $sheet->setCellValue('C6', 'Entrada');
+        $sheet->setCellValue('D6', 'Salida');
+        $sheet->setCellValue('E6', 'Grupo');
+        $sheet->setCellValue('F6', 'Asistencia');
+        $sheet->setCellValue('G6', 'Tema/Actividad');
+        $sheet->setCellValue('H6', 'Materia');
+        $sheet->setCellValue('I6', 'Total de horas');
+
+        /* Auto size cell */
+        $cellIterator = $sheet->getRowIterator()->current()->getCellIterator();
+        $cellIterator->setIterateOnlyExistingCells(true);
+        foreach( range('A','H') as $cell ) {
+          $sheet->getColumnDimension($cell)->setAutoSize(true);
+        }
+        /* Save file */
+        $writer = new Xlsx($spreadsheet);
+        try {
+            $writer->save('hello world.xlsx');
+            echo 'save';
+        } catch (\Exception $e) {
+          echo $e->getMessage();
+        }
+
+
       }
 
       public function generateReportPDF($values){
@@ -79,7 +171,7 @@
           $pdf->Ln(5);
 
           $pdf->SetFont('Arial','B',12);
-          $pdf->Cell(150,10,'Reporte de asitencia personal Docente',0,0,'L');
+          $pdf->Cell(150,10,'Reporte de asitencia personal docente',0,0,'L');
           /* line date now */
           $pdf->Cell(15,10,'Fecha:',0,0,'L');
           $pdf->SetFont('Arial','',12);
