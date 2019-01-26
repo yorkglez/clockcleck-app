@@ -13,6 +13,8 @@
    date_default_timezone_set('America/Mexico_City');
   class Report extends Connection
   {
+
+
       public function getReports($values){
         $sql = "CALL getReports(:week,:ter,:startDate,:endDate,:code,:extension,:subject)";
         $stmt = $this->connect()->prepare($sql);
@@ -31,13 +33,12 @@
         }
         else
           $fetch = false;
-        return  json_encode($fetch);
+        return $fetch;
       }
 
       public function generateReportExcel($values){
-
-
         $spreadsheet = new Spreadsheet(); //Call class
+        $spreadsheet->setActiveSheetIndex(0);
         $sheet = $spreadsheet->getActiveSheet(); //Activate sheet
         /* Styles */
         $styleTitle = array(
@@ -62,52 +63,115 @@
             'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
           )
         );
+        $styleCells = [
+          'borders' => [
+            'allBorders' => [
+              'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+              'color' => ['argb' => '#000000'],
+            ],
+          ],
+        ];
+        $styleHeader = [
+          'font'  => [
+            'bold'  => true,
+            'color' => array('rgb' => '#000000'),
+            'size'  => 12,
+            'name'  => 'Arial'
+          ],
+          'alignment' => [
+            'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+          ]
+        ];
+
         /* Header doc */
         $sheet->mergeCells('A1:O1'); //Combinate cells
         $sheet->setCellValue('A1', 'INSTITUTO TECNOLOGICO JOSE MARIO MOLINA PASQUEL Y HENRIQUEZ'); //Set value cell
         $sheet->getStyle('A1')->applyFromArray($styleTitle); //Apply styles
         // $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); //Apply styles
-        $sheet->mergeCells('A2:O2'); //Combinate cells
+        $sheet->mergeCells('A2:I2'); //Combinate cells
         $sheet->setCellValue('A2', 'Reporte De asistencia personal docente Campus Tala'); //Set value cell
         $sheet->getStyle('A2')->applyFromArray($styleSubtitle); //Apply styles
 
-        $sheet->mergeCells('A3:O3'); //Combinate cells
+        $sheet->mergeCells('A3:I3'); //Combinate cells
         if($values['week'] != 'null')
           $sheet->setCellValue('A3', 'Periodo 2018 al 2019 '.$this->dataBetween($values['week']));
         else
           $sheet->setCellValue('A3', 'Periodo 2018 al 2019 typereport del '.date("d-m-Y",strtotime($values['startDate'])).' al '.date("d-m-Y",strtotime($values['endDate'])));
         $sheet->getStyle('A3')->applyFromArray($styleSubtitle); //Apply styles
 
-        $sheet->setCellValue('A4','Extension:');
-        $sheet->setCellValue('B4','Tala');
-        $sheet->setCellValue('C4','Tipo de reporte:');
-        $sheet->setCellValue('D4',' Por materia');
-        $sheet->setCellValue('E4','Docente:');
-        $sheet->setCellValue('F4','Juan Luis Rivaz');
-        $sheet->setCellValue('G4','Fecha: ');
-        $sheet->setCellValue('H4',$this->getDatetimeNow('date'));
-        $sheet->setCellValue('I4','Hora: ');
-        $sheet->setCellValue('J4',$this->getDatetimeNow('time'));
+        $sheet->setCellValue('A4','Extension: '.$this->getExtensionName($values['extension'])); //Extension name
+        $sheet->mergeCells('A4:B4'); //Combinate cells
+
+        $sheet->setCellValue('C4','Tipo de reporte: Por materia');
+        $sheet->mergeCells('C4:E4'); //Combinate cells
+
+        $sheet->setCellValue('F4','Docente: Juan Luis Rivaz');
+        $sheet->mergeCells('F4:H4'); //Combinate cells
+
+        /* Date & time  */
+        $sheet->setCellValue('J2','Fecha: '.$this->getDatetimeNow('date'));
+        $sheet->mergeCells('J2:K2'); //Combinate cells2
+
+        $sheet->setCellValue('J3','Hora: '.$this->getDatetimeNow('time'));
+        $sheet->mergeCells('J3:K3'); //Combinate cells
 
         /* Header table */
         $sheet->setCellValue('A6', 'Departamento');
+        $sheet->mergeCells('A6:A7'); //Combinate cells
         $sheet->setCellValue('B6', 'Docente');
+        $sheet->mergeCells('B6:B7'); //Combinate cells
         // $sheet->getColumnDimension('A')->setAutoSize(true);
-        $sheet->setCellValue('C5', 'Hora');
-        $sheet->mergeCells('C5:D5'); //Combinate cells
+        $sheet->setCellValue('C6', 'Hora');
+        $sheet->mergeCells('C6:D6'); //Combinate cells
 
-        $sheet->setCellValue('C6', 'Entrada');
-        $sheet->setCellValue('D6', 'Salida');
-        $sheet->setCellValue('E6', 'Grupo');
+        // $sheet->mergeCells('E5:D5'); //Combinate cells
+
+        $sheet->setCellValue('C7', 'Entrada');
+        $sheet->setCellValue('D7', 'Salida');
+        $sheet->setCellValue('E7', 'Grupo');
+        $sheet->setCellValue('E6', 'Localidad');
         $sheet->setCellValue('F6', 'Asistencia');
+        $sheet->mergeCells('F6:F7'); //Combinate cells
         $sheet->setCellValue('G6', 'Tema/Actividad');
+        $sheet->mergeCells('G6:G7'); //Combinate cells
         $sheet->setCellValue('H6', 'Materia');
+        $sheet->mergeCells('H6:H7'); //Combinate cells
         $sheet->setCellValue('I6', 'Total de horas');
+        $sheet->mergeCells('I6:I7'); //Combinate cells
+        $sheet->getStyle('A6
+        :I7')->applyFromArray($styleHeader); //Apply styles
+        /* Get report form database*/
+        $reports = $this->getReports($values);
 
+        $i = 8;
+        /* get data from database */
+        foreach ($reports as $row) {
+          $sheet->setCellValue('A'.$i, $row['alias']);  //Departamento
+          $sheet->setCellValue('B'.$i, 'hello World!');  //Docente type
+          $sheet->setCellValue('C'.$i, $row['checkEntry']);  //Etrada
+          $sheet->setCellValue('D'.$i, $row['checkEnd']);  // Salida
+          $sheet->setCellValue('E'.$i, $row['grade']);   // Grupo
+          $sheet->setCellValue('F'.$i, $row['type']); //Assitencia
+          $sheet->setCellValue('G'.$i, $row['topic']); //Tema
+          $sheet->setCellValue('H'.$i, $row['nameSubject']); //Materia
+
+          $i++; //count
+        }
+
+        // $pdf->Cell(27,6,,1,0,'C',0);
+        // $pdf->Cell(16,6,,1,0,'C',0);
+        // $pdf->Cell(14,6,,1,0,'C',0);
+        // $pdf->Cell(12,6,$row['grade'],1,0,'C',0);
+        // $pdf->Cell(20,6,,1,0,'C',0);
+        // $pdf->Cell(55,6,,1,0,'C',0);
+        // $pdf->Cell(55,6,,1,1,'C',0);
+
+        /* Cells format */
+        $sheet->getStyle('A6:I'.($i-1))->applyFromArray($styleCells);
         /* Auto size cell */
         $cellIterator = $sheet->getRowIterator()->current()->getCellIterator();
         $cellIterator->setIterateOnlyExistingCells(true);
-        foreach( range('A','H') as $cell ) {
+        foreach( range('A','I') as $cell ) {
           $sheet->getColumnDimension($cell)->setAutoSize(true);
         }
         /* Save file */
@@ -124,13 +188,7 @@
 
       public function generateReportPDF($values){
         $subject = $values['subject'];
-        // $extension = 'Tala';
-        $sql = "SELECT name FROM Extensions WHERE idExtension = :id";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->bindParam(':id',$values['extension'],PDO::PARAM_STR);
-        $stmt->execute();
-        $extension = $stmt->fetchColumn();
-        $this->closeConnection();
+        $extension = $this->getExtensionName($values['extension']);
 
         $sql = "CALL getReports(:week,:ter,:startDate,:endDate,:code,:extension,:subject)";
         $stmt = $this->connect()->prepare($sql);
@@ -147,7 +205,6 @@
         if($stmt->rowCount() > 0){
           while($row = $stmt->fetch(PDO::FETCH_ASSOC))
             $fetch[] = $row;
-
           $hoursCount = 0;
           $teacherName = $fetch[0]['nameTeacher'];
           foreach ($fetch as $row) {
@@ -273,12 +330,27 @@
           $fetch = false;
         }
 
-        function Footer() {
-          $pdf->SetY(-1);
-          $pdf->SetFont('Arial','I',8);
-          $pdf->Cell(0,10,'Pagina '.$pdf->pageNo(),0,0,'C');
-         }
-}
+        // function Footer() {
+        //   $pdf->SetY(-1);
+        //   $pdf->SetFont('Arial','I',8);
+        //   $pdf->Cell(0,10,'Pagina '.$pdf->pageNo(),0,0,'C');
+        //  }
+      }
+    /**
+     * [getExtensionName description]
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    private function getExtensionName($id){
+      $sql = "SELECT name FROM Extensions WHERE idExtension = :id";
+      $stmt = $this->connect()->prepare($sql);
+      $stmt->bindParam(':id',$id,PDO::PARAM_INT);
+      $stmt->execute();
+      $extension = $stmt->fetchColumn();
+      $this->closeConnection();
+      return $extension;
+    }
+
     private function dataBetween($type){
       $dt = new DateTime();
       switch ($type) {
