@@ -19,7 +19,7 @@ export class UsersService {
     return this.http.get<User[]>('api/queries/User/searchData.php',{params:{ter: ter, type: type}})
   }
   Save(model) {
-    return this.http.post('api/queries/User/saveUser.php',JSON.stringify(model))
+    return this.http.post('api/queries/User/Save.php',JSON.stringify(model))
   }
   Update(model,id) {
     return this.http.post('api/queries/User/updateUser.php',{model: JSON.stringify(model),id: id})

@@ -48,12 +48,15 @@ export class CarersComponent implements OnInit {
     })
     this.model = {"extension": localStorage.getItem('extension')}
   }
+
   showBy(extension,status){
       this._carersService.getData(extension,status).subscribe(data=>{this.carers = data })
   }
+
   Edit(carer){
     this.router.navigate(['/editcarer',carer.codeCarer])
   }
+
   Activate(carer){
     this.carer = carer
     this._carersService.changeStatus(this.carer.codeCarer,'1').subscribe(resp=>{
@@ -62,6 +65,7 @@ export class CarersComponent implements OnInit {
       }
     })
   }
+
   Search(ter:string, extension:string,status:string){
     this.searchAlert = false
     this._carersService.Search(ter,extension,status).subscribe(data=>{
@@ -74,9 +78,11 @@ export class CarersComponent implements OnInit {
         this.carers = data
     })
   }
+
   getId(carer){
     this.carer = carer
   }
+
   Delete(){
     this._carersService.changeStatus(this.carer.codeCarer,'0').subscribe(resp=>{
       if(resp){

@@ -8,8 +8,8 @@
   </div>
   <div class="content-body">
     <!-- alerts -->
-    <app-alerts [type]="type" [message]= "message" [alertVisible]="alertVisible"></app-alerts>
-    <form  name="form" (ngSubmit)="form.valid && saveUser(form)" #form="ngForm" class="needs-validation" novalidate>
+    <app-alerts [type]="type" [message]= "message" [alertVisible]="alertisVisible"></app-alerts>
+    <form  name="form" (ngSubmit)="form.valid && Save(form)" #form="ngForm" class="needs-validation" novalidate>
       <!-- {{form.value | json}} -->
       <div class="form-row">
         <!-- input name -->
@@ -50,18 +50,18 @@
                 name="email"
                 ngModel [(ngModel)]="model.email"
                 #email="ngModel"
-                [ngClass]="{'is-invalid':form.submitted && email.invalid || email.invalid && email.dirty || model.email =='' || !emailValid,
-                'is-valid': emailValid && email.valid}"
+                [ngClass]="{'is-invalid':form.submitted && email.invalid || email.invalid && email.dirty || model.email =='' || !emaiisValid,
+                'is-valid': emaiisValid && email.valid}"
                 [email]="model.email !==''"
                 placeholder="email@example.com"
                 required>
           <div class="invalid-feedback" *ngIf="form.submitted || model.email ==''">
             Porfavor escriba un email.
           </div>
-          <div class="valid-feedback" *ngIf="emailValid && email.valid"  >
+          <div class="valid-feedback" *ngIf="emaiisValid && email.valid"  >
             El email es valido.
           </div>
-          <div *ngIf="!emailValid && email.valid" class="invalid-feedback">
+          <div *ngIf="!emaiisValid && email.valid" class="invalid-feedback">
             Este email ya existe, porfavor escribe uno valido.
           </div>
           <div *ngIf="email.errors?.email " class="invalid-feedback">Escribe un email valido.</div>
@@ -127,7 +127,7 @@
       </div>
       <!-- btn save -->
       <!-- <div class="col-md-4"> -->
-      <button [disabled]="!emailValid" type="submit" class="btn-form btn btn-lg btn-primary">
+      <button [disabled]="!emaiisValid" type="submit" class="btn-form btn btn-lg btn-primary">
           <i class="fas fa-save"></i> Guardar
       </button>
       <!-- </div> -->

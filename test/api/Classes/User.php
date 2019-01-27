@@ -23,7 +23,7 @@
       /*Encrypt password*/
       $encrypt = password_hash('Password', PASSWORD_DEFAULT);
       $token = bin2hex(random_bytes(20));
-      $realToken = '_token'.$token;
+      $realToken = '_token$'.$token;
       $values['token'] = $realToken;
       $sql = "INSERT INTO Users(name,lastname,email,password,type,token,Extensions_idExtension, genere)
       VALUES (:name,:lastname,:email,:password,:type,:token,:Extensions_idExtension, :genere)";
@@ -31,9 +31,45 @@
       $resp = false;
       if ($stmt->execute($values)) {
         $resp = true;
+        require_once('Helpers.php');
+        $helper = new Helpers;
+        $type = 'user';
+        $email = $values['email'];
+        $url = 'http://localhost:4200/confirmemail/'.$type.'/'.$token.'/'.$email.'/activate'; // url for activate email
+        /* html message*/
+        $body = '
+          <h2>Clock Check</h2>
+          <h3>Bienvenid@: User name a la plataforma!</h3>
+          <p><b>Correo:</b> emal@</p>
+          <p>Si este no es tu correo haz caso omiso de este este correo y contactate con el administrador de la plataforma para que cambie el correo.</p>
+          <p>Para poder activar tu cuenta es necesario validar tu correo, haz clic en el siguiente boton para ser enviado a la pagina de activacion.</p>
+          <a href=""
+          style="
+          text-decoration: none;
+          background-color: #28a745;
+          border-color: #1e7e34;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+          border: 1px solid transparent;
+          color: white;
+          font-weight: 400;
+          text-align: center;
+          white-space: nowrap;
+          vertical-align: middle;
+          padding: .600rem .85rem;
+          font-size: 1rem;
+          line-height: 1.5;
+          border-radius: .25rem;
+          transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+              "
+          >Activar cuenta</a>
+        ';
+         // $resp = $helper->sendMail($email,'Restablecr contrasena',$body);
       }
-      return '{"resp": '.$resp.'}';
       $this->closeConnection();
+      return '{"resp": '.$resp.'}';
     }
 
     public function deleteUser($id){

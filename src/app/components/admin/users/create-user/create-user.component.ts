@@ -14,8 +14,8 @@ export class CreateUserComponent implements OnInit {
   model = {}
   extensions: any[];
   passwordsValid: boolean = true
-  emailValid: boolean = true
-  alertVisible: boolean = false
+  emaiisValid: boolean = true
+  alertisVisible: boolean = false
   type: string
   message: string
   constructor(private http: HttpClient,
@@ -44,13 +44,13 @@ export class CreateUserComponent implements OnInit {
   validateEmail(email){
     this._helpersService.validateEmail(email).subscribe(resp =>{
       if(!resp){
-        this.emailValid = true
+        this.emaiisValid = true
       }else{
-        this.emailValid = false
+        this.emaiisValid = false
       }
     })
   }
-  saveUser(form: NgForm){
+  Save(form: NgForm){
      this._usersService.Save(this.model).subscribe(resp =>{
        if(resp){
          form.resetForm()
@@ -61,9 +61,9 @@ export class CreateUserComponent implements OnInit {
          this.type  = "error"
          this.message = 'Ocurrio un error al gurdar.'
        }
-       this.alertVisible = true
+       this.alertisVisible = true
        setTimeout(() => {
-       this.alertVisible = false
+       this.alertisVisible = false
        }, 2500)
      })
   }

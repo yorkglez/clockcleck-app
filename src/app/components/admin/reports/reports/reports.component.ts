@@ -66,7 +66,6 @@ export class ReportsComponent implements OnInit {
                }
 
   ngOnInit() {
-    console.log('hola')
     this.date = new Date()
     this.date =  this.date.toLocaleString('en-US', {timeZone: 'America/Mexico_City'})
     this._extensionsService.getExtension().subscribe(data=>{this.extensions = data})

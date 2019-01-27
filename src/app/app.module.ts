@@ -70,7 +70,7 @@ import { LoaderComponent } from './components/shared/loader/loader.component';
 @NgModule({
   declarations: [
     AppComponent,
-    AngularFontAwesomeModule,
+
     LoginComponent,
     NavadminComponent,
     LogoutComponent,

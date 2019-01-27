@@ -33,13 +33,15 @@ header {
 
 .navbar {
   background-color: #EEEBEC;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.4);
   -webkit-box-shadow: 1px 2px 10px #888;
   box-shadow: 1px 2px 10px #888;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   height: 50px;
   width: 100%; }
+  .navbar .navbar-brand {
+    cursor: context-menu; }
   .navbar .navbar-toggler i {
     color: white; }
   .navbar .navbody {

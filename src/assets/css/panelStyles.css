@@ -7,7 +7,7 @@ sellect:hover {
   position: relative;
   top: 70px;
   padding: 1px;
-  border: 1px solid rgba(128, 128, 128, 0.4);
+  border: 1px solid rgba(128, 128, 128, 0.7);
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.85);
   -webkit-box-shadow: 5px 5px 5px rgba(128, 128, 128, 0.5);

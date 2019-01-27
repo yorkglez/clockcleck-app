@@ -29,10 +29,10 @@ export class ConfigsComponent implements OnInit {
   ngOnInit() {
     this.getData()
   }
+
   getData(){
     this._configService.getConfig().subscribe(data=>{
       this.configData = data
-      console.log(this.configData)
       this.data['startTime'] = data['startTime']
       this.data['endTime'] = data['endTime']
       this.data['sbreakTime'] = data['sbreakTime']
@@ -41,6 +41,7 @@ export class ConfigsComponent implements OnInit {
       this.data['durationBreak'] = data['durationBreak']
     })
   }
+
   Edit(){
     if(this.isEditable)
       this.isEditable = false

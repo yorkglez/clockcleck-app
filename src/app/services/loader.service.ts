@@ -6,7 +6,6 @@ import { BehaviorSubject } from 'rxjs';
 export class LoaderService {
   public status: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   display(value: boolean){
-    console.log('LoaderService.display ' + value);
     this.status.next(value)
   }
 
