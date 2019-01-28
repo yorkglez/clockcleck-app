@@ -5,7 +5,7 @@ import { HelpersService } from '../../../services/helpers.service';
 @Component({
   selector: 'app-forgotpassword',
   templateUrl: './forgotpassword.component.html',
-  styleUrls: ['../../../../assets/css/comfirmEmailStyles.css']
+  styleUrls: ['../../../../assets/css/confirmEmailStyles.css']
 })
 export class ForgotpasswordComponent implements OnInit {
 

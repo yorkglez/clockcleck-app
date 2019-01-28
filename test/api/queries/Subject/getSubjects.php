@@ -6,7 +6,8 @@
   /**/
   $values = [
     'ter'=> $_GET['ter'],
-    'status'=> $_GET['status']
+    'status'=> $_GET['status'],
+    'sequence'=> $_GET['sequence']
   ];
   $op = new Operations;
   $resp = $op->Call('getSubjects',$values,true);

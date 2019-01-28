@@ -9,8 +9,8 @@ export class SubjectsService {
   url = 'http://api.malastareas.com.mx/Queries/Subject/';
   constructor(private http: HttpClient) { }
 
-  getSubjects(status,ter): Observable<Subject[]>{
-    return this.http.get<Subject[]>('api/queries/Subject/getSubjects.php',{params:{status: status,ter: ter}})
+  getSubjects(status,ter,sequence): Observable<Subject[]>{
+    return this.http.get<Subject[]>('api/queries/Subject/getSubjects.php',{params:{status: status,ter: ter, sequence: sequence}})
   }
 
   getSubjectList(): Observable<SubjectList[]>{

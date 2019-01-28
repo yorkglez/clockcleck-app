@@ -47,8 +47,15 @@
         <!-- input name -->
         <div class="form-group col-md-4">
           <label for="name">Nombre</label>
-          <input type="text" class="form-control" name="name" [(ngModel)]="model.name" #name="ngModel"
-          [ngClass]="{'is-invalid':form.submitted && name.invalid}" maxlength="48" placeholder="Fundamentos de programacion" required>
+          <input type="text"
+          class="form-control"
+          name="name"
+          [(ngModel)]="model.name"
+          #name="ngModel"
+          [ngClass]="{'is-invalid':form.submitted && name.invalid}"
+          maxlength="48"
+          placeholder="Fundamentos de programacion"
+          required>
           <div class="invalid-feedback">
             Porfavor escriba un nombre.
           </div>
@@ -67,7 +74,7 @@
           placeholder="5"
           required>
           <div class="invalid-feedback">
-            Porfavor escriba el N de creditos.
+            Porfavor escriba el numero de creditos.
           </div>
         </div>
         <!-- Radio secuence -->

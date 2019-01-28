@@ -4,7 +4,7 @@ import {Title} from "@angular/platform-browser";
 @Component({
   selector: 'app-resetpassword',
   templateUrl: './resetpassword.component.html',
-  styleUrls: ['../../../../assets/css/comfirmEmailStyles.css']
+  styleUrls: ['../../../../assets/css/confirmEmailStyles.css']
 })
 export class ResetpasswordComponent implements OnInit {
   model = {}

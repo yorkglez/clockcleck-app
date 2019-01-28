@@ -19,17 +19,17 @@
           aria-label="Search"
           (keypress)="getSubjects(status.value,searchText.value)"
           #searchText>
-          <button class="btn-clear" (click)="searchText.value = ''; getSubjects(status.value,searchText.value)">
+          <button class="btn-clear" (click)="searchText.value = ''; getSubjects(status.value,searchText.value,type.value)">
            <i class="fa fa-times"></i>
          </button>
         </div>
         <div class="form-group">
-          <button class="btn btn-primary my-2 my-sm-0" (click)="getSubjects(status.value,searchText.value)"><i class="fas fa-search"></i></button>
+          <button class="btn btn-primary my-2 my-sm-0" (click)="getSubjects(status.value,searchText.value,type.value)"><i class="fas fa-search"></i></button>
         </div>
         <!-- show by -->
         <div class="form-group col-md-2 col-sm-4">
           <!-- <label for="showType">Mostrar por</label> -->
-          <select id="showType" class="form-control custom-select" (change)="getType(type.value); checkInactive(type.value)"  #type>
+          <select id="showType" class="form-control custom-select" (change)="showBy(status.value,searchText.value,type.value)"  #type>
             <option value="all" selected>Mostrar todo</option>
             <option value="0" >Secuencia</option>
             <option value="1">Sin secuencia</option>
@@ -38,7 +38,7 @@
         <!-- select actives/inactives -->
         <div class="form-group col-md-2 col-sm-4">
           <!-- <label for="showType">Mostrar por</label> -->
-          <select id="showType" class="form-control custom-select" (click)="getSubjects(status.value,searchText.value)"  #status>
+          <select id="showType" class="form-control custom-select" (change)="getSubjects(status.value,searchText.value,type.value)"  #status>
             <option value="1" selected>Activas</option>
             <option value="0" >Inactivas</option>
           </select>

@@ -20,7 +20,6 @@
             <i class="fas fa-times"></i>
           </button>
         </div>
-
       </div>
       <!-- toggler -->
       <li class="nav-item selected bar-toggler" routerLinkActive="active"  *ngIf="sidebar && !showSidebar">
@@ -61,7 +60,6 @@
           <li><a class="nav-lin" routerLink="/createcarer"><i class="fas fa-plus"></i> Anadir carreras</a></li>
         </ul>
       </li>
-
       <!-- subjects -->
       <li *ngIf="admin" class="nav-item" routerLinkActive="active">
         <a class="nav-link" routerLink="/subjects"><i class="fas fa-book"></i> <span> Materias</span></a>
@@ -96,9 +94,9 @@
       </li>
 
       <!-- temp -->
-      <li class="nav-item" routerLinkActive="active">
+      <!-- <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['/confirmemail', 'teacher', '12token', '1414' ]"><i class="fas fa-cog"></i> tex</a>
-      </li>
+      </li> -->
       <!-- support -->
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" href="#"><i class="far fa-question-circle"></i> <span> Soporte</span></a>

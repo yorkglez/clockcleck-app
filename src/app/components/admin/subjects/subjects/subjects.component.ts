@@ -33,7 +33,7 @@ export class SubjectsComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.getSubjects('1','')
+    this.getSubjects('1','','all')
   }
 
   Edit(code){
@@ -45,10 +45,10 @@ export class SubjectsComponent implements OnInit {
     this.subject = subject;
   }
 
-  getSubjects(status,ter){
+  getSubjects(status, ter, sequence){
    this._loaderService.display(true)
     this.searchAlert = false
-    this._subjectsService.getSubjects(status,ter).subscribe(data=>{
+    this._subjectsService.getSubjects(status,ter, sequence).subscribe(data=>{
       if(!data && ter != ''){
         this.searchAlert = true
         this.ter = ter
@@ -61,7 +61,9 @@ export class SubjectsComponent implements OnInit {
         this._loaderService.display(false)
      })
   }
-
+  showBy(status, ter, type){
+    this.getSubjects(status,ter,type)
+  }
   deleteSubject(){
     this._subjectsService.changeStatus(this.subject['codeSubject'],'0').subscribe(data=>{
       if(data){

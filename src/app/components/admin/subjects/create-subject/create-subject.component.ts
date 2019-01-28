@@ -16,7 +16,7 @@ export class CreateSubjectComponent implements OnInit {
   subjects = {"code":''}
   subjectsList = []
   idx: number
-  isSequence: boolean = true
+  isSequence: boolean = false
   codeValid: boolean = false
   secodeValid: boolean = true
   alertVisible: boolean = false
@@ -25,7 +25,7 @@ export class CreateSubjectComponent implements OnInit {
   secCode: string = '';
   type: string
   message: string
-  radio
+  radio:boolean = false
   constructor(private _subjectsService: SubjectsService,
               private _helpersService: HelpersService,
               private _titleService: Title) {
@@ -60,8 +60,7 @@ export class CreateSubjectComponent implements OnInit {
     }
   }
   checkSequence(sequence){
-    console.log(this.radio)
-    if (sequence == 'true' && (this.model['code'] != undefined  && this.model['name'] != undefined && this.model['credits'] != undefined)) {
+    if (sequence && (this.model['code'] != undefined  && this.model['name'] != undefined && this.model['credits'] != undefined)) {
       this.subjectsList.push(this.model)
       this.isSequence = true
     }
