@@ -10,10 +10,11 @@ import { HelpersService } from '../../../services/helpers.service';
 export class ForgotpasswordComponent implements OnInit {
 
   model = {}
-  emailValid: boolean = false
+  emailisValid: boolean = false
   type:string = localStorage.getItem('type')
-  comfirmComple: boolean = false
+  confirmisComple: boolean = false
   url:string
+
   constructor(private _authService: AuthService,
   private _helpersService: HelpersService) { }
 
@@ -24,25 +25,24 @@ export class ForgotpasswordComponent implements OnInit {
     if(email.valid){
       this._helpersService.validateEmail(email.value).subscribe(resp =>{
         if(resp)
-          this.emailValid = true
+          this.emailisValid = true
         else
-          this.emailValid = false
+          this.emailisValid = false
       })
     }
-
   }
+
   sendReset(email){
-    if(this.emailValid){
-      this.model['type'] = this.type
+    if(this.emailisValid){
+      // this.model['type'] = this.type
       this._authService.resetPassword(this.model['email'],this.type).subscribe(resp=>{
         if(resp){
-          this.comfirmComple = true
+          this.confirmisComple = true
           if(this.type = 'user')
             this.url = '/login'
           else
             this.url = '/loginteacher'
         }
-
       })
     }
   }

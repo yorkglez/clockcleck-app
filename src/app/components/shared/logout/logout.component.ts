@@ -10,7 +10,10 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class LogoutComponent implements OnInit {
 
-  constructor(private user: UserService, private router: Router, private _authService: AuthService) { }
+  constructor(private user: UserService,
+     private router: Router,
+     private _authService: AuthService)
+     { }
 
   ngOnInit() {
     this._authService.logout().subscribe(resp => {
@@ -21,9 +24,9 @@ export class LogoutComponent implements OnInit {
           this.router.navigate(['/loginteacher'])
         if(resp.type =='user')
           this.router.navigate(['/login'])
-      }else{
-          window.alert('Some problem')
       }
+      else
+          window.alert('Some problem')
     })
   }
 

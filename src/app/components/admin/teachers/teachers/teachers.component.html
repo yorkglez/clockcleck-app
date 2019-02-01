@@ -64,7 +64,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let teacher of teachers | paginate: { itemsPerPage: 25, currentPage: 1 }; let i = index ">
+        <tr *ngFor="let teacher of teachers | paginate: { itemsPerPage: 25, currentPage: p }; let i = index ">
           <th scope="row">{{teacher.codeTeacher}}</th>
           <td>{{teacher.name}}</td>
           <td>{{teacher.lastname}}</td>
@@ -79,8 +79,8 @@
           <td>{{teacher.extensionName}}</td>
           <td  class="accions-content">
             <button class="btn btn-warning" (click)="Edit(teacher)"><i class="fas fa-pencil-alt"></i> <span class="d-none d-md-inline "> Editar</span></button>
-            <button *ngIf="inactive"  (click)="Activate(teacher)"   class="btn btn-success" ><i class="fas fa-check"></i> <span class="d-none d-md-inline "> Activar</span></button>
-            <button *ngIf="!inactive"  class="btn btn-danger" data-toggle="modal" data-target="#modalDelete"  (click)="getId(teacher)"  #deleteUser><i class="fas fa-trash-alt"></i> <span> Eliminar</span></button>
+            <button *ngIf="isInactive"  (click)="Activate(teacher)"   class="btn btn-success" ><i class="fas fa-check"></i> <span class="d-none d-md-inline "> Activar</span></button>
+            <button *ngIf="!isInactive"  class="btn btn-danger" data-toggle="modal" data-target="#modalDelete"  (click)="getId(teacher)"  #deleteUser><i class="fas fa-trash-alt"></i> <span> Eliminar</span></button>
           </td>
         </tr>
       </tbody>

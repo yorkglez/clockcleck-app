@@ -13,7 +13,7 @@ import { Title } from '@angular/platform-browser';
 export class CreateUserComponent implements OnInit {
   model = {}
   extensions: any[];
-  passwordsValid: boolean = true
+  // passwordsValid: boolean = true
   emaiisValid: boolean = true
   alertisVisible: boolean = false
   type: string

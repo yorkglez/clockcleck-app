@@ -9,22 +9,24 @@
      * @param  [string] $table [table name]
      * @return [json]        [return data]
      */
-    public function getData($table,$conditions = false){
+    public function getData($table,$conditions = false, $values = false){
+      $sql = "SELECT * FROM ".$table; //sentence sql
       if(!$conditions){
-        $sql = "SELECT * FROM ".$table." ".$conditions;
+        // $sql = "SELECT * FROM ".$table." ".$conditions;
+        $sql .= " ".$conditions;
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute($values);
       }
       else{
-        $sql = "SELECT * FROM ".$table;
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute();
+        // $sql = "SELECT * FROM ".$table; //sentence sql
+        $stmt = $this->connect()->prepare($sql); //preprare sentence
+        $stmt->execute(); //execute sentente
       }
-
+      /* Get data from db in fetch*/
       while($row = $stmt->fetch(PDO::FETCH_ASSOC))
         $fetch[] = $row;
-      $this->closeConnection();
-      return  json_encode($fetch);
+      $this->closeConnection(); //close conection
+      return  json_encode($fetch); //return data
     }
 
     public function Create($values, $table){
@@ -53,7 +55,7 @@
       if($stmt->execute($values)){
         $exc = true;
         if ($stmt->rowCount()>0) {
-          if($get == true){
+          if($get){
             while($row = $stmt->fetch(PDO::FETCH_ASSOC))
               $fetch[] = $row;
             $exc = $fetch;
@@ -119,13 +121,14 @@
      * @return [type]         [description]
      */
     public function changeStatus($table,$id,$idName,$status){
-        $resp = false;
         $sql ="UPDATE ".$table." SET status = :status WHERE ".$idName."  = :id";
         $stmt = $this->connect()->prepare($sql);
         $stmt->bindParam(':id',$id);
         $stmt->bindParam(':status',$status,PDO::PARAM_STR);
         if($stmt->execute())
           $resp = true;
+        else
+          $resp = false;
         $this->closeConnection();
         return json_encode($resp);
     }

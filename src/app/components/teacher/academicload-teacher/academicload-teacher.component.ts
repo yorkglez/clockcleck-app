@@ -36,8 +36,7 @@ export class AcademicloadTeacherComponent implements OnInit {
       private _academicloadService: AcademicloadTeacherService,
       private _subjectsService: SubjectsService,
       private _carersService: CarersService,
-      private _titleService: Title
-    )
+      private _titleService: Title)
     {
       this._titleService.setTitle('Carga horaria')
       this.config.notFoundText = 'No se encontraron resultados';
@@ -86,17 +85,15 @@ export class AcademicloadTeacherComponent implements OnInit {
       // console.log(this.model)
       // this.etSlice  = parseInt(idx) + 1
     }*/
-
-
-
       ngOnInit() {
         this._subjectsService.getSubjectList().subscribe(data=>{this.subjects  = data})
+
         this._scheduleService.getHours().subscribe(data=>{
           this.hoursSelect = data
-          for (let i = 0; i < Object.keys(data).length; i++) {
+          for (let i = 0; i < Object.keys(data).length; i++)
               this.hours.push(this.hoursSelect[i])
-          }
         })
+
         this.days = this._academicloadService.getDays()
         this.semesters = this._scheduleService.getSemesters()
         this._carersService.getSelectCarers(localStorage.getItem('extension')).subscribe(data=>{this.carers = data})
@@ -106,6 +103,7 @@ export class AcademicloadTeacherComponent implements OnInit {
         //  console.log(this.oldAc)
         })
       }
+
       Edit(idx){
         this.idx = idx
         this.isEditable = true
@@ -118,6 +116,7 @@ export class AcademicloadTeacherComponent implements OnInit {
         this.model['alias'] = this.academicload[idx].alias
 
       }
+
       getSelectedSubject(idx) {
        this.model['codeSubject'] = this.subjects[idx].codeSubject
        this.model['nameSubject'] = this.subjects[idx].name
@@ -127,6 +126,7 @@ export class AcademicloadTeacherComponent implements OnInit {
         this.model['codeCarer'] = this.carers[idx].codeCarer
         this.model['alias'] = this.carers[idx].alias
       }
+
       addSubject(form: NgForm){
         let objective = this.model['objetive']
         let id = this.academicload[this.idx].idSubjectlist
@@ -150,20 +150,24 @@ export class AcademicloadTeacherComponent implements OnInit {
         this.model = {}
         form.resetForm()
       }
+
       sliceHours(idx){
         this.etSlice  = parseInt(idx) + 1
       }
+
       saveSchedule(event){
         event.preventDefault();
         this._academicloadService.Update(this.academicload).subscribe(resp=>{
           console.log(resp)
         })
       }
+
       getId(subject){
         this.subject = subject
       }
+
       Delete(){
-        console.log(this.subject.idSubjectlist)
+        // console.log(this.subject.idSubjectlist)
         this._academicloadService.Delete(this.subject.idSubjectlist).subscribe(resp=>{
           if(resp)
             this.academicload.splice(this.academicload.indexOf(this.subject),1)

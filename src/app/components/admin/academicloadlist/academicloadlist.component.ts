@@ -15,9 +15,10 @@ import { Title } from '@angular/platform-browser';
 })
 export class AcademicloadlistComponent implements OnInit {
   p: number = 1
+  bTime: number
   id: string
   ter:string
-  teacherName: string
+  teacherName: string  = ''
   searchAlert: boolean
   aclist = []
   existsSchedule: boolean = false
@@ -29,9 +30,7 @@ export class AcademicloadlistComponent implements OnInit {
   viernes  = []
   extensions = []
   model = {}
-  bTime: number
-  rowCont: number
-  itemsPerPage: number = 10
+
   constructor(private _academicloadteacherService: AcademicloadTeacherService,
               private _scheduleService: ScheduleService,
               private _extensionsService: ExtensionsService,
@@ -49,6 +48,7 @@ export class AcademicloadlistComponent implements OnInit {
     this._extensionsService.getExtension().subscribe(data=>{this.extensions = data})
     this.model = {"extension": localStorage.getItem('extension')}
   }
+
   Search(ter,extension){
     this.ter = ter
     this._academicloadteacherService.searchAcademiadloadList(ter,extension).subscribe(data=>{
@@ -62,21 +62,19 @@ export class AcademicloadlistComponent implements OnInit {
         this.aclist = data
         this.searchAlert = false
       }
-
     })
   }
+
   getSchedule(ac){
+    this.teacherName = ac.teacherName
     this._scheduleService.getScheduleTeacherbyId(ac.codeTeacher).subscribe(data=>{
-      if(!data){
+      if(!data)
         this.existsSchedule = false
-      }
       else{
         this._scheduleService.getScheduleConfig(ac.codeTeacher).subscribe(data=>{
           this.hours  = data.hours
           this.bTime = data.breakTime
         })
-
-        this.teacherName = ac.teacherName
         this.lunes = data.lunes
         this.martes = data.martes
         this.miercoles= data.miercoles

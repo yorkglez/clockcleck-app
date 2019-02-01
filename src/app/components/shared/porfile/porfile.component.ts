@@ -82,19 +82,19 @@ export class PorfileComponent implements OnInit {
       this.data['lastname'] = this.porfileInfo.lastname
       this.data['email'] = this.porfileInfo.email
     }
-
   }
   validatePasswords(password, repeatpassword){
-    if(password == repeatpassword){
+    if(password == repeatpassword)
       this.passwordsisValid = true
-    }
-    else{
+    else
       this.passwordsisValid = false
-    }
   }
 
   showChangePass(){
-    this.changePass = true
+    if(this.changePass)
+      this.changePass = false
+    else
+      this.changePass = true
   }
   changePassword(oldpassword, newpassword){
     if (this.passwordsisValid && oldpassword != newpassword) {

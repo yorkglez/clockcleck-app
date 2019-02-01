@@ -27,17 +27,14 @@ export class ConfirmemailComponent implements OnInit {
       this.id = params['id']
       this.type = params['type']
       this.token = params['token']
-
     })
   }
 
   validatePasswords(password, repeatpassword){
-    if(password == repeatpassword){
+    if(password == repeatpassword)
       this.passwordsValid = true
-    }
-    else{
+    else
       this.passwordsValid = false
-    }
   }
 
   changePassword(form: NgForm){
@@ -50,6 +47,5 @@ export class ConfirmemailComponent implements OnInit {
           this.comfirmComple = true
       })
     }
-
   }
 }

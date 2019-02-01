@@ -16,16 +16,13 @@ import { LoaderService } from '../../../../services/loader.service';
 
 export class UsersComponent implements OnInit {
   p: number = 1
-  id: string
-  searchAlert: boolean
-  ter:string
+  searchAlert: boolean = false
   users = []
   user:any[]
-  rowCont: number
-  itemsPerPage: number = 10
+  ter:string
   message: string
   type: string
-  alertisVisible: boolean = false
+  id: string
 
   constructor(private _usersService: UsersService,
               private _loaderService: LoaderService,

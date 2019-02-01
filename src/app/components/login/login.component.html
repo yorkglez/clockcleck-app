@@ -2,18 +2,19 @@
 <header>
   <!-- navbar -->
   <nav class="navbar navbar-expand-lg">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand">
-      <span>Clock Check</span>
-      <span> Administrador</span>
-    </a>
-    <div class="collapse navbar-collapse" id="navbarNav">
-
-    </div>
-    <span class="createby">Desarrollado por: <a href=""> Malastareas</a></span>
-  </nav>
+    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button> -->
+  <!-- navbrand -->
+  <a class="navbar-brand">
+    <span>Clock Check</span>
+    <span> Administrador</span>
+  </a>
+  <div class="collapse navbar-collapse" id="navbarNav">
+  </div>
+  <!-- info -->
+  <span class="createby">Desarrollado por: <a href=""> Malastareas</a></span>
+</nav>
 </header>
 <!-- container -->
 <div class="login-container">
@@ -38,7 +39,8 @@
           aria-describedby="emailHelp"
           [(ngModel)]="model.email"
           #email="ngModel"
-          [ngClass]="{'is-invalid':form.submitted && email.invalid,'log-invalid': form.submitted && email.invalid}" required>
+          [ngClass]="{'is-invalid':form.submitted && email.invalid,
+          'log-invalid': form.submitted && email.invalid}" required>
           <div class="invalid-feedback">
             Porfavor escriba su email.
           </div>
@@ -63,11 +65,11 @@
           <a routerLink="/forgotpassword">Olvidaste tu contraseña?</a>
         </div>
         <div class="error row col-md-10 mx-auto"  *ngIf="isError">No se pudo iniciar sesion, verifique su email o contraseña.</div>
-        <div class="row">
-          <div class="col-md-6 mx-auto">
-              <button type="" class="btn-login btn-lg btn-block btnlogin form-control btn btn-danger">Acceder</button>
-          </div>
-      </div>
+          <div class="row">
+            <div class="col-md-6 mx-auto">
+            <button type="submit" class="btn-login btn-lg btn-block btnlogin form-control btn btn-danger">Acceder</button>
+            </div>
+        </div>
       </form>
     </div>
   </div>

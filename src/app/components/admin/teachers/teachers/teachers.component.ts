@@ -19,7 +19,7 @@ export class TeachersComponent implements OnInit {
   id: string
   ter:string
   searchAlert: boolean
-  inactive: boolean = false
+  isInactive: boolean = false
   teachers = []
   extensions = []
   teacher:any[]
@@ -76,12 +76,12 @@ export class TeachersComponent implements OnInit {
   }
 
   checkInactive(type){
-    if (type == 'inactive') {
-      this.inactive = true
-    }else{
-      this.inactive = false
-    }
+    if (type == 'inactive')
+      this.isInactive = true
+    else
+      this.isInactive = false
   }
+
   searchTeacher(ter:string,type:string,extension:string){
       this.ter = ter
       this._teachersService.Search(ter,type,extension).subscribe(data=>{

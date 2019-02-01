@@ -9,7 +9,6 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['../../../../assets/css/panelStyles.css',
               '../../../../assets/css/tableStyles.css',
               '../../../../assets/css/scheduleStyles.css'
-
             ]
 })
 export class ScheduleTeacherComponent implements OnInit {
@@ -31,19 +30,19 @@ export class ScheduleTeacherComponent implements OnInit {
       this.hours  = data.hours
       this.bTime = data.breakTime
     })
-    this._scheduleService.getSubjectsTeacher().subscribe(data=>{
-      if(!data){
-        this.schedule = false;
-      }
-      else{
-        this.lunes = data.lunes
-        this.martes = data.martes
-        this.miercoles= data.miercoles
-        this.jueves = data.jueves
-        this.viernes = data.viernes
-      }
+    this._scheduleService.getSubjectsTeacher().subscribe(
+      data=>{
+        if(!data){
+          this.schedule = false;
+        }
+        else{
+          this.lunes = data.lunes
+          this.martes = data.martes
+          this.miercoles= data.miercoles
+          this.jueves = data.jueves
+          this.viernes = data.viernes
+        }
     })
-
   }
 
 }
