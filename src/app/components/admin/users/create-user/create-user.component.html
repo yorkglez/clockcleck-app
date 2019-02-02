@@ -43,7 +43,8 @@
         <!-- input email -->
         <div class="form-group col-md-6">
           <label for="email">Email</label>
-          <input pattern="^[a-z0-9._+%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+          <input
+                pattern="^[a-z0-9._+%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                 (focusout)="validateEmail(email.value)"
                 type="email"
                 class="form-control invalid-input"

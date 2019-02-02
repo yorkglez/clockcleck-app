@@ -37,7 +37,7 @@ export class ConfirmemailComponent implements OnInit {
       this.passwordsValid = false
   }
 
-  changePassword(form: NgForm){
+  changePassword(){
     this.model['id'] = this.id
     this.model['type'] = this.type
     this.model['token'] = this.token

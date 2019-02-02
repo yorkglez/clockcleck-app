@@ -42,7 +42,7 @@
               name="lastname"
               ngModel [(ngModel)]="data.lastname"
               #lastname="ngModel">
-                  <!-- icon editable -->
+              <!-- icon editable -->
               <div class="edit-icon">
                 <i *ngIf="isEditable" class="fas fa-edit"></i>
               </div>
@@ -62,7 +62,7 @@
               #email="ngModel"
               [ngClass]="{'is-invalid': !emailisValid, 'is-valid': emailisValid}"
               [email]="data.email !==''" required>
-                <!-- icon editable -->
+              <!-- icon editable -->
               <div class="edit-icon">
                 <i *ngIf="isEditable" class="fas fa-edit"></i>
               </div>

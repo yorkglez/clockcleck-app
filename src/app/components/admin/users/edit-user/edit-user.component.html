@@ -7,7 +7,7 @@
     <h1 class="title">Editar usuario</h1>
   </div>
   <div class="content-body">
-    <form  name="form" (ngSubmit)="form.valid && (form.value)" #form="ngForm" class="needs-validation" novalidate>
+    <form  name="form" (ngSubmit)="form.valid && Update(form.value)" #form="ngForm" class="needs-validation" novalidate>
       <!-- {{form.value | json}} -->
       <div class="form-row">
         <!-- input name -->

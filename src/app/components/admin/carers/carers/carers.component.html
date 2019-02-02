@@ -27,14 +27,21 @@
       </div>
       <!-- extension -->
       <div class="form-group  col-md-2 col-sm-4">
-        <select id="showExtension" (change)="showBy(extension.value,status.value)" class="form-control custom-select"  name="extension"  ngModel [(ngModel)]="model.extension" #extension="ngModel">
+        <select id="showExtension"
+        (change)="showBy(extension.value,status.value)"
+        class="form-control custom-select"
+        name="extension"
+        ngModel [(ngModel)]="model.extension"
+        #extension="ngModel">
           <option  *ngFor="let extension of extensions;" [value]="extension.idExtension">{{extension.name}}</option>
         </select>
       </div>
       <div class="form-group col-md-2 col-sm-4">
-        <select  (change)="showBy(extension.value,status.value)" class="form-control custom-select" name="status" #status>
-          <option value="active" selected>Activos</option>
-          <option value="inactive">Inactivos</option>
+        <select  (change)="showBy(extension.value,status.value)"
+        class="form-control custom-select"
+        name="status" #status>
+          <option value="active" selected>Activas</option>
+          <option value="inactive">Inactivas</option>
         </select>
       </div>
     </div>
