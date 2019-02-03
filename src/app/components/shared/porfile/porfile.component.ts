@@ -35,6 +35,7 @@ export class PorfileComponent implements OnInit {
       this.porfileInfo = data
     })
   }
+
   validateEmail(email){
     let oldEmail = this.porfileInfo.email
     if(oldEmail != email){
@@ -83,6 +84,7 @@ export class PorfileComponent implements OnInit {
       this.data['email'] = this.porfileInfo.email
     }
   }
+
   validatePasswords(password, repeatpassword){
     if(password == repeatpassword)
       this.passwordsisValid = true
@@ -102,7 +104,7 @@ export class PorfileComponent implements OnInit {
         if(resp){
           this.changePass = false
           this.type  = "success"
-          this.message = 'Su contrasena ha sido actualizada'
+          this.message = 'Su contrasena ha sido actualizada.'
         }
         else{
           this.type  = "error"
