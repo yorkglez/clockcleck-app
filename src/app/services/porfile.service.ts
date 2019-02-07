@@ -12,9 +12,11 @@ export class PorfileService {
   getTeacherinfo():Observable<Teacher[]>{
     return this.http.get<Teacher[]>('api/queries/Teacher/getinfoporfile.php')
   }
+
   changePassTeacher(model){
     return this.http.post('api/queries/Teacher/changePassword.php',JSON.stringify(model))
   }
+
   changePorfile(model){
     return this.http.post('api/queries/Teacher/changePorfiledata.php',JSON.stringify(model))
   }

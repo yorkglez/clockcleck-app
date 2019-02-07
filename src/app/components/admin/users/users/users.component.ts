@@ -32,26 +32,28 @@ export class UsersComponent implements OnInit {
               }
 
 
-  ngOnInit() {
-   this._loaderService.display(true)
-    this._usersService.getData().subscribe(data=>{
-      this.users = data
-      this._loaderService.display(false)
-      }
-    )
-  }
+ ngOnInit() {
+   this._loaderService.display(true) //Show loader
+    /* get user data from service */
+   this._usersService.getData().subscribe(data=>{
+     this.users = data
+     this._loaderService.display(false) //Hide loader
+  })
+}
 
-  deleteUser(){
-    this._usersService.Delete(this.user['idUser']).subscribe(data=>{
-      if(data.success){
-        this.users.splice(this.users.indexOf(this.user),1)
-      }
-    })
-  }
+deleteUser(){
+  /* Call function Delete from service*/
+  this._usersService.Delete(this.user['idUser']).subscribe(data=>{
+    /* validate response */
+    if(data.success){
+      this.users.splice(this.users.indexOf(this.user),1) //Remove item from array
+    }
+  })
+}
 
-  getId(user){
-    this.user = user;
-  }
+getId(user){
+  this.user = user; //add user
+}
 
   searchUser(ter:string,type:string){
       this._usersService.Search(ter,type).subscribe(data=>{
@@ -65,9 +67,10 @@ export class UsersComponent implements OnInit {
         }
       )
   }
-  editUser(user){
-      this.id = user['idUser']
-      this.router.navigate(['/edituser',this.id])
+
+  Edit(user){
+    this.id = user['idUser'] //add user id
+    this.router.navigate(['/edituser',this.id]) //redirect to edituser
   }
 
   getType(type:string){

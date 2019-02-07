@@ -37,32 +37,35 @@ export class CarersComponent implements OnInit {
               }
 
   ngOnInit() {
-    this._loaderService.display(true)
+    this._loaderService.display(true)// show loader
+    /* Call function getData from service */
     this._carersService.getData(localStorage.getItem('extension'),'active').subscribe(data=>{
-      this.carers = data
-      this._loaderService.display(false)
+      this.carers = data //add carers
+      this._loaderService.display(false) //hide loader
     })
+    /* Call function getExtwension from service*/
     this._extensionsService.getExtension().subscribe(data=>{
-      this.extensions = data
-      this.extension =  this.extensions[0].idExtension
+      this.extensions = data //add extensionts list
+      this.extension =  this.extensions[0].idExtension //set first extension
     })
     this.model = {"extension": localStorage.getItem('extension')}
   }
 
   showBy(extension,status){
-      this._carersService.getData(extension,status).subscribe(data=>{this.carers = data })
+      this._carersService.getData(extension,status).subscribe(data=>{this.carers = data }) //get Extensions
   }
 
   Edit(carer){
-    this.router.navigate(['/editcarer',carer.codeCarer])
+    this.router.navigate(['/editcarer',carer.codeCarer]) //redirect to editcarer
   }
 
   Activate(carer){
-    this.carer = carer
+    this.carer = carer //add carer
+    /* Call function changeStatus from service*/
     this._carersService.changeStatus(this.carer.codeCarer,'1').subscribe(resp=>{
-      if(resp){
+      /* Validate response*/
+      if(resp)
         this.carers.splice(this.carers.indexOf(this.carer),1)
-      }
     })
   }
 
@@ -84,10 +87,11 @@ export class CarersComponent implements OnInit {
   }
 
   Delete(){
+    /* Call function changeStatus from service*/
     this._carersService.changeStatus(this.carer.codeCarer,'0').subscribe(resp=>{
-      if(resp){
-        this.carers.splice(this.carers.indexOf(this.carer),1)
-      }
+      /*Validate response*/
+      if(resp)
+        this.carers.splice(this.carers.indexOf(this.carer),1) ///remove item from array
     })
   }
 

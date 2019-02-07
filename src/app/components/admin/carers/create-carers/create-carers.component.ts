@@ -28,35 +28,39 @@ export class CreateCarersComponent implements OnInit {
               }
 
   ngOnInit() {
-    this._extensionsService.getExtension().subscribe(data=>{this.extensions = data})
-    this.model['extension'] = localStorage.getItem('extension')
+    this._extensionsService.getExtension().subscribe(data=>{this.extensions = data}) //get extensions list
+    this.model['extension'] = localStorage.getItem('extension') //set user extension
   }
 
   Save(form: NgForm){
-   this._carersService.Save(this.model).subscribe(resp =>{
-     if(resp){
-       form.resetForm()
-       this.type  = "success"
-       this.message = 'La carrera se ha guardado correctamente.'
-     }else{
-       this.type  = "error"
-       this.message = 'Ocurrio un error al gurdar.'
-     }
-     this.alertVisible = true
-     setTimeout(() => {
-     this.alertVisible = false
-   }, 2000)
-   })
-
+    /* Call function Save from service */
+    this._carersService.Save(this.model).subscribe(resp =>{
+      /* Validate response */
+      if(resp){
+        form.resetForm() //rest form
+        this.type  = "success" //alert type
+        this.message = 'La carrera se ha guardado correctamente.' //alert message
+      }else{
+        this.type  = "error" //alert type
+        this.message = 'Ocurrio un error al gurdar.' //alert message
+      }
+      this.alertVisible = true //show alert
+      /*Hide alert in 2 secunds*/
+      setTimeout(() => {
+        this.alertVisible = false //hide alert
+      }, 2000)
+    })
   }
   addCharacter(code){
     if(code.length == 4 || code.length == 9 )
       this.model['code'] = code + '-'
   }
   validateCode(code){
-
+    /*validate code */
     if(code.valid){
+      /*Call validateCodeCarer from service*/
       this._helpersService.validateCodeCarer(code.value).subscribe(resp=>{
+        /*validate response*/
         if(resp)
           this.codeValid = true
         else

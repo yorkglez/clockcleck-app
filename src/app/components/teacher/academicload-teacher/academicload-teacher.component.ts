@@ -85,82 +85,85 @@ export class AcademicloadTeacherComponent implements OnInit {
       // console.log(this.model)
       // this.etSlice  = parseInt(idx) + 1
     }*/
-      ngOnInit() {
-        this._subjectsService.getSubjectList().subscribe(data=>{this.subjects  = data})
+    ngOnInit() {
+      this._subjectsService.getSubjectList().subscribe(data=>{this.subjects  = data}) //get subjects lisat
+      /**/
+      this._scheduleService.getHours().subscribe(data=>{
+        this.hoursSelect = data
+        for (let i = 0; i < Object.keys(data).length; i++)
+            this.hours.push(this.hoursSelect[i])
+      })
 
-        this._scheduleService.getHours().subscribe(data=>{
-          this.hoursSelect = data
-          for (let i = 0; i < Object.keys(data).length; i++)
-              this.hours.push(this.hoursSelect[i])
-        })
+      this.days = this._academicloadService.getDays() //get days
+      this.semesters = this._scheduleService.getSemesters() //get hours
+      this._carersService.getSelectCarers(localStorage.getItem('extension')).subscribe(data=>{this.carers = data}) //get extensions
+      /*get academicload*/
+      this._academicloadService.getAcademicload().subscribe(data=>{
+        this.academicload = data //get data
+        this.oldAc.push(this.academicload) //add data to list
+      })
+    }
 
-        this.days = this._academicloadService.getDays()
-        this.semesters = this._scheduleService.getSemesters()
-        this._carersService.getSelectCarers(localStorage.getItem('extension')).subscribe(data=>{this.carers = data})
-        this._academicloadService.getAcademicload().subscribe(data=>{
-          this.academicload = data
-          this.oldAc.push(this.academicload)
-        //  console.log(this.oldAc)
-        })
+    Edit(idx){
+      this.idx = idx //get id
+      this.isEditable = true //shpw form
+      /*show data in form*/
+      this.model['objetive'] = this.academicload[idx].objetive
+      this.model['day'] = this.academicload[idx].day
+      this.model['startTime'] = this.academicload[idx].startTime
+      this.model['endTime'] = this.academicload[idx].endTime
+      this.model['semester'] = this.academicload[idx].semester
+      this.model['nameSubject'] = this.academicload[idx].nameSubject
+      this.model['alias'] = this.academicload[idx].alias
+    }
+
+    getSelectedSubject(idx) {
+      this.model['codeSubject'] = this.subjects[idx].codeSubject
+      this.model['nameSubject'] = this.subjects[idx].name
+    }
+
+    getSelectedCarer(idx) {
+      this.model['codeCarer'] = this.carers[idx].codeCarer
+      this.model['alias'] = this.carers[idx].alias
+    }
+
+    addSubject(form: NgForm){
+      let objective = this.model['objetive'] //get objetive
+      let id = this.academicload[this.idx].idSubjectlist //get
+      /*Search subejcts with similar id*/
+      for (let i = 0; i < this.academicload.length; i++) {
+          /*compare id*/
+          if (id == this.academicload[i].idSubjectlist)
+            this.academicload[i].objetive = objective
       }
-
-      Edit(idx){
-        this.idx = idx
-        this.isEditable = true
-        this.model['objetive'] = this.academicload[idx].objetive
-        this.model['day'] = this.academicload[idx].day
-        this.model['startTime'] = this.academicload[idx].startTime
-        this.model['endTime'] = this.academicload[idx].endTime
-        this.model['semester'] = this.academicload[idx].semester
-        this.model['nameSubject'] = this.academicload[idx].nameSubject
-        this.model['alias'] = this.academicload[idx].alias
-
+      /*validate isEditable status*/
+      if(this.isEditable){
+        /*add subject data to array position*/
+        this.academicload[this.idx].objetive = this.model['objetive']
+        this.academicload[this.idx].day =  this.model['day']
+        this.academicload[this.idx].startTime = this.model['startTime']
+        this.academicload[this.idx].endTime =   this.model['endTime']
+        this.academicload[this.idx].semester = this.model['semester']
+        this.academicload[this.idx].nameSubject = this.model['nameSubject']
+        this.academicload[this.idx].alias = this.model['alias']
+        this.isEditable = false
       }
+      else
+        this.academicload.push(this.model) //add new subject
+      this.model = {} //clear model
+      form.resetForm() //clear form
+    }
 
-      getSelectedSubject(idx) {
-       this.model['codeSubject'] = this.subjects[idx].codeSubject
-       this.model['nameSubject'] = this.subjects[idx].name
-      }
+    sliceHours(idx){
+      this.etSlice  = parseInt(idx) + 1
+    }
 
-      getSelectedCarer(idx) {
-        this.model['codeCarer'] = this.carers[idx].codeCarer
-        this.model['alias'] = this.carers[idx].alias
-      }
-
-      addSubject(form: NgForm){
-        let objective = this.model['objetive']
-        let id = this.academicload[this.idx].idSubjectlist
-        for (let i = 0; i < this.academicload.length; i++) {
-            if (id == this.academicload[i].idSubjectlist)
-              this.academicload[i].objetive = objective
-        }
-
-        if(this.isEditable){
-          this.academicload[this.idx].objetive = this.model['objetive']
-          this.academicload[this.idx].day =  this.model['day']
-          this.academicload[this.idx].startTime = this.model['startTime']
-          this.academicload[this.idx].endTime =   this.model['endTime']
-          this.academicload[this.idx].semester = this.model['semester']
-          this.academicload[this.idx].nameSubject = this.model['nameSubject']
-          this.academicload[this.idx].alias = this.model['alias']
-          this.isEditable = false
-        }
-        else
-          this.academicload.push(this.model)
-        this.model = {}
-        form.resetForm()
-      }
-
-      sliceHours(idx){
-        this.etSlice  = parseInt(idx) + 1
-      }
-
-      saveSchedule(event){
-        event.preventDefault();
-        this._academicloadService.Update(this.academicload).subscribe(resp=>{
-          console.log(resp)
-        })
-      }
+    saveSchedule(event){
+      event.preventDefault();
+      this._academicloadService.Update(this.academicload).subscribe(resp=>{
+        console.log(resp)
+      })
+    }
 
       getId(subject){
         this.subject = subject

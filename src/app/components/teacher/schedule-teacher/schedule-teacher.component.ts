@@ -26,22 +26,24 @@ export class ScheduleTeacherComponent implements OnInit {
   }
 
   ngOnInit() {
+    /*Call function getScheduleConfig from service*/
     this._scheduleService.getScheduleConfig('1414').subscribe(data=>{
       this.hours  = data.hours
       this.bTime = data.breakTime
     })
-    this._scheduleService.getSubjectsTeacher().subscribe(
-      data=>{
-        if(!data){
-          this.schedule = false;
-        }
-        else{
-          this.lunes = data.lunes
-          this.martes = data.martes
-          this.miercoles= data.miercoles
-          this.jueves = data.jueves
-          this.viernes = data.viernes
-        }
+    /*get schedule*/
+    this._scheduleService.getSubjectsTeacher().subscribe(data=>{
+      /*validate response*/
+      if(!data){
+        this.schedule = false;
+      }
+      else{
+        this.lunes = data.lunes
+        this.martes = data.martes
+        this.miercoles= data.miercoles
+        this.jueves = data.jueves
+        this.viernes = data.viernes
+      }
     })
   }
 

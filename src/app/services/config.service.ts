@@ -12,9 +12,11 @@ export class ConfigService {
   getConfig(): Observable<Config>{
     return this.http.get<Config>('api/queries/Config/getConfig.php')
   }
+
   Save(model){
     return this.http.post('api/queries/Config/Save.php',JSON.stringify(model))
   }
+
   Update(model){
     return this.http.post('api/queries/Config/Update.php',JSON.stringify(model))
   }

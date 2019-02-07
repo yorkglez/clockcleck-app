@@ -33,6 +33,7 @@ export class UsersService {
   getDatabyId(id:string): Observable<User>{
     return this.http.get<User>('api/queries/User/getUser.php',{params:{id:id}})
   }
+
   // checkEmail(email){
   //   return this.http.post('api/queries/User/checkEmail.php',{email:email})
   // }

@@ -27,14 +27,18 @@ export class CreateExtensionsComponent implements OnInit {
   ngOnInit() {
 
   }
+
   validateName(name){
+    /* Call function validateNameExtension from service */
     this._helpersService.validateNameExtension(name).subscribe(resp=>{
+      /*Validate response*/
       if(resp)
         this.nameValid = true
       else
         this.nameValid = false
     })
   }
+
   saveExtension(form: NgForm){
     if(this.nameValid){
       this._extensionsService.saveExtension(this.model).subscribe(resp =>{

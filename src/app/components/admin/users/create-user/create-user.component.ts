@@ -27,10 +27,11 @@ export class CreateUserComponent implements OnInit {
       }
 
   ngOnInit() {
+    /* call function getExtension from service*/
     this._extensionsService.getExtension().subscribe(data=>{this.extensions = data})
-    this.model['type'] = 'normal'
-    this.model['extension'] = localStorage.getItem('extension')
-    this.model['genere'] = 'H'
+    this.model['type'] = 'normal' //set user type default
+    this.model['extension'] = localStorage.getItem('extension') // set admin extension
+    this.model['genere'] = 'H' //set genere default
   }
 
   // validatePasswords(password, repeatpassword){
@@ -42,12 +43,13 @@ export class CreateUserComponent implements OnInit {
   //   }
   // }
   validateEmail(email){
+    /* Call function validaEmail from services */
     this._helpersService.validateEmail(email).subscribe(resp =>{
-      if(!resp){
-        this.emaiisValid = true
-      }else{
-        this.emaiisValid = false
-      }
+      /*Validate response*/
+      if(!resp)
+        this.emaiisValid = true // email is invalid
+      else
+        this.emaiisValid = false //email is valid
     })
   }
   Save(form: NgForm){

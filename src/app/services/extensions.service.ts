@@ -11,21 +11,27 @@ export class ExtensionsService {
   getExtension(): Observable<Extension[]>{
     return this.http.get<Extension[]>('api/queries/Extension/getExtension.php')
   }
-  getExtensionbyId(id): Observable<Extension>{
+
+  getDatabyId(id): Observable<Extension>{
     return this.http.get<Extension>('api/queries/Extension/getExtensionbyId.php',{params:{id: id}})
   }
-  getExtensions(status): Observable<Extension[]>{
+
+  getData(status): Observable<Extension[]>{
     return this.http.get<Extension[]>('api/queries/Extension/getExtensions.php',{params: {status: status}})
   }
+
   saveExtension(model){
     return this.http.post('api/queries/Extension/saveExtension.php',JSON.stringify(model))
   }
+
   Update(model){
     return this.http.post('api/queries/Extension/updateExtension.php',JSON.stringify(model))
   }
+
   Search(ter:string,status:string){
     return this.http.get<Extension[]>('api/queries/Extension/Search.php',{params: {ter: ter, status: status}})
   }
+
   changeStatus(id,status){
     return this.http.post('api/queries/Extension/changeStatus.php',{id: id,status: status})
   }

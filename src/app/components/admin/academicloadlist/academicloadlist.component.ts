@@ -39,14 +39,16 @@ export class AcademicloadlistComponent implements OnInit {
               }
 
   ngOnInit() {
+    /*Call function getAcademicloadList from service */
     this._academicloadteacherService.getAcademicloadList().subscribe(data=>{
+      /*Validate data*/
       if(!data)
-        this.aclist = []
+        this.aclist = [] //clear array
       else
-        this.aclist = data
+        this.aclist = data //get data
     })
-    this._extensionsService.getExtension().subscribe(data=>{this.extensions = data})
-    this.model = {"extension": localStorage.getItem('extension')}
+    this._extensionsService.getExtension().subscribe(data=>{this.extensions = data}) //get extensions list
+    this.model = {"extension": localStorage.getItem('extension')} //set user extension
   }
 
   Search(ter,extension){
@@ -66,15 +68,19 @@ export class AcademicloadlistComponent implements OnInit {
   }
 
   getSchedule(ac){
-    this.teacherName = ac.teacherName
+    this.teacherName = ac.teacherName //get teacher name
+    /*Call function getScheduleTeacherbyId from service*/
     this._scheduleService.getScheduleTeacherbyId(ac.codeTeacher).subscribe(data=>{
+      /*Validate response*/
       if(!data)
         this.existsSchedule = false
       else{
+        /*call function getScheduleConfig*/
         this._scheduleService.getScheduleConfig(ac.codeTeacher).subscribe(data=>{
           this.hours  = data.hours
           this.bTime = data.breakTime
         })
+        /*get days with subjects*/
         this.lunes = data.lunes
         this.martes = data.martes
         this.miercoles= data.miercoles
@@ -84,4 +90,5 @@ export class AcademicloadlistComponent implements OnInit {
       }
     })
   }
+
 }

@@ -38,26 +38,27 @@ export class EditSubjectComponent implements OnInit {
               }
 
   ngOnInit() {
+       /* call function params from service */
     this.activatedRoute.params.subscribe( params => {
-      this.id = params['id']
-      this._subjectsService.getSubjectbyId(this.id).subscribe(data=>{
+      this.id = params['id'] //get id from  url param
+         /* call getDatabyId function from service */
+      this._subjectsService.getDatabyId(this.id).subscribe(data=>{
+           /*add subject data to model*/
         this.model['code'] = data[0].codeSubject
         this.model['name'] = data[0].name
         this.model['credits'] = data[0].credits
-        // if(data[0].sequence == '0')
-        //   this.isSequence = false
-        // else
-        //   this.isSequence = true
+        /* search subjects in list */
         for (let i = 1; i < data.length; i++)
-          this.subjectsList.push(data[i])
+          this.subjectsList.push(data[i]) //add subject to list
       })
     })
   }
+
   showSequence(value){
     if(value == 'true')
-      this.isSequence = true
+      this.isSequence = true //show sequences subjects
     else
-      this.isSequence = false
+      this.isSequence = false //hide sequences subjects
   }
 
   validateCode(code){
@@ -115,18 +116,22 @@ export class EditSubjectComponent implements OnInit {
       this.subjects['name'] = this.subjectsList[idx].name
       this.subjects['credits'] = this.subjectsList[idx].credits
   }
+
   updateItem(idx){
+    /*add subject data to your position*/
     this.subjectsList[idx].codeSubject = this.subjects['code']
     this.subjectsList[idx].name = this.subjects['name']
     this.subjectsList[idx].credits = this.subjects['credits']
-    this.updateItems = false
+    this.updateItems = false //hide update boton
   }
+
   deleteItem(){
-    let code = this.subjectsList[this.idx].codeSubject
+    let code = this.subjectsList[this.idx].codeSubject //get index
+    /*Call removeSquence from service*/
     this._subjectsService.removeSquence(code).subscribe(resp=>{
-      if(resp){
-        this.subjectsList.splice(this.idx,1)
-      }
+      /*Validate response*/
+      if(resp)
+        this.subjectsList.splice(this.idx,1) //remove item from array
     })
   }
   getId(idx){

@@ -30,10 +30,11 @@ export class EditTeacherComponent implements OnInit {
               }
 
   ngOnInit() {
-    this._extensionsService.getExtension().subscribe(data=>{this.extensions = data})
+    this._extensionsService.getExtension().subscribe(data=>{this.extensions = data})//Get extensions list
+    /* get urls params*/
     this.activatedRoute.params.subscribe( params => {
       this.id = params['id']
-
+      /* Call function getDatabyId from service*/
       this._teachersService.getDatabyId(this.id).subscribe(data=>{
         this.oldEmail = data['email']
         this.model['code'] = data['codeTeacher']
@@ -52,9 +53,11 @@ export class EditTeacherComponent implements OnInit {
      this.router.navigate(['/teachers'])
    }
   }
+
   validatePhone(phone){
+    /* Validate phone length*/
     if(phone.length == 3 || phone.length == 7 )
-      this.model['phone'] = phone + '-'
+      this.model['phone'] = phone + '-' //add character
   }
 
   validateCode(code){

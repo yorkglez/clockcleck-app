@@ -24,8 +24,8 @@
               ngModel [(ngModel)]="data.startTime"
               #startTime="ngModel">
               <!-- icon editable -->
-              <div class="edit-icon">
-                <i *ngIf="isEditable" class="fas fa-edit"></i>
+              <div  *ngIf="isEditable && !isNewconfig" class="edit-icon">
+                <i class="fas fa-edit"></i>
               </div>
             </td>
           </tr>
@@ -40,8 +40,8 @@
               name="endTime"
               #endTime="ngModel">
               <!-- icon editable -->
-              <div class="edit-icon">
-                <i *ngIf="isEditable" class="fas fa-edit"></i>
+              <div  *ngIf="isEditable && !isNewconfig" class="edit-icon">
+                <i class="fas fa-edit"></i>
               </div>
             </td>
           </tr>
@@ -58,8 +58,8 @@
               ngModel [(ngModel)]="data.durationModule"
               #durationModule="ngModel">
               <!-- icon editable -->
-              <div class="edit-icon">
-                <i *ngIf="isEditable" class="fas fa-edit"></i>
+              <div  *ngIf="isEditable && !isNewconfig" class="edit-icon">
+                <i  class="fas fa-edit"></i>
               </div>
             </td>
           </tr>
@@ -75,8 +75,8 @@
               name="sbreakTime"
               #sbreakTime="ngModel">
               <!-- icon editable -->
-              <div class="edit-icon">
-                <i *ngIf="isEditable" class="fas fa-edit"></i>
+              <div  *ngIf="isEditable && !isNewconfig" class="edit-icon">
+                <i class="fas fa-edit"></i>
               </div>
             </td>
           </tr>
@@ -92,8 +92,8 @@
               ngModel [(ngModel)]="data.ebreakTime"
               #ebreakTime="ngModel">
               <!-- icon editable -->
-              <div class="edit-icon">
-                <i *ngIf="isEditable" class="fas fa-edit"></i>
+              <div  *ngIf="isEditable && !isNewconfig" class="edit-icon">
+                <i  class="fas fa-edit"></i>
               </div>
             </td>
           </tr>
@@ -110,8 +110,8 @@
               ngModel [(ngModel)]="data.durationBreak"
               #durationBreak="ngModel">
               <!-- icon editable -->
-              <div class="edit-icon">
-                <i *ngIf="isEditable" class="fas fa-edit"></i>
+              <div  *ngIf="isEditable && !isNewconfig" class="edit-icon">
+                <i class="fas fa-edit"></i>
               </div>
             </td>
           </tr>

@@ -21,21 +21,23 @@ export class EditextensionComponent implements OnInit {
               private activatedRoute:ActivatedRoute,
               private _helpersService: HelpersService,
               private router: Router,
-              private _titleService: Title) { 
+              private _titleService: Title) {
                 this._titleService.setTitle('Editar extension')
               }
 
   ngOnInit() {
+    /* call function params from service */
     this.activatedRoute.params.subscribe( params => {
-      this.id = params['id']
-      this._extensionsService.getExtensionbyId(this.id).subscribe(data=>{
-          this.name = data.name
-          this.model['name'] = data.name
-          this.model['city'] = data.city
-          this.model['address'] = data.address
+      this.id = params['id'] //get id from  url param
+      /* call getDatabyId function from service */
+      this._extensionsService.getDatabyId(this.id).subscribe(data=>{
+        this.name = data.name
+        /*add extension data to model*/
+        this.model['name'] = data.name
+        this.model['city'] = data.city
+        this.model['address'] = data.address
       })
     })
-
   }
 
   validateName(name){

@@ -11,15 +11,19 @@ export class ReportsService {
   constructor(private http: HttpClient) {
 
   }
+
   getReports(model): Observable<Report[]>{
     return this.http.post<Report[]>('api/queries/Report/getReports.php',JSON.stringify(model))
   }
+
   getselectTeacher(ex): Observable<TeacherSelect[]>{
     return this.http.get<TeacherSelect[]>('api/queries/Helpers/getselectTeacher.php',{params:{ex:ex}})
   }
+
   saveChanges(id,note,type){
     return this.http.post('api/queries/Attendance/saveChanges.php',{id: id, note: note, type: type})
   }
+
   generateReportPDF(){
     var headers = new Headers();
     headers.append('responseType', 'arraybuffer');

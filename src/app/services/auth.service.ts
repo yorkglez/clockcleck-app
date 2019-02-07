@@ -16,38 +16,40 @@ export class AuthService {
   }
 
   /*Validate session data in db and return if this data exists*/
+
   authUser(user){
     return this.http.post<myData>('api/queries/Auth/authUser.php',JSON.stringify(user))
   }
+
   authTeacher(teacher){
     return this.http.post<myData>('api/queries/Auth/authTeacher.php',JSON.stringify(teacher))
   }
+
   logout(){
     return this.http.get<logout>('api/queries/Auth/logOut.php')
   }
+
   verifyToken(type:string, token:string, id:string, action:string){
     return this.http.post('api/queries/Auth/verifyToken.php',{type: type, token: token, id: id,action: action})
   }
+
   verifyEmail(email){
     return this.http.post('api/queries/Auth/verifyEmail.php',JSON.stringify(email))
   }
+
   resetPassword(email,type){
     return this.http.post('api/queries/Auth/resetPassword.php',{email: email, type: type})
   }
+
   changePassword(model){
     return this.http.post('api/queries/Auth/changePassword.php',JSON.stringify(model))
   }
+  
   //create localStorage from user logged
   setLoggedIn(value: boolean){
     this.loggedInStatus = value
-    // if (value) {
-    //   if(type == 'normal'){
-    //     localStorage.setItem('extension',extension)
-    //   }
-    //   localStorage.setItem('username',username)
-    //   localStorage.setItem('email',email)
-    // }
   }
+
   isLoggedIn(){
     return this.http.get<logged>('api/queries/Auth/isLoggedIn.php')
   }

@@ -13,22 +13,17 @@ export class UserService {
     return this.http.get<myData>('api/queries/Auth/validateUser.php')
   }
 
-  // isLoggedIn(){
-  //   return this.http.get<logged>('api/queries/Auth/isLoggedIn.php')
-  // }
   getPorfile(): Observable<Porfile>{
     return this.http.get<Porfile>('api/queries/User/getPorfile.php')
   }
+
   changePassword(oldpassword, newpassword){
     return this.http.post('api/queries/User/changePassword.php',{oldpassword: oldpassword, newpassword: newpassword})
   }
+  
   updatePorfile(model){
     return this.http.post('api/queries/User/updatePorfile.php',JSON.stringify(model))
   }
-
-  // logout(){
-  //   return this.http.get<logoutStatus>('http://api.malastareas.com.mx/Queries/Auth/logOut.php')
-  // }
 }
 
 interface myData {

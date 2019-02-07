@@ -32,10 +32,13 @@ export class EditUserComponent implements OnInit {
               }
 
   ngOnInit() {
-    this._extensionsService.getExtension().subscribe(data=>{this.extensions = data})
+    this._extensionsService.getExtension().subscribe(data=>{this.extensions = data}) //Get extensions list
+    /* get urls params*/
     this.activatedRoute.params.subscribe( params => {
-      this.id = params['id']
+      this.id = params['id'] //get id
+      /* Call function getDatabyId from service*/
       this._usersService.getDatabyId(this.id).subscribe(data=>{
+         /*set data user in from*/
          this.model['name'] =  data.name
          this.model['lastname'] =  data.lastname
          this.model['email'] = data.email

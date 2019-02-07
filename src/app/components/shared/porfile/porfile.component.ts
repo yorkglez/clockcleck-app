@@ -31,8 +31,9 @@ export class PorfileComponent implements OnInit {
     }
 
   ngOnInit() {
+    /*Call function getPorfile from service*/
     this._userService.getPorfile().subscribe(data=>{
-      this.porfileInfo = data
+      this.porfileInfo = data //get data
     })
   }
 
@@ -75,10 +76,12 @@ export class PorfileComponent implements OnInit {
   }
 
   editPorfile(){
+    /*Validate editable status*/
     if(this.isEditable)
-      this.isEditable = false
+      this.isEditable = false //hide edit form
     else{
-      this.isEditable = true
+      this.isEditable = true //show edit form
+      /*add data to form*/
       this.data['name'] = this.porfileInfo.name
       this.data['lastname'] = this.porfileInfo.lastname
       this.data['email'] = this.porfileInfo.email
@@ -86,6 +89,7 @@ export class PorfileComponent implements OnInit {
   }
 
   validatePasswords(password, repeatpassword){
+    /*Validate passwords*/
     if(password == repeatpassword)
       this.passwordsisValid = true
     else
@@ -93,31 +97,33 @@ export class PorfileComponent implements OnInit {
   }
 
   showChangePass(){
+    /* Show change password form*/
     if(this.changePass)
       this.changePass = false
     else
       this.changePass = true
   }
+
   changePassword(oldpassword, newpassword){
+    /*compare passwords*/
     if (this.passwordsisValid && oldpassword != newpassword) {
+      /*Call function changePassword from service*/
       this._userService.changePassword(oldpassword, newpassword).subscribe(resp=>{
         if(resp){
           this.changePass = false
-          this.type  = "success"
-          this.message = 'Su contrasena ha sido actualizada.'
+          this.type  = "success"//alert type
+          this.message = 'Su contrasena ha sido actualizada.'//alert message
         }
         else{
-          this.type  = "error"
-          this.message = 'La contrasena que escribiste no coincide con tu contrasena actual.'
+          this.type  = "error"//alert type
+          this.message = 'La contrasena que escribiste no coincide con tu contrasena actual.'//alert message
         }
-        this.alertisVisible = true
+        this.alertisVisible = true //shhow alert]
+        //hide alert in 2 secunds
         setTimeout(() => {
-        this.alertisVisible = false
+        this.alertisVisible = false //hide alert
         }, 2500)
       })
-    }
-    else{
-
     }
   }
 

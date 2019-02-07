@@ -26,18 +26,21 @@ export class EditCarersComponent implements OnInit {
                 this._titleService.setTitle('Editar carrera')
                }
 
-  ngOnInit() {
-      this._extensionsService.getExtension().subscribe(data=>{this.extensions = data})
-      this.activatedRoute.params.subscribe( params => {
-        this.id = params['id']
-        this._carersService.getDatabyId(this.id).subscribe(data=>{
-              this.model['code'] = data['codeCarer']
-              this.model['name'] = data['name']
-              this.model['alias'] = data['alias']
-              this.model['extension'] = data['Extensions_idExtension']
-        })
-      })
-  }
+ ngOnInit() {
+   this._extensionsService.getExtension().subscribe(data=>{this.extensions = data}) //get extensions list
+   /* call function params from service */
+   this.activatedRoute.params.subscribe( params => {
+     this.id = params['id'] //get id from  url param
+     /* call getDatabyId function from service */
+     this._carersService.getDatabyId(this.id).subscribe(data=>{
+       /*add carer data to model*/
+       this.model['code'] = data['codeCarer']
+       this.model['name'] = data['name']
+       this.model['alias'] = data['alias']
+       this.model['extension'] = data['Extensions_idExtension']
+     })
+   })
+ }
   addCharacter(code){
     if(code.length == 4 || code.length == 9 )
       this.model['code'] = code + '-'
@@ -53,9 +56,13 @@ export class EditCarersComponent implements OnInit {
     }
   }
 
-  Save(form: NgForm){
-   this._carersService.Update(this.model,this.id).subscribe(res => console.log(res))
-   this.router.navigate(['/carers'])
+  Update(){
+    /*Call function Update from service*/
+    this._carersService.Update(this.model,this.id).subscribe(resp =>{
+      /* Validate response*/
+      if(resp)
+      this.router.navigate(['/carers']) //redirect to carers
+    })
   }
 
 }

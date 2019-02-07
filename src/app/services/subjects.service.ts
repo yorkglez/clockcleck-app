@@ -40,15 +40,19 @@ export class SubjectsService {
   changeStatus(id:string, status:string){
     return this.http.post('api/queries/Subject/changeStatus.php',{id,status});
   }
+
   getCarerbyType(type:string){
     return this.http.get<Subject[]>('api/queries/Subject/getDatabyType.php',{params:{type:type}})
   }
-  getSubjectbyId(id:string):Observable<Subject[]>{
+
+  getDatabyId(id:string):Observable<Subject[]>{
     return this.http.get<Subject[]>('api/queries/Subject/getSubject.php',{params:{id:id}})
   }
+
   removeSquence(code){
     return this.http.post('api/queries/Subject/removeSquence.php',JSON.stringify(code))
   }
+
   getSubjectsListTeacher(code): Observable<SubjectList[]>{
         return this.http.get<SubjectList[]>('api/queries/Subject/getSubjectsListTeacher.php',{params:{code:code}})
   }

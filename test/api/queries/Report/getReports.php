@@ -18,5 +18,5 @@
    'subject'=>isset($data->subjectCode)? $data->subjectCode: 0
  ];
  $resp = $report->getReports($values); //Get data from database
- echo json_endoce($resp); //Send data in json to frontend
+ echo json_encode($resp); //Send data in json to frontend
  ?>

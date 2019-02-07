@@ -29,33 +29,35 @@ export class ExtensionsComponent implements OnInit {
       }
 
   ngOnInit() {
-   this._loaderService.display(true)
-    this._extensionsService.getExtensions('1').subscribe(data=>{
-      this.extensions = data
-      this._loaderService.display(false)
+   this._loaderService.display(true) //show loader
+   /* Call function getData from service*/
+    this._extensionsService.getData('1').subscribe(data=>{
+      this.extensions = data //add data
+      this._loaderService.display(false)//hide loader
     })
   }
   getId(extension){
     this.extension = extension;
   }
   getType(type){
-    this._extensionsService.getExtensions(type).subscribe(data=>{this.extensions = data})
+    this._extensionsService.getData(type).subscribe(data=>{this.extensions = data})
   }
   Search(ter, type){
-    this.searchAlert = false
-    this._loaderService.display(true)
+    this.searchAlert = false //hide search searchAlert
+    /*Call function Search from service*/
     this._extensionsService.Search(ter, type).subscribe(
+      /*Get response from service*/
       data=>{
+        /* Validate response */
         if(!data){
-          this.ter = ter
-          this.extensions = []
-          this.searchAlert = true
+          this.ter = ter //set ter
+          this.extensions = [] // clear extensions
+          this.searchAlert = true //show search alert
         }
         else
-            this.extensions = data
-        })
-        this._loaderService.display(false)
-      }
+        this.extensions = data // add data response to extensions
+      })
+    }
 
 
   Edit(extension){

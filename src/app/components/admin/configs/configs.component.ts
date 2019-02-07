@@ -31,8 +31,10 @@ export class ConfigsComponent implements OnInit {
   }
 
   getData(){
+    /*Call function getConfig from service*/
     this._configService.getConfig().subscribe(data=>{
-      this.configData = data
+      this.configData = data //get getData
+      /*set data in form*/
       this.data['startTime'] = data['startTime']
       this.data['endTime'] = data['endTime']
       this.data['sbreakTime'] = data['sbreakTime']
@@ -43,10 +45,12 @@ export class ConfigsComponent implements OnInit {
   }
 
   Edit(){
+    /*Validate editable status*/
     if(this.isEditable)
-      this.isEditable = false
+      this.isEditable = false //hide form
     else{
-      this.isEditable = true
+      this.isEditable = true//show form
+      /*sjpw data in form*/
       this.data['startTime'] = this.configData.startTime
       this.data['endTime'] = this.configData.endTime
       this.data['durationModule'] = this.configData.durationModule
@@ -98,17 +102,16 @@ export class ConfigsComponent implements OnInit {
   }
 
   newConfig(){
-    this.data = {}
+    this.data = {}//clea form
+    /* validate isNewconfig status*/
     if(this.isNewconfig){
-        this.isNewconfig = false
-        this.isEditable = false
+        this.isNewconfig = false //hide form
+        this.isEditable = false //hide form
     }
-
     else{
-        this.isNewconfig = true
-        this.isEditable = true
+        this.isNewconfig = true //hide form
+        this.isEditable = true //hide form
     }
-
   }
 
 }

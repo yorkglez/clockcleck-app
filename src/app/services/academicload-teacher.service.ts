@@ -33,6 +33,7 @@ export class AcademicloadTeacherService {
   AssingSubject(model) {
     return this.http.post('api/queries/Academicload/AssingSubjectTeacher.php',JSON.stringify(model))
   }
+
   Update(model) {
     return this.http.post('api/queries/Academicload/updateSubjectlist.php',JSON.stringify(model))
   }
@@ -40,18 +41,23 @@ export class AcademicloadTeacherService {
   getAcademicloadList():Observable<acList[]>{
     return this.http.get<acList[]>('api/queries/Academicload/getAcademicloadList.php');
   }
+
   searchAcademiadloadList(ter: string, extension: string):Observable<acList[]>{
     return this.http.get<acList[]>('api/queries/Academicload/searchAcademicloadList.php',{params:{ ter: ter,extension: extension}});
   }
+
   getAcademicload():Observable<acload[]>{
       return this.http.get<acload[]>('api/queries/Academicload/getAcademicloadTeacher.php');
   }
+
   Delete(id:string){
     return this.http.post('api/queries/Academicload/Delete.php',id)
   }
+
   getHours(){
     return this.hours
   }
+
   getDays(){
     return this.days
   }
