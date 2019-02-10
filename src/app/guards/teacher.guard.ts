@@ -18,24 +18,25 @@ export class TeacherGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-
-    return this._authService.isLoggedIn().pipe(map(resp=> {
-      if(resp.type == 'teacher' && resp.logged){
-        this._authService.setLoggedIn(true);
-        return true
-      }
-      else if(resp.type == 'admin' && resp.logged){
-        this.router.navigate(['users'])
-        return false
-      }
-      else if(resp.type == 'normal' && resp.logged){
-        this.router.navigate(['reports'])
-        return false
-      }
-      else{
-        this.router.navigate(['loginteacher'])
-        return false
-      }
-    }))
+      /*Call function isLoggedIn from service*/
+      return this._authService.isLoggedIn().pipe(map(resp=> {
+        /* Validate type user*/
+        if(resp.type == 'teacher' && resp.logged){
+          this._authService.setLoggedIn(true);  // users is logged
+          return true
+        }
+        else if(resp.type == 'admin' && resp.logged){
+          this.router.navigate(['users']) // rederect to users
+          return false
+        }
+        else if(resp.type == 'normal' && resp.logged){
+          this.router.navigate(['reports']) // rederect to reports
+          return false
+        }
+        else{
+          this.router.navigate(['loginteacher']) // rederect to login
+          return false
+        }
+      }))
+    }
   }
-}

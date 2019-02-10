@@ -21,8 +21,11 @@ export class ForgotpasswordComponent implements OnInit {
   ngOnInit() {
     console.log(this.type)
   }
+
   validateEmail(email){
+    /*Validate email*/
     if(email.valid){
+      /*Call function validateEmail from service*/
       this._helpersService.validateEmail(email.value).subscribe(resp =>{
         if(resp)
           this.emailisValid = true
@@ -33,15 +36,18 @@ export class ForgotpasswordComponent implements OnInit {
   }
 
   sendReset(email){
+    /*Validate email*/
     if(this.emailisValid){
-      // this.model['type'] = this.type
+      /*Call function resetPassword from service*/
       this._authService.resetPassword(this.model['email'],this.type).subscribe(resp=>{
+        /*Validate response*/
         if(resp){
           this.confirmisComple = true
+          /*Verify user type*/
           if(this.type = 'user')
-            this.url = '/login'
+            this.url = '/login' //generate login url
           else
-            this.url = '/loginteacher'
+            this.url = '/loginteacher' //generate login url
         }
       })
     }

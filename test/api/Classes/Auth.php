@@ -143,13 +143,15 @@
         $token = $values->token;
         $id = $values->id;
         $type = $values->type;
+        $action = $values->action;
         $password = $values->password;
         $encrypt = password_hash($password, PASSWORD_DEFAULT);
-        $sql = "CALL createPassword(:type,:password,:id)";
+        $sql = "CALL createPassword(:type,:password,:id,:action)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->bindParam(':type',$type);
         $stmt->bindParam(':password',$encrypt);
         $stmt->bindParam(':id',$id);
+        $stmt->bindParam(':action',$action);
 
         if($stmt->execute())
           $resp = true;

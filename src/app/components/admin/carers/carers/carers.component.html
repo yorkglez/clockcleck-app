@@ -61,7 +61,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let carer of carers | paginate: { itemsPerPage: 25, currentPage: p }; let i = index ">
+        <tr *ngFor="let carer of carers | paginate: { itemsPerPage: 2, currentPage: p }; let i = index ">
           <th scope="row">{{carer.codeCarer}}</th>
           <td>{{carer.name}}</td>
           <td>{{carer.alias}}</td>

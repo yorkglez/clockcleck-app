@@ -17,20 +17,21 @@ export class UserGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-
-
+      /*Call function isLoggedIn from service*/
       return this.auth.isLoggedIn().pipe(map(resp=> {
+        /* Validate type user*/
         if(resp.type == 'normal' && resp.logged){
-          this.auth.setLoggedIn(true);
+          this.auth.setLoggedIn(true); // users is logged
           return true
         }
         else if(resp.type == 'admin' && resp.logged){
-          this.auth.setLoggedIn(true);
+          this.auth.setLoggedIn(true); // users is logged
           return true
         }
+        /* user type teacher*/
         else{
-          this.router.navigate(['login'])
-          localStorage.clear()
+          this.router.navigate(['login']) // rederect to login
+          localStorage.clear() //clear localStorage
           return false
         }
       }))

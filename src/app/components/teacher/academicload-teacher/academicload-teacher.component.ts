@@ -15,6 +15,9 @@ import { Title } from '@angular/platform-browser';
              ]
 })
 export class AcademicloadTeacherComponent implements OnInit {
+    type: string 
+    message: string
+
     hours = []
     hoursSelect:any = []
     days = []
@@ -30,6 +33,7 @@ export class AcademicloadTeacherComponent implements OnInit {
     idx: number
     i: number
     isEditable: boolean = false
+    alertisVisible: boolean = true
     subject
     constructor(private config: NgSelectConfig,
       private _scheduleService: ScheduleService,
@@ -128,6 +132,34 @@ export class AcademicloadTeacherComponent implements OnInit {
     }
 
     addSubject(form: NgForm){
+
+      /*validate isEditable status*/
+      if(this.isEditable){
+        let objective = this.model['objetive'] //get objetive
+        let id = this.academicload[this.idx].idSubjectlist //get
+        /*Search subejcts with similar id*/
+        for (let i = 0; i < this.academicload.length; i++) {
+            /*compare id*/
+            if (id == this.academicload[i].idSubjectlist)
+              this.academicload[i].objetive = objective
+        }
+        /*add subject data to array position*/
+        this.academicload[this.idx].objetive = this.model['objetive']
+        this.academicload[this.idx].day =  this.model['day']
+        this.academicload[this.idx].startTime = this.model['startTime']
+        this.academicload[this.idx].endTime =   this.model['endTime']
+        this.academicload[this.idx].semester = this.model['semester']
+        this.academicload[this.idx].nameSubject = this.model['nameSubject']
+        this.academicload[this.idx].alias = this.model['alias']
+        this.isEditable = false
+      }
+      else
+        this.academicload.push(this.model) //add new subject
+      this.model = {} //clear model
+      form.resetForm() //clear form
+    }
+
+    updateSubject(form: NgForm){
       let objective = this.model['objetive'] //get objetive
       let id = this.academicload[this.idx].idSubjectlist //get
       /*Search subejcts with similar id*/
@@ -154,6 +186,9 @@ export class AcademicloadTeacherComponent implements OnInit {
       form.resetForm() //clear form
     }
 
+
+
+
     sliceHours(idx){
       this.etSlice  = parseInt(idx) + 1
     }
@@ -161,7 +196,18 @@ export class AcademicloadTeacherComponent implements OnInit {
     saveSchedule(event){
       event.preventDefault();
       this._academicloadService.Update(this.academicload).subscribe(resp=>{
-        console.log(resp)
+        if(resp){
+            this.type = 'success'
+            this.message = 'La carga academica se ha guardado correctamente.'
+        }
+        else{
+          this.type = 'error'
+          this.message = 'Ocurrio un error al intentar guardar.'
+        }
+        this.alertisVisible = true
+        setTimeout(() => {
+          this.alertisVisible = false
+        }, 1300)
       })
     }
 

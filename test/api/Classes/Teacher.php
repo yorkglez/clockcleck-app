@@ -204,16 +204,10 @@
       return  json_encode($fetch);
     }
     /*Automatic download finger file*/
-    public function getFingerfile($id){
+    public function getFingerfile($fileName){
       $path = 'C:/FingersServer/';
-      $sql = "SELECT fingerRoute FROM Teachers WHERE codeTeacher: :id";
-      $stmt = $this->connect()->prepare($sql);
-      $stmt->bindParam(':id',$id);
-      $stmt->execute();
-      if($stmt->rowCount()>0){
-        $fileName = $stmt->fetchColumn();
-        $fingerRoute = $path.$fileName;
-        if (file_exists($path)) {
+        $fingerRoute = $path.$fileName.".fpt";
+        if (file_exists($fingerRoute)) {
             $mm_type="application/octet-stream";
             header("Pragma: public");
             header("Expires: 0");
@@ -227,10 +221,10 @@
             readfile($fingerRoute);
             exit();
         }
-          else {
+        else {
           print 'Sorry, we could not find requested download file.';
-          }
-      }
+        }
+    //  }
 
     }
     /**
@@ -260,17 +254,7 @@
        $this->closeConnection();
        return  json_encode($resp);
      }
-    public function test(){
-      $sql = "SELECT finger FROM Teachers";
-      $stmt = $this->connect()
-      ->query($sql);
-      $fetch = array();
-      while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-          $fetch[] = $row;
-      }
-      $this->closeConnection();
-      return  json_encode($fetch);
-    }
+
 
     public function saveTeacher($values){
     //  include_once('/Helpers.php');
@@ -313,7 +297,6 @@
       return '{"success": true}';
       $this->closeConnection();
     }
-
 
     public function searchTeachersDesk($ter,$extension){
       $sql = "SELECT * FROM View_searchTeachersDesk WHERE (code LIKE concat(:ter,'%') OR name LIKE concat(:ter,'%') OR lastname LIKE concat(:ter,'%') OR email LIKE concat(:ter,'%')) AND extension = :extension ";

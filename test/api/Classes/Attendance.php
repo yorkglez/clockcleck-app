@@ -5,7 +5,7 @@
   require_once('Connection.php');
   class Attendance extends Connection
   {
-    function createAttendance($values){
+    public function createAttendance($values){
       $resp = false;
       // $sql = "INSERT INTO Attendances (idAttendance, type, date_At, checkEntry,checkEnd,topic, Subjects_list_idSubjectlist, Schedule_idSchedule)
       // VALUES (0,'presente','2018-29-11','7:00','7:00','text',43,55)";

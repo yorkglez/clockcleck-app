@@ -31,8 +31,8 @@ export class ReportsComponent implements OnInit {
   id: number
 
   ter:string
-  type: string
-  message: string
+  type: string = 'success'
+  message: string = 'La asistencia se ha cambiado correctamente.'
   extension: string = localStorage.getItem('extension')
 
   model = {"week": "day","note": "", "search": "",
@@ -44,7 +44,7 @@ export class ReportsComponent implements OnInit {
   reportExists: boolean = true
   editable: boolean = false
   notes: boolean = false
-  alertVisible: boolean = false
+  alertVisible: boolean = true
   isAdmin: boolean = false
   date
   dateNow

@@ -70,7 +70,6 @@ import { LoaderComponent } from './components/shared/loader/loader.component';
 @NgModule({
   declarations: [
     AppComponent,
-
     LoginComponent,
     NavadminComponent,
     LogoutComponent,
@@ -277,7 +276,7 @@ import { LoaderComponent } from './components/shared/loader/loader.component';
       canActivate: [ValidGuard]
     },
     {
-      path:'resetpassword',
+      path:'resetpassword/:type/:token/:id/:action',
       component: ResetpasswordComponent,
       canActivate: [ValidGuard]
     },

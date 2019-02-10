@@ -23,36 +23,28 @@ export class AdminGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    // if(this.auth.isLoggedIn) {
-    //   return true
-    // }
-    //validate if session users exists
-  //  if (next.url['path'] == 'users') {
-      //   console.log()
-  //  }
+    /*Call function isLoggedIn from service*/
     return this._authService.isLoggedIn().pipe(map(resp=> {
-
+  /* Validate type user*/
       if(resp.type == 'admin' && resp.logged){
-        this._authService.setLoggedIn(true);
+        this._authService.setLoggedIn(true); // users is logged
         return true
       }
       else if(resp.type == 'normal' && resp.logged && next.url[0].path  != 'reports'){
-          this._authService.setLoggedIn(true);
-          this.router.navigate(['reports'])
+          this._authService.setLoggedIn(true); // users is logged
+          this.router.navigate(['reports']) // rederect to reports
           return true
       }
       else if(resp.type == 'normal' && resp.logged && next.url[0].path  == 'reports'){
-
-          this._authService.setLoggedIn(true);
-
-        return true
+          this._authService.setLoggedIn(true); // users is logged
+          return true
       }
       else if(resp.type == 'teacher' && resp.logged){
-        this.router.navigate(['porfileteacher'])
+        this.router.navigate(['porfileteacher']) // rederect to porfile
         return false
       }
       else{
-        this.router.navigate(['login'])
+        this.router.navigate(['login']) // rederect to login
         return false
       }
     }))

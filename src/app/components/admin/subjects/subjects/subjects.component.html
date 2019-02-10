@@ -61,7 +61,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let subject of subjects | paginate: { itemsPerPage: 25, currentPage: p }; let i = index ">
+            <tr *ngFor="let subject of subjects | paginate: { itemsPerPage: 2, currentPage: p }; let i = index ">
               <th>{{subject.codeSubject}}</th>
               <td>{{subject.name}}</td>
               <td>{{subject.credits}}</td>

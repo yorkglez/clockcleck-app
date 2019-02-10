@@ -23,7 +23,7 @@ export class EditSubjectComponent implements OnInit {
   updateItems: boolean = false
   codeValid: boolean = true
   secodeValid: boolean = true
-  isSequence: boolean = true
+  isSequence: boolean = false
   alertVisible: boolean = false
   code: string = ''
   secCode: string = ''

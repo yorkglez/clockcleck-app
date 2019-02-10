@@ -130,9 +130,9 @@
               Porfavor escriba el N de creditos.
             </div>
           </div>
-          <div class="form-group">
-            <button *ngIf="!updateItems" (click)="addSubject()" type="button" name="btn-add" class="btn btn-success">Anadir</button>
-            <button *ngIf="updateItems" (click)="updateItem(idx)" type="button" name="btn-add" class="btn btn-primary">Actualizar</button>
+          <div class="form-group" style="position: relative;">
+            <button *ngIf="!updateItems" (click)="addSubject()" type="button" name="btn-add" style="position: absolute; bottom: -70px;" class="btn btn-success">Anadir</button>
+            <button *ngIf="updateItems" (click)="updateItem(idx)" type="button" name="btn-add" style="position: absolute; bottom: -70px;" class="btn btn-primary">Actualizar</button>
           </div>
         </div>
       </form>

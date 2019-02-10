@@ -8,6 +8,8 @@
   </div>
   <!-- body -->
   <div class="content-body">
+    <!-- alerts -->
+    <app-alerts [type]="type" [message]= "message" [alertVisible]="alertisVisible"  ></app-alerts>
     <form  (ngSubmit)="form.valid && addSubject(form)" #form="ngForm" class="needs-validation" novalidate>
       <!-- {{form.value | json}} -->
       <!-- select day -->
@@ -108,7 +110,7 @@
       name="semester"
       ngModel [(ngModel)]="model.semester"
       #semester="ngModel"
-      [ngClass]="{'is-invalid':form.submitted && semester.invalid}"
+      [ngClass]="{'is-invalid':form.submitted && semester.invalid && model.semester != null}"
       required>
         <ng-container *ngFor="let semester of semesters let i=index" >
           <option [value]="semester" selected>{{semester}}</option>
@@ -125,6 +127,8 @@
     </div>
     <!-- add subject button -->
     <div class="form-group col-md-auto mb-3 col-sm-auto">
+      <!-- <button (click)="addSubject(form)" class="btn btn-success" *ngIf="!isEditable"><i class="fas fa-plus"></i> Agregar</button> -->
+      <!-- <button (click)="updateSubject(form)" class="btn btn-primary" *ngIf="isEditable"><i class="fas fa-plus"></i> Actualizar</button> -->
       <button (click)="addSubject(form)" type="submit"
        class="btn"
        [ngClass]="{'btn-success': !isEditable,'btn-primary': isEditable}">
