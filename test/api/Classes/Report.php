@@ -37,9 +37,11 @@
       }
 
       public function generateReportExcel($values){
+        $reportType = 'docente';
         $spreadsheet = new Spreadsheet(); //Call class
         $spreadsheet->setActiveSheetIndex(0);
         $sheet = $spreadsheet->getActiveSheet(); //Activate sheet
+
         /* Styles */
         $styleTitle = array(
           'font'  => array(
@@ -102,7 +104,7 @@
         $sheet->setCellValue('A4','Extension: '.$this->getExtensionName($values['extension'])); //Extension name
         $sheet->mergeCells('A4:B4'); //Combinate cells
 
-        $sheet->setCellValue('C4','Tipo de reporte: Por materia');
+        $sheet->setCellValue('C4','Tipo de reporte: Por '.$reportType);
         $sheet->mergeCells('C4:E4'); //Combinate cells
 
         $sheet->setCellValue('F4','Docente: Juan Luis Rivaz');
@@ -138,8 +140,7 @@
         $sheet->mergeCells('H6:H7'); //Combinate cells
         $sheet->setCellValue('I6', 'Total de horas');
         $sheet->mergeCells('I6:I7'); //Combinate cells
-        $sheet->getStyle('A6
-        :I7')->applyFromArray($styleHeader); //Apply styles
+        $sheet->getStyle('A6:I7')->applyFromArray($styleHeader); //Apply styles
         /* Get report form database*/
         $reports = $this->getReports($values);
 

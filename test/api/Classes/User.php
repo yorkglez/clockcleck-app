@@ -1,22 +1,15 @@
 <?php
   require_once('Connection.php');
   class User extends Connection{
-
     /**
-     * [getData description]
+     * [getUsers description]
      * @return [type] [description]
      */
-    public function getData(){
+    public function getUsers(){
       session_start();
       $id =  $_SESSION['id'];
-      $sql ="SELECT * FROM View_Users WHERE NOT idUser = :id";
-      $stmt = $this->connect()->prepare($sql);
-      $stmt->bindParam(':id',$id,PDO::PARAM_INT);
-      $stmt->execute();
-      while($row = $stmt->fetch(PDO::FETCH_ASSOC))
-          $fetch[] = $row;
-      $this->closeConnection();
-      return  json_encode($fetch);
+      $values = ['id' => $id];
+      return $this->getData('Users','WHERE NOT idUser = :id',$values);
     }
 
     public function createUser($values){
@@ -93,13 +86,8 @@
     }
     /**/
     public function getUser($id){
-      $sql = "SELECT * FROM Users WHERE idUser = :id";
-      $stmt = $this->connect()->prepare($sql);
-      $stmt->bindParam(':id',$id,PDO::PARAM_INT);
-      $stmt->execute();
-      $row = $stmt->fetch(PDO::FETCH_ASSOC);
-      $this->closeConnection();
-      return  json_encode($row);
+      $values = ['id' => $id];
+      return $this->getFirst('Users','WHERE idUser = :id',$values);
     }
     /**/
     public function checkEmail($email){

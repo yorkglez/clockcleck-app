@@ -1,5 +1,6 @@
 <?php
-  class Connection {
+  require_once('Operations.php');
+  class Connection extends Operations {
     private $server;
     private $user;
     private $pass;

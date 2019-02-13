@@ -1,15 +1,14 @@
 <?php
   /*Includes*/
   require('../../Headers.php');
-  require('../../Classes/Connection.php');
-  require('../../Classes/Operations.php');
+  require('../../Classes/Subject.php');
   /**/
   $values = [
     'ter'=> $_GET['ter'],
     'status'=> $_GET['status'],
     'sequence'=> $_GET['sequence']
   ];
-  $op = new Operations;
-  $resp = $op->Call('getSubjects',$values,true);
+  $subject = new Subject;
+  $resp = $subject->getSubjects($values);
   echo $resp;
 ?>

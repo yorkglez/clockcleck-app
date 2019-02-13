@@ -5,6 +5,21 @@
   require_once('Connection.php');
   class Attendance extends Connection
   {
+    /**
+     * [createJustification description]
+     * @param  [type] $data [description]
+     * @return [type]       [description]
+     */
+    public function createJustification($data){
+      $values =[
+        'idSl' => $data->subjectCode,
+        'idSc' => $data->schedule,
+        'note' => $data->note,
+        'topic' => 'lala',
+        'dateAt' => $data->dateAt
+      ];
+      return $this->Call('createJustification',$values);
+    }
     public function createAttendance($values){
       $resp = false;
       // $sql = "INSERT INTO Attendances (idAttendance, type, date_At, checkEntry,checkEnd,topic, Subjects_list_idSubjectlist, Schedule_idSchedule)

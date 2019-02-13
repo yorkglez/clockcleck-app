@@ -5,6 +5,6 @@
  require('../../Classes/User.php');
  /*Call Class users*/
  $user = new User;
- $data = $user->getData(); //Get data from database
+ $data = $user->getUsers(); //Get data from database
  echo $data; //Send data in json to frontend
  ?>

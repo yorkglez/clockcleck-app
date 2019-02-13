@@ -31,21 +31,23 @@ export class ReportsComponent implements OnInit {
   id: number
 
   ter:string
-  type: string = 'success'
-  message: string = 'La asistencia se ha cambiado correctamente.'
+  type: string
+  message: string
   extension: string = localStorage.getItem('extension')
 
   model = {"week": "day","note": "", "search": "",
   "startDate": "null", "endDate": "null","extension": this.extension,"atType":"","codeTeacher": "","subjectCode": null}
 
+  modelJust = {}
   searchAlert: boolean
   reportOptions: boolean = false
   checksDate: boolean = false
   reportExists: boolean = true
   editable: boolean = false
   notes: boolean = false
-  alertVisible: boolean = true
+  alertVisible: boolean = false
   isAdmin: boolean = false
+  isJustification: boolean = true
   date
   dateNow
   teachers: TeacherSelect [] = []
@@ -53,13 +55,15 @@ export class ReportsComponent implements OnInit {
   carers = []
   subjects = []
   reports = []
-
+  tcSubjects = []
+  Schedule = []
   @ViewChild('teachersSelect') public ngSelect: ReportsComponent;
 
   constructor(private _reportsService: ReportsService,
               private _extensionsService: ExtensionsService,
               private _carersService: CarersService,
               private _subjectsService: SubjectsService,
+
               private http: HttpClient,
               private _titleService: Title) {
                   this._titleService.setTitle('Reportes')
@@ -128,6 +132,42 @@ export class ReportsComponent implements OnInit {
 
   }
 
+  getSubjectbyDate(date){
+    this._reportsService.getSubjectbyDate(date,'1414').subscribe(data=>{
+      this.tcSubjects = data
+    })
+  }
+  getSchedulelist(id){
+    this._reportsService.getSchedulelist(id,'1414').subscribe(data=>{
+      this.Schedule = data
+    })
+  }
+
+  createAttendance(){
+      console.table(this.modelJust)
+      this._reportsService.createAttendance(this.modelJust).subscribe(resp=>{
+        if(resp){
+          this.type  = "success"
+          this.message = 'La justificacion ha sido creada correctamente.'
+          this.modelJust = {}
+          // this.Schedule = []
+        }else{
+          this.type  = "error"
+          this.message = 'Ocurrio un error al intentar gurdar.'
+        }
+        this.alertVisible = true
+        setTimeout(() => {
+          this.alertVisible = false
+        }, 1300)
+      })
+  }
+  showJusti(){
+    if(this.isJustification)
+      this.isJustification = false
+    else
+      this.isJustification = true
+    this.modelJust = {}
+  }
 
   getReport(){
     console.log(this.model.subjectCode)

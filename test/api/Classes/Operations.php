@@ -1,8 +1,8 @@
 <?php
  //require '././vendor/autoload.php';
 //use  Faker\Factor::create();
-  require_once('Connection.php');
-  class Operations extends Connection {
+  //require_once('Connection.php');
+  class Operations {
 
     /**
      * [this funtion get data for databse]
@@ -11,12 +11,15 @@
      */
     public function getData($table,$conditions = false, $values = false){
       $sql = "SELECT * FROM ".$table; //sentence sql
-      if(!$conditions){
-        // $sql = "SELECT * FROM ".$table." ".$conditions;
+      if($conditions != false){
         $sql .= " ".$conditions;
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute($values);
+        if($values != false)
+          $stmt->execute($values);
+        else
+          $stmt->execute();
       }
+
       else{
         // $sql = "SELECT * FROM ".$table; //sentence sql
         $stmt = $this->connect()->prepare($sql); //preprare sentence
@@ -27,6 +30,21 @@
         $fetch[] = $row;
       $this->closeConnection(); //close conection
       return  json_encode($fetch); //return data
+    }
+    /**
+     * [getFirst description]
+     * @param  [type]  $table      [description]
+     * @param  boolean $conditions [description]
+     * @param  boolean $values     [description]
+     * @return [type]              [description]
+     */
+    public function getFirst($table,$conditions = false, $values = false){
+        $sql = "SELECT * FROM ".$table." ".$conditions; //sentence sql
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute($values);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->closeConnection(); //close conection
+        return  json_encode($row); //return data
     }
 
     public function Create($values, $table){
@@ -45,7 +63,7 @@
      * @param [string] $procedure [name of procedure]
      * @param [array] $values    [values for procedure]
      */
-    public function Call($procedure,$values,$get){
+    public function Call($procedure,$values,$get = false){
       $exc = false;
       $sql = "CALL ".$procedure." (";
       foreach($values as $param=>$value)
@@ -74,7 +92,6 @@
      * @param [array] $values [this a]
      */
     public function Insert($table,$values){
-
       $sql = "INSERT INTO ".$table." (";
       foreach($values as $param=>$value)
         $sql .= $param.", ";
@@ -112,6 +129,23 @@
         $exc = true;
       return $exc;
     }
+
+    public function Delete($table, $values){
+      $exc = false;
+      $sql = "DELETE ".$table." WHERE ";
+      foreach($values as $param=>$value){
+        if(end( $values )  == $value ){
+          $sql = substr($sql,0,-1);
+          $sql .="WHERE ".$param." = :".$param;
+        }
+        else
+          $sql .= $param." = :". $param." ,";
+      }
+      $stmt = $this->connect()->prepare($sql);
+      if($stmt->execute($values))
+        $exc = true;
+      return $exc;
+    }
     /**
      * [changeStatus description]
      * @param  [type] $table  [description]
@@ -120,7 +154,7 @@
      * @param  [type] $status [description]
      * @return [type]         [description]
      */
-    public function changeStatus($table,$id,$idName,$status){
+    public function changeSt($table,$id,$idName,$status){
         $sql ="UPDATE ".$table." SET status = :status WHERE ".$idName."  = :id";
         $stmt = $this->connect()->prepare($sql);
         $stmt->bindParam(':id',$id);
@@ -161,57 +195,5 @@
        echo $this->Insert('Teachers',$values);
       }
     }
-
-    public function getRows($table,$conditions = array()){
-    $sql = 'SELECT ';
-    $sql .= array_key_exists("select",$conditions)?$conditions['select']:'*';
-    $sql .= ' FROM '.$table;
-    if(array_key_exists("where",$conditions)){
-        $sql .= ' WHERE ';
-        $i = 0;
-        foreach($conditions['where'] as $key => $value){
-            $pre = ($i > 0)?' AND ':'';
-            $sql .= $pre.$key." = '".$value."'";
-            $i++;
-        }
-    }
-
-
-
-
-
-
-    if(array_key_exists("order_by",$conditions)){
-        $sql .= ' ORDER BY '.$conditions['order_by'];
-    }
-
-    if(array_key_exists("start",$conditions) && array_key_exists("limit",$conditions)){
-        $sql .= ' LIMIT '.$conditions['start'].','.$conditions['limit'];
-    }elseif(!array_key_exists("start",$conditions) && array_key_exists("limit",$conditions)){
-        $sql .= ' LIMIT '.$conditions['limit'];
-    }
-
-    $query = $this->db->prepare($sql);
-    $query->execute();
-
-    if(array_key_exists("return_type",$conditions) && $conditions['return_type'] != 'all'){
-        switch($conditions['return_type']){
-            case 'count':
-                $data = $query->rowCount();
-                break;
-            case 'single':
-                $data = $query->fetch(PDO::FETCH_ASSOC);
-                break;
-            default:
-                $data = '';
-        }
-    }else{
-        if($query->rowCount() > 0){
-            $data = $query->fetchAll();
-        }
-    }
-    return !empty($data)?$data:false;
-}
-
   }
 ?>

@@ -83,6 +83,65 @@
       }
     }
 
+    public function getSelectsjbytc($date,$code){
+      $timestamp = strtotime($date);
+      $dayName = date("l", $timestamp);
+      $nDay = date('N',strtotime($dayName));
+
+      // $sql = "SELECT Subjects_list_idSubjectlist AS idSl, Schedule_idSchedule AS idSc FROM Attendances at
+      // INNER JOIN Subjects_list sl ON at.Subjects_list_idSubjectlist = sl.idSubjectlist
+      // WHERE sl.Teachers_codeTeacher = :code AND at.date_At = :date";
+      // $stmt = $this->connect()->prepare($sql);
+      // $stmt->bindParam(':date',$date,PDO::PARAM_STR);
+      // $stmt->bindParam(':code',$code,PDO::PARAM_STR);
+      // $stmt->execute();
+      $sql = "SELECT sl.idSubjectlist AS id, sb.name  FROM Subjects_list sl
+      INNER JOIN Subjects sb ON sl.Subjects_codeSubject = sb.codeSubject
+      INNER JOIN schedule sc ON sc.Subjects_list_idSubjectlist = sl.idSubjectlist
+      WHERE sc.day = ".$nDay." AND sl.Teachers_codeTeacher = :code";
+      $stmt = $this->connect()->prepare($sql);
+      // $stmt->bindParam(':day', $nDay, PDO::PARAM_INT);
+      $stmt->bindParam(':code', $code, PDO::PARAM_STR);
+      $stmt->execute();
+      if($stmt->rowCount() > 0){
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC))
+          $fetch[] = $row;
+      }
+      else
+        $fetch = false;
+      $this->closeConnection();
+      return  json_encode($fetch);
+    }
+
+   public function getSchedulelist($idsl, $code){
+     $sql = "SELECT  at.Schedule_idSchedule FROM attendances at
+     INNER JOIN Subjects_list sl ON sl.idSubjectlist = at.Subjects_list_idSubjectlist
+     WHERE sl.Teachers_codeTeacher = :code AND at.date_At = '2019-02-11' AND sl.idSubjectlist = :idsl";
+     $stmt = $this->connect()->prepare($sql);
+     $stmt->bindParam(':idsl',$idsl,PDO::PARAM_INT);
+     $stmt->bindParam(':code',$code,PDO::PARAM_STR);
+     $stmt->execute();
+     if($stmt->rowCount() > 0){
+       while($row = $stmt->fetchColumn())
+         $ids[] = $row;
+       $cad =  implode(',',$ids);
+       $this->closeConnection();
+
+       $sql = "SELECT idSchedule, concat(startTime, ' - ', endTime) as hours FROM schedule WHERE idSchedule not in "."(".$cad.")";
+       $stmt = $this->connect()->prepare($sql);
+       $stmt->execute();
+       if($stmt->rowCount() > 0){
+         while($row = $stmt->fetch(PDO::FETCH_ASSOC))
+           $fetch[] = $row;
+       }
+       else
+         $fetch = false;
+       $this->closeConnection();
+     }
+     else
+       $fetch = false;
+     return  json_encode($fetch);
+   }
   }
 
 

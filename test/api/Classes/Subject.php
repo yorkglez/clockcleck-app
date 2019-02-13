@@ -7,18 +7,11 @@
   {
     /**
      * [getSubjects description]
-     * @param  [type] $status [description]
+     * @param  [type] $values [description]
      * @return [type]         [description]
      */
-    public function getSubjects($status){
-      $sql = "SELECT * FROM Subjects WHERE status = :status";
-      $stmt = $this->connect()->prepare($sql);
-      $stmt->bindParam(':status',$status,PDO::PARAM_STR);
-      $stmt->execute();
-      while($row = $stmt->fetch(PDO::FETCH_ASSOC))
-          $fetch[] = $row;
-      $this->closeConnection();
-      return json_encode($fetch);
+    public function getSubjects($values){
+      return $this->Call('getSubjects',$values, true);
     }
     public function getSubject($id){
       $sql = "SELECT * FROM Subjects WHERE codeSubject = :id";
@@ -200,7 +193,7 @@
       return  json_encode($resp);
     }
 
-    public function Update($values){
+    public function updateSubject($values){
       $sql ="UPDATE Subjects SET name = :name, credits = :credits, codeSubject = :newcode WHERE codeSubject = :oldcode";
       $stmt = $this->connect()->prepare($sql);
       if($stmt->execute($values))

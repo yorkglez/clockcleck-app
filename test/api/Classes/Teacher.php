@@ -9,25 +9,28 @@
      * [getTeachers description]
      * @return [type] [description]
      */
-    public function getTeachers(){
-      $sql = "SELECT * FROM View_Teachers WHERE NOT status = '0'" ;
-      $stmt = $this->connect()
-      ->query($sql);
-      $fetch = array();
-      while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-          $fetch[] = $row;
-      }
-      $this->closeConnection();
-      return  json_encode($fetch);
+    public function getTeachers($values){
+      return $this->Call('getTeachers',$values,true);
+      // $sql = "SELECT * FROM View_Teachers WHERE NOT status = '0'" ;
+      // $stmt = $this->connect()
+      // ->query($sql);
+      // $fetch = array();
+      // while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+      //     $fetch[] = $row;
+      // }
+      // $this->closeConnection();
+      // return  json_encode($fetch);
     }
     public function getTeacher($id){
-      $sql = "SELECT * FROM View_Teachers WHERE codeTeacher = :id";
-      $stmt = $this->connect()->prepare($sql);
-      $stmt->bindParam(':id',$id,PDO::PARAM_STR);
-      $stmt->execute();
-      $row = $stmt->fetch(PDO::FETCH_ASSOC);
-      $this->closeConnection();
-      return  json_encode($row);
+      $values = ['id' => $id];
+      return $this->getFirst('View_Teachers', "WHERE codeTeacher = :id", $values );
+      // $sql = "SELECT * FROM View_Teachers WHERE codeTeacher = :id";
+      // $stmt = $this->connect()->prepare($sql);
+      // $stmt->bindParam(':id',$id,PDO::PARAM_STR);
+      // $stmt->execute();
+      // $row = $stmt->fetch(PDO::FETCH_ASSOC);
+      // $this->closeConnection();
+      // return  json_encode($row);
     }
     public function getSelect($ex){
       $sql = "SELECT name,codeTeacher FROM Teachers WHERE Extensions_idExtension = :ex";
@@ -185,23 +188,69 @@
       return  json_encode($fetch);
     }
 
-    public function getSchedulelist($day, $id){
-      $sql = "CALL getScheduleList(:day,:id);";
+    public function getSchedulelist($idsl, $code){
+      $sql = "SELECT  at.Schedule_idSchedule  FROM attendances at
+      INNER JOIN Subjects_list sl ON sl.idSubjectlist = at.Subjects_list_idSubjectlist
+      WHERE sl.Teachers_codeTeacher = :code AND at.date_At = '2019-02-11' AND sl.idSubjectlist = :idsl";
       $stmt = $this->connect()->prepare($sql);
-      $stmt->bindParam(':day',$day);
-      $stmt->bindParam(':id',$id);
+      $stmt->bindParam(':idsl',$idsl,PDO::PARAM_INT);
+      $stmt->bindParam(':code',$code,PDO::PARAM_STR);
       $stmt->execute();
       if($stmt->rowCount() > 0){
-        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        while($row = $stmt->fetchColumn())
+          $ids[] = $row;
+        $cad =  implode(',',$ids);
+        $this->closeConnection();
+
+        $sql = "SELECT idSchedule AS id, concat(startTime, ' - ', endTime) as hours FROM schedule
+        WHERE idSchedule not in "."(".$cad.") AND Subjects_list_idSubjectlist = :idsl";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->bindParam(':idsl',$idsl,PDO::PARAM_INT);
+        $stmt->execute();
+        if($stmt->rowCount() > 0){
+          while($row = $stmt->fetch(PDO::FETCH_ASSOC))
             $fetch[] = $row;
         }
+        else
+          $fetch = false;
+        $this->closeConnection();
       }
       else{
-        $fetch = false;
+        $daynum = date("N", strtotime(date('l')));
+        $sql = "SELECT idSchedule AS id, concat(startTime, ' - ', endTime) as hours FROM schedule
+        WHERE Subjects_list_idSubjectlist = :idsl AND day = :day";
+        $stmt->bindParam(':idsl',$idsl,PDO::PARAM_INT);
+        $stmt->bindParam(':day',$daynum,PDO::PARAM_STR);
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+        if($stmt->rowCount() > 0){
+          while($row = $stmt->fetch(PDO::FETCH_ASSOC))
+            $fetch[] = $row;
+        }
+        else
+          $fetch = false;
+        $this->closeConnection();
       }
-
-      $this->closeConnection();
       return  json_encode($fetch);
+
+
+
+      // $sql = "CALL getScheduleList(:day,:id);";
+      // $stmt = $this->connect()->prepare($sql);
+      // $stmt->bindParam(':day',$day);
+      // $stmt->bindParam(':id',$id);
+      // $stmt->execute();
+      // if($stmt->rowCount() > 0){
+      //   while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+      //       $fetch[] = $row;
+      //   }
+      // }
+      // else{
+      //   $fetch = false;
+      // }
+      //
+      // $this->closeConnection();
+      // return  json_encode($fetch);
     }
     /*Automatic download finger file*/
     public function getFingerfile($fileName){

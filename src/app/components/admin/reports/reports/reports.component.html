@@ -117,8 +117,74 @@
   <div class="form-group mr-sm-2">
     <button [disabled]="reports.length == 0" class="btn btn-success" (click)="getReport(form)"><i class="fas fa-file-excel"></i> Descargar excel</button>
   </div>
-</div>
+  <div class="form-group mr-sm-2">
+    <button [disabled]="reports.length == 0" class="btn btn-warning" (click)="showJusti()">Crear justificacion</button>
+  </div>
+    </div>
+
+    <form *ngIf="isJustification">
+      <hr>
+      <h4 style="color: white;">Nueva justificacion</h4>
+      <div class="form-row align-items-end">
+        <!-- input date -->
+        <div class="form-group col-md-auto col-sm-4">
+          <label for="">Fecha</label>
+          <input class="form-control"
+          type="date"
+          (focusout)="getSubjectbyDate(dateAt.value)"
+          name="dateAt"
+          ngModel [(ngModel)]="modelJust.dateAt"
+          #dateAt = "ngModel">
+        </div>
+        <!-- subject -->
+        <div class="form-group col-md-2">
+        <label for="showType">Materia</label>
+        <ng-select
+        (change)="getSchedulelist(subjectSelect.value)"
+        [items]="tcSubjects"
+        bindLabel="name"
+        bindValue="id"
+        name="subjectSelect"
+        ngModel [(ngModel)]="modelJust.subjectCode"
+        #subjectSelect ="ngModel"
+        placeholder = "Seleccionar materia"
+        required>
+      </ng-select>
+        </div>
+        <!-- schedule -->
+        <div class="form-group col-md-2">
+      <label for="showType">Horario</label>
+      <ng-select
+      [items]="Schedule"
+      bindLabel="hours"
+      bindValue="id"
+      name="schedueleSelect"
+      ngModel [(ngModel)]="modelJust.schedule"
+      #schedueleSelect ="ngModel"
+      placeholder = "Seleccionar horario"
+      required>
+    </ng-select>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="">Nota</label>
+          <textarea name="note"
+          ngModel [(ngModel)]="modelJust.note"
+          #note ="ngModel"
+          class="form-control"
+          rows="3"
+          style="height:38px; resize: none;" >
+        </textarea>
+        </div>
+        <div class="form-group mr-sm-2">
+          <button [disabled] = "Schedule.length == 0" class="btn btn-success" (click)="createAttendance()"><i class="fas fa-check"></i> Jusficiar</button>
+        </div>
+      </div>
+    </form>
+
+
+
   </form>
+
   <!-- table   -->
   <div class="table-responsive-md"  id="reportContainer" #reportContainer >
     <table class="table table-sm" >
