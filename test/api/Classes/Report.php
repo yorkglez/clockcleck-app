@@ -13,9 +13,9 @@
    date_default_timezone_set('America/Mexico_City');
   class Report extends Connection
   {
-
-
       public function getReports($values){
+        // return $this->Call('getReports',$values,true);
+
         $sql = "CALL getReports(:week,:ter,:startDate,:endDate,:code,:extension,:subject)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->bindParam(':week',$values['week'],PDO::PARAM_STR);
@@ -154,7 +154,8 @@
         }
 
         /* Get report form database*/
-        $reports = $this->getReports($values);
+        $reports = $this->getReports($values); //get report and cover to array
+        // print_r($reports);
         $i = 8;
         /* get data from database */
         foreach ($reports as $row) {

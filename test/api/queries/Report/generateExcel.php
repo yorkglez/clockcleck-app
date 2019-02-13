@@ -22,14 +22,13 @@
    $subject = 48;
    //
    $values = [
+      'week' => $week,
      'ter' => '',
-     'week' => $week,
      'startDate' => $startDate,
      'endDate' => $endDate,
      'code' =>$code,
      'extension'=>$extension,
      'subject'=>$subject,
-     'type' => 'docente'
    ];
 
   $report= new Report;

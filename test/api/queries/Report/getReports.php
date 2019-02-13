@@ -9,8 +9,8 @@
  $data = json_decode(file_get_contents("php://input",true));
 
  $values = [
-   'ter' => $data->search,
    'week' => $data->week,
+   'ter' => $data->search,
    'startDate' => $data->startDate,
    'endDate' => $data->endDate,
    'code' =>$code =  isset($data->teachersSelect)? $data->teachersSelect: 'null',
