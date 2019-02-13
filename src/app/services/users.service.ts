@@ -25,7 +25,7 @@ export class UsersService {
     return this.http.post('api/queries/User/updateUser.php',{model: JSON.stringify(model),id: id})
   }
   Delete(id:string){
-    return this.http.post<Response>('api/queries/User/deleteData.php',id)
+    return this.http.post('api/queries/User/deleteData.php',id)
   }
   getUserbyType(type:string): Observable<User[]>{
     return this.http.get<User[]>('api/queries/User/getDatabyType.php',{params:{type:type}})

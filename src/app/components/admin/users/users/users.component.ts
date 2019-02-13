@@ -43,9 +43,9 @@ export class UsersComponent implements OnInit {
 
 deleteUser(){
   /* Call function Delete from service*/
-  this._usersService.Delete(this.user['idUser']).subscribe(data=>{
+  this._usersService.Delete(this.user['idUser']).subscribe(resp=>{
     /* validate response */
-    if(data.success){
+    if(resp){
       this.users.splice(this.users.indexOf(this.user),1) //Remove item from array
     }
   })

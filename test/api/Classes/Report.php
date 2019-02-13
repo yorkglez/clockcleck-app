@@ -37,10 +37,13 @@
       }
 
       public function generateReportExcel($values){
-        $reportType = 'docente';
+        $reportType = 'docente'; //reporte type
+        /*call class sheet*/
         $spreadsheet = new Spreadsheet(); //Call class
         $spreadsheet->setActiveSheetIndex(0);
         $sheet = $spreadsheet->getActiveSheet(); //Activate sheet
+
+
 
         /* Styles */
         $styleTitle = array(
@@ -90,15 +93,15 @@
         $sheet->setCellValue('A1', 'INSTITUTO TECNOLOGICO JOSE MARIO MOLINA PASQUEL Y HENRIQUEZ'); //Set value cell
         $sheet->getStyle('A1')->applyFromArray($styleTitle); //Apply styles
         // $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); //Apply styles
-        $sheet->mergeCells('A2:I2'); //Combinate cells
+        $sheet->mergeCells('A2:H2'); //Combinate cells
         $sheet->setCellValue('A2', 'Reporte De asistencia personal docente Campus Tala'); //Set value cell
         $sheet->getStyle('A2')->applyFromArray($styleSubtitle); //Apply styles
-
-        $sheet->mergeCells('A3:I3'); //Combinate cells
+        $sheet->mergeCells('A3:H3'); //Combinate cells
         if($values['week'] != 'null')
           $sheet->setCellValue('A3', 'Periodo 2018 al 2019 '.$this->dataBetween($values['week']));
         else
-          $sheet->setCellValue('A3', 'Periodo 2018 al 2019 typereport del '.date("d-m-Y",strtotime($values['startDate'])).' al '.date("d-m-Y",strtotime($values['endDate'])));
+          $sheet->setCellValue('A3', 'Periodo 2018 al 2019 typereport del '
+          .date("d-m-Y",strtotime($values['startDate'])).' al '.date("d-m-Y",strtotime($values['endDate'])));
         $sheet->getStyle('A3')->applyFromArray($styleSubtitle); //Apply styles
 
         $sheet->setCellValue('A4','Extension: '.$this->getExtensionName($values['extension'])); //Extension name
@@ -111,11 +114,11 @@
         $sheet->mergeCells('F4:H4'); //Combinate cells
 
         /* Date & time  */
-        $sheet->setCellValue('J2','Fecha: '.$this->getDatetimeNow('date'));
-        $sheet->mergeCells('J2:K2'); //Combinate cells2
+        $sheet->setCellValue('I2','Fecha: '.$this->getDatetimeNow('date'));
+        // $sheet->mergeCells('I2:J2'); //Combinate cells2
 
-        $sheet->setCellValue('J3','Hora: '.$this->getDatetimeNow('time'));
-        $sheet->mergeCells('J3:K3'); //Combinate cells
+        $sheet->setCellValue('I3','Hora: '.$this->getDatetimeNow('time'));
+        // $sheet->mergeCells('I3:J3'); //Combinate cells
 
         /* Header table */
         $sheet->setCellValue('A6', 'Departamento');
@@ -127,7 +130,7 @@
         $sheet->mergeCells('C6:D6'); //Combinate cells
 
         // $sheet->mergeCells('E5:D5'); //Combinate cells
-
+        /*Table header*/
         $sheet->setCellValue('C7', 'Entrada');
         $sheet->setCellValue('D7', 'Salida');
         $sheet->setCellValue('E7', 'Grupo');
@@ -136,14 +139,22 @@
         $sheet->mergeCells('F6:F7'); //Combinate cells
         $sheet->setCellValue('G6', 'Tema/Actividad');
         $sheet->mergeCells('G6:G7'); //Combinate cells
-        $sheet->setCellValue('H6', 'Materia');
-        $sheet->mergeCells('H6:H7'); //Combinate cells
-        $sheet->setCellValue('I6', 'Total de horas');
-        $sheet->mergeCells('I6:I7'); //Combinate cells
-        $sheet->getStyle('A6:I7')->applyFromArray($styleHeader); //Apply styles
+        /*header for docente type*/
+        if($reportType == 'docente'){
+          $sheet->setCellValue('H6', 'Materia');
+          $sheet->mergeCells('H6:H7'); //Combinate cells
+          $sheet->setCellValue('I6', 'Total de horas');
+          $sheet->mergeCells('I6:I7'); //Combinate cells
+          $sheet->getStyle('A6:I7')->applyFromArray($styleHeader); //Apply styles
+        }
+        else if($reportType == 'materia'){
+          $sheet->setCellValue('H6', 'Total de horas');
+          $sheet->mergeCells('H6:H7'); //Combinate cells
+          $sheet->getStyle('A6:H7')->applyFromArray($styleHeader); //Apply styles
+        }
+
         /* Get report form database*/
         $reports = $this->getReports($values);
-
         $i = 8;
         /* get data from database */
         foreach ($reports as $row) {
@@ -155,6 +166,11 @@
           $sheet->setCellValue('F'.$i, $row['type']); //Assitencia
           $sheet->setCellValue('G'.$i, $row['topic']); //Tema
           $sheet->setCellValue('H'.$i, $row['nameSubject']); //Materia
+          /*get total hours*/
+          $stTime = strtotime($row['checkEntry']);
+          $enTime = strtotime($row['checkEnd']);
+          $total = round((abs($stTime-$enTime) / 60)/50);
+          $sheet->setCellValue('I'.$i,  $total); //Materia
 
           $i++; //count
         }
@@ -178,7 +194,7 @@
         /* Save file */
         $writer = new Xlsx($spreadsheet);
         try {
-            $writer->save('hello world.xlsx');
+            $writer->save('hello world.xlsx'); //Create file
             echo 'save';
         } catch (\Exception $e) {
           echo $e->getMessage();

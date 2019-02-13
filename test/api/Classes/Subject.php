@@ -144,18 +144,8 @@
       return  json_encode($fetch);
     }
     public function getSubjectsListTeacher($code){
-      $sql = "SELECT * FROM viewgetsubjectsteacher WHERE codeTeacher = :code";
-      $stmt = $this->connect()->prepare($sql);
-      $stmt->bindParam(':code',$code);
-      $stmt->execute();
-      if($stmt->rowCount() > 0){
-        while($row = $stmt->fetch(PDO::FETCH_ASSOC))
-            $fetch[] = $row;
-      }
-      else
-        $fetch  = [];
-      return  json_encode($fetch);
-      $this->closeConnection();
+      $values = ['code' => $code];
+      return $this->getData('viewgetsubjectsteacher','WHERE codeTeacher = :code',$values);
     }
     /**
      * [changeStatus description]

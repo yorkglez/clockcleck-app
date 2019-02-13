@@ -19,7 +19,6 @@
         else
           $stmt->execute();
       }
-
       else{
         // $sql = "SELECT * FROM ".$table; //sentence sql
         $stmt = $this->connect()->prepare($sql); //preprare sentence
@@ -130,21 +129,16 @@
       return $exc;
     }
 
-    public function Delete($table, $values){
-      $exc = false;
-      $sql = "DELETE ".$table." WHERE ";
-      foreach($values as $param=>$value){
-        if(end( $values )  == $value ){
-          $sql = substr($sql,0,-1);
-          $sql .="WHERE ".$param." = :".$param;
-        }
-        else
-          $sql .= $param." = :". $param." ,";
-      }
+    public function Delete($table, $idName, $id){
+      $sql ="DELETE FROM ".$table." WHERE ".$idName." = :id";
       $stmt = $this->connect()->prepare($sql);
-      if($stmt->execute($values))
-        $exc = true;
-      return $exc;
+      $stmt->bindParam(':id',$id);
+      if($stmt->execute())
+        $resp = true;
+      else
+        $resp = false;
+      $this->closeConnection();
+      return json_encode($resp);
     }
     /**
      * [changeStatus description]

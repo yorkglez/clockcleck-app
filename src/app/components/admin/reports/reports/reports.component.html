@@ -55,6 +55,7 @@
       ngModel [(ngModel)]="model.teachersSelect"
       #teachersSelect ="ngModel"
       placeholder ="Seleccionar docente"
+      notFoundText = "Sin resultados"
       required>
     </ng-select>
   </div>
@@ -83,6 +84,7 @@
    ngModel [(ngModel)]="model.subjectCode"
    #carersSelect ="ngModel"
    placeholder = "Seleccionar materia"
+   notFoundText = "Sin resultados"
    required>
  </ng-select>
 </div>
@@ -123,7 +125,7 @@
     </div>
 
     <form *ngIf="isJustification">
-      <hr>
+      <!-- <hr> -->
       <h4 style="color: white;">Nueva justificacion</h4>
       <div class="form-row align-items-end">
         <!-- input date -->
@@ -148,6 +150,7 @@
         ngModel [(ngModel)]="modelJust.subjectCode"
         #subjectSelect ="ngModel"
         placeholder = "Seleccionar materia"
+        notFoundText = "Sin resultados"
         required>
       </ng-select>
         </div>
@@ -162,6 +165,7 @@
       ngModel [(ngModel)]="modelJust.schedule"
       #schedueleSelect ="ngModel"
       placeholder = "Seleccionar horario"
+      notFoundText = "Sin resultados"
       required>
     </ng-select>
         </div>

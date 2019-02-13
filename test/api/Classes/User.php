@@ -31,12 +31,12 @@
         $url = 'http://localhost:4200/confirmemail/'.$type.'/'.$token.'/'.$email.'/activate'; // url for activate email
         /* html message*/
         $body = '
-          <h2>Clock Check</h2>
-          <h3>Bienvenid@: User name a la plataforma!</h3>
-          <p><b>Correo:</b> emal@</p>
-          <p>Si este no es tu correo haz caso omiso de este este correo y contactate con el administrador de la plataforma para que cambie el correo.</p>
-          <p>Para poder activar tu cuenta es necesario validar tu correo, haz clic en el siguiente boton para ser enviado a la pagina de activacion.</p>
-          <a href=""
+          <img src="./Classes/public/images/logocc.png"  alt="imagen..."  style=" width: 150px;">
+          <h3 style="font-family: Arial;">Bienvenid@: '.$values['name'].' '.$values['lastname'].' a la plataforma!</h3>
+          <p style="font-family: Arial;"><b>Correo:</b> '.$values['email'].'</p>
+          <p style="font-family: Arial;">Si este no es tu correo haz caso omiso de este este correo y contactate con el administrador de la plataforma para que cambie el correo.</p>
+          <p style="font-family: Arial;">Para poder activar tu cuenta es necesario validar tu correo, haz clic en el siguiente boton para ser enviado a la pagina de activacion.</p>
+          <a href="'.$url.'"
           style="
           text-decoration: none;
           background-color: #28a745;
@@ -59,73 +59,62 @@
               "
           >Activar cuenta</a>
         ';
-         // $resp = $helper->sendMail($email,'Restablecr contrasena',$body);
+         //$resp = $helper->sendMail($email,'Restablecr contrasena',$body);
       }
       $this->closeConnection();
       return '{"resp": '.$resp.'}';
     }
-
+    /**
+     * [deleteUser description]
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
     public function deleteUser($id){
-      /*verifict exits user*/
-      $sql = 'SELECT * FROM Users WHERE idUser = :id';
-      $stmt = $this->connect()->prepare($sql);
-      $stmt->bindParam(':id',$id,PDO::PARAM_INT);
-      $stmt->execute();
-
-      /*If User exits*/
-      if($stmt->rowCount() > 0){
-        /*Delete user*/
-        $this->closeConnection();
-        $sql ='DELETE FROM Users WHERE idUser = :id';
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->bindParam(':id',$id,PDO::PARAM_INT);
-        $stmt->execute();
-      }
-      return '{"success": true}';
-      $this->closeConnection();
+      return $this->Delete('Users','idUser',$id);
     }
-    /**/
+    /**
+     * [getUser description]
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
     public function getUser($id){
       $values = ['id' => $id];
       return $this->getFirst('Users','WHERE idUser = :id',$values);
     }
     /**/
-    public function checkEmail($email){
-      $sql = 'SELECT email FROM Users WHERE email = :email';
-      $stmt = $this->connect()->prepare($sql);
-      $stmt->bindParam(':email',$email,PDO::PARAM_STR);
-      $stmt->execute();
-      if($stmt->rowCount() > 0)
-        $resp = true;
-      else{
-        $this->closeConnection();
-        $sql = 'SELECT email FROM Teachers WHERE email = :email';
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->bindParam(':email',$email,PDO::PARAM_STR);
-        $stmt->execute();
-        if($stmt->rowCount() > 0)
-          $resp = true;
-        else
-          $resp = false;
-      }
-      return  json_encode($resp);
-      $this->closeConnection();
-    }
-    /**/
+    // public function checkEmail($email){
+    //   $sql = 'SELECT email FROM Users WHERE email = :email';
+    //   $stmt = $this->connect()->prepare($sql);
+    //   $stmt->bindParam(':email',$email,PDO::PARAM_STR);
+    //   $stmt->execute();
+    //   if($stmt->rowCount() > 0)
+    //     $resp = true;
+    //   else{
+    //     $this->closeConnection();
+    //     $sql = 'SELECT email FROM Teachers WHERE email = :email';
+    //     $stmt = $this->connect()->prepare($sql);
+    //     $stmt->bindParam(':email',$email,PDO::PARAM_STR);
+    //     $stmt->execute();
+    //     if($stmt->rowCount() > 0)
+    //       $resp = true;
+    //     else
+    //       $resp = false;
+    //   }
+    //   return  json_encode($resp);
+    //   $this->closeConnection();
+    // }
+    /**
+     * [searchUser description]
+     * @param  [type] $ter  [description]
+     * @param  [type] $type [description]
+     * @return [type]       [description]
+     */
     public function searchUser($ter,$type){
-      $sql = "CALL searchUsers(:ter,:type)";
-      $stmt = $this->connect()->prepare($sql);
-      $stmt->bindParam(':type',$type);
-      $stmt->bindParam(':ter',$ter);
-      $stmt->execute();
-      if($stmt->rowCount() > 0){
-        while($row = $stmt->fetch(PDO::FETCH_ASSOC))
-            $fetch[] = $row;
-      }
-      else
-        $fetch = false;
-      $this->closeConnection();
-      return  json_encode($fetch);
+      $values = [
+        'ter' => $ter,
+        'type' => $type
+      ];
+      return $this->Call('searchUsers',$values,true);
     }
     /**/
     public function getUserForType($type){
@@ -152,13 +141,8 @@
     public function getPorfile(){
       session_start();
       $id =  $_SESSION['id'];
-      $sql ="SELECT * FROM View_Users WHERE idUser = :id";
-      $stmt = $this->connect()->prepare($sql);
-      $stmt->bindParam(':id',$id,PDO::PARAM_INT);
-      $stmt->execute();
-        $fetch = $stmt->fetch(PDO::FETCH_ASSOC);
-      $this->closeConnection();
-      return  json_encode($fetch);
+      $values =['id' => $id];
+      return $this->getFirst('View_Users','WHERE idUser = :id',$values);
     }
     /**
      * [changePassword description]

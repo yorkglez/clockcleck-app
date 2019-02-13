@@ -8,7 +8,7 @@
 
   /*Call Class Teacher*/
   $helper= new Helpers;
-  $resp = $helper->getSelectsjbytc($date,$code = '1414' );
+  $resp = $helper->getSelectsjbytc($date,$code);
   echo $resp; //Send data in json to frontend
 
 ?>

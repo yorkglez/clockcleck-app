@@ -1,7 +1,6 @@
 <?php
   /*Includes*/
   require('../../Headers.php');
-  require('../../Classes/Connection.php');
   require('../../Classes/User.php');
 
   $id = json_decode(file_get_contents("php://input",true)); //Get id

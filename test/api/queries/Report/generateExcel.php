@@ -6,19 +6,20 @@
 
 
 
-   $extension = $_GET['extension'];
-   $week =  $_GET['week'];
-   $startDate =  $_GET['startDate'];
-   $endDate =  $_GET['endDate'];
-   $code = $_GET['codeTeacher'];
-   $subject =  $_GET['subject'];
+   // $extension = $_GET['extension'];
+   // $week =  $_GET['week'];
+   // $startDate =  $_GET['startDate'];
+   // $endDate =  $_GET['endDate'];
+   // $code = $_GET['codeTeacher'];
+   // $subject =  $_GET['subject'];
 
-   // $extension = '1';
-   // $week =  'month';
-   // $startDate =  'null';
-   // $endDate =  'null';
-   // $code = '1414';
-   // $carer =  '';
+   $extension = '1';
+   $week =  'week';
+   $startDate =  'null';
+   $endDate =  'null';
+   $code = '1414';
+   $carer =  '';
+   $subject = 48;
    //
    $values = [
      'ter' => '',
@@ -27,7 +28,8 @@
      'endDate' => $endDate,
      'code' =>$code,
      'extension'=>$extension,
-     'subject'=>$subject
+     'subject'=>$subject,
+     'type' => 'docente'
    ];
 
   $report= new Report;
