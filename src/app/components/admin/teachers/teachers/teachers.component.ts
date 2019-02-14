@@ -77,9 +77,9 @@ export class TeachersComponent implements OnInit {
 
   checkInactive(type){
     if (type == 'inactive')
-      this.isInactive = true
+      this.isInactive = true //Show inactives
     else
-      this.isInactive = false
+      this.isInactive = false //Hide inactives
   }
 
   searchTeacher(ter:string,type:string,extension:string){

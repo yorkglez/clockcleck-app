@@ -8,15 +8,24 @@
       public function authFingerTeacher(){
 
       }
+      /**
+       * [authUserDesk description]
+       * @param  [type] $email    [description]
+       * @param  [type] $password [description]
+       * @return [type]           [description]
+       */
       public function authUserDesk($email, $password){
-          $resp  = false;
-          $sql ='SELECT * FROM View_authUser WHERE email = :email';
-          $stmt = $this->connect()->prepare($sql);
-          $stmt->bindParam(':email',$email,PDO::PARAM_STR);
+          $sql ='SELECT * FROM View_authUser WHERE email = :email'; //create sentence
+          $stmt = $this->connect()->prepare($sql); //prepare sentence
+          $stmt->bindParam(':email',$email,PDO::PARAM_STR); //add param
+          /*execute sentence*/
           if($stmt->execute()){
+            /*validate results*/
             if($stmt->rowCount() > 0){
               $row = $stmt->fetch(PDO::FETCH_ASSOC);
+              /*compare passwords*/
               if(password_verify($password, $row['password'])  AND $row['status'] == '1'){
+                /*get data response*/
                 $resp['username'] =  $row['username'];
                 $resp['extension'] =  $row['extension'];
                 $resp['genere'] =  $row['genere'];
@@ -24,8 +33,10 @@
               }
             }
           }
-          $this->closeConnection();
-          return  json_encode($resp);
+          else
+            $resp = false;
+          $this->closeConnection(); //close conection
+          return  json_encode($resp); // return response
       }
       public function authTeacherDesk($email, $password){
           $resp  = false;
@@ -53,14 +64,15 @@
        * @return [type]           [description]
        */
       public function authUser($email, $password){
-        $sql ="SELECT * FROM View_authUser WHERE email = :email AND (status = '1' AND validate = '1')";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->bindParam(':email',$email,PDO::PARAM_STR);
+        $sql ="SELECT * FROM View_authUser WHERE email = :email AND (status = '1' AND validate = '1')"; //create sentence
+        $stmt = $this->connect()->prepare($sql); //prepare sentence
+        $stmt->bindParam(':email',$email,PDO::PARAM_STR); //add params
+        /*execute sentence*/
         if($stmt->execute()){
           $row = $stmt->fetch(PDO::FETCH_ASSOC);
-          /*if data exists*/
+          /*validate results*/
           if($stmt->rowCount() > 0){
-            /*User type admin*/
+            /*compare passwords*/
             if (password_verify($password, $row['password'])) {
               /*Create sessions varibles*/
               $_SESSION['username'] =  $row['username'];
@@ -81,12 +93,8 @@
           else
             $resp['success'] = false;
         }
-        // else{
-        //   $resp['success'] = false;
-        //   $resp['message'] = 'error in conect to DB!:(';
-        // }
-        $this->closeConnection();
-        return  json_encode($resp);
+        $this->closeConnection(); //close conecion
+        return  json_encode($resp); //return response
       }
       /**
        * [authTeacher description]
@@ -95,14 +103,17 @@
        * @return [type]           [description]
        */
       public function authTeacher($email, $password){
-        $sql ="SELECT * FROM ViewAuthteacher WHERE email = :email AND (status = '1' AND validate = '1')";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->bindParam(':email',$email,PDO::PARAM_STR);
+        $sql ="SELECT * FROM ViewAuthteacher WHERE email = :email AND (status = '1' AND validate = '1')"; //create sentence
+        $stmt = $this->connect()->prepare($sql); //prepare sentence
+        $stmt->bindParam(':email',$email,PDO::PARAM_STR); //add params
+        /*execute sentence*/
         if($stmt->execute()){
-          /*if data exists*/
+          /*validate results*/
           if($stmt->rowCount() > 0){
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            /*compare passwords*/
             if (password_verify($password, $row['password'])) {
+              /*Create sessions varibles*/
               $_SESSION['email'] =  $row['email'];
               $_SESSION['id'] =  $row['code'];
               $_SESSION['username'] =  $row['username'];
@@ -120,12 +131,8 @@
           else
             $resp = false;
         }
-        // else{
-        //   $resp['success'] = false;
-        //   $resp['message'] = 'error in conect to DB!:(';
-        // }
-        $this->closeConnection();
-        return  json_encode($resp);
+        $this->closeConnection(); //close conection
+        return  json_encode($resp); // return response
       }
 
       public function getUserInfo(){
@@ -167,24 +174,25 @@
        */
       public function verifyToken($userType,$token,$id,$action){
         $resp = false;
-          /*If action is reset password*/
+        /*if action is type reset*/
         if($action == 'reset'){
+          /*validate user type*/
           if($userType == 'user')
-            $sql = "SELECT token FROM Users WHERE email = :id AND (status = '1' AND validate = '1')";
+            $sql = "SELECT token FROM Users WHERE email = :id AND (status = '1' AND validate = '1')"; //create sentence
           else if($userType == 'teacher')
-            $sql = "SELECT token FROM Teachers WHERE email = :id AND status = '1' AND validate = '1'";
+            $sql = "SELECT token FROM Teachers WHERE email = :id AND status = '1' AND validate = '1'"; //create sentence
         }
-        /*If action is validate email*/
+        /*If action is type validate*/
         else if($action == 'validate'){
+          /*validate user type*/
           if($userType == 'user')
-            $sql = "SELECT token FROM Users WHERE email = :id AND status = '1' AND validate = '0'";
+            $sql = "SELECT token FROM Users WHERE email = :id AND status = '1' AND validate = '0'"; //create sentence
           else if($userType == 'teacher')
-            $sql = "SELECT token FROM Teachers WHERE email = :id AND status = '1' AND validate = '0'";
+            $sql = "SELECT token FROM Teachers WHERE email = :id AND status = '1' AND validate = '0'"; //create sentence
         }
-        /*Prepare connection*/
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->bindParam(':id',$id);
-        $stmt->execute();
+        $stmt = $this->connect()->prepare($sql); //prepare sentence
+        $stmt->bindParam(':id',$id); //add params
+        $stmt->execute(); //execute sentence
         /*If email exists*/
         if($stmt->rowCount() > 0){
           $tokendb = $stmt->fetchColumn(); //Get token from consult
@@ -260,9 +268,6 @@
           transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
               "
           >Restablecer contrasena</a>
-
-
-
           ';
         //  $resp = $helper->sendMail($email,'Restablecr contrasena',$body);
         }

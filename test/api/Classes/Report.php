@@ -15,7 +15,6 @@
   {
       public function getReports($values){
         // return $this->Call('getReports',$values,true);
-
         $sql = "CALL getReports(:week,:ter,:startDate,:endDate,:code,:extension,:subject)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->bindParam(':week',$values['week'],PDO::PARAM_STR);
@@ -42,8 +41,6 @@
         $spreadsheet = new Spreadsheet(); //Call class
         $spreadsheet->setActiveSheetIndex(0);
         $sheet = $spreadsheet->getActiveSheet(); //Activate sheet
-
-
 
         /* Styles */
         $styleTitle = array(
@@ -89,7 +86,7 @@
         ];
 
         /* Header doc */
-        $sheet->mergeCells('A1:O1'); //Combinate cells
+        $sheet->mergeCells('A1:I1'); //Combinate cells
         $sheet->setCellValue('A1', 'INSTITUTO TECNOLOGICO JOSE MARIO MOLINA PASQUEL Y HENRIQUEZ'); //Set value cell
         $sheet->getStyle('A1')->applyFromArray($styleTitle); //Apply styles
         // $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); //Apply styles
