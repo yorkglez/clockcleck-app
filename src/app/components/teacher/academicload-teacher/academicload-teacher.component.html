@@ -123,12 +123,11 @@
     <!-- textarea ojetive -->
     <div class="form-group col-md-4">
       <label for="exampleFormControlTextarea1">Objetivo</label>
-      <textarea name="objetive" ngModel [(ngModel)]="model.objetive"   #objetive ="ngModel" class="form-control" rows="2" style="height:38px; resize: none;" ></textarea>
+      <textarea name="objetive" ngModel [(ngModel)]="model.objetive" #objetive ="ngModel"
+      class="form-control" rows="2" style="height:38px; resize: none;" ></textarea>
     </div>
     <!-- add subject button -->
     <div class="form-group col-md-auto mb-3 col-sm-auto">
-      <!-- <button (click)="addSubject(form)" class="btn btn-success" *ngIf="!isEditable"><i class="fas fa-plus"></i> Agregar</button> -->
-      <!-- <button (click)="updateSubject(form)" class="btn btn-primary" *ngIf="isEditable"><i class="fas fa-plus"></i> Actualizar</button> -->
       <button (click)="addSubject(form)" type="submit"
        class="btn"
        [ngClass]="{'btn-success': !isEditable,'btn-primary': isEditable}">

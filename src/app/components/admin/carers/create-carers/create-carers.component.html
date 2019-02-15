@@ -31,7 +31,6 @@
           'is-valid': code.valid && code.dirty && codeValid }"
           placeholder="ISIC-2010-224"
           required>
-          <!-- 'is-valid': code.valid && code.dirty && codeValid, 'is-invalid':form.submitted && code.invalid || code.invalid && code.touched|| !codeValid || model.code =='' -->
           <div class="invalid-feedback" *ngIf="form.submitted && code.invalid || model.code == null && code.touched">
             Porfavor escriba un codigo.
           </div>
@@ -86,10 +85,9 @@
           required>
           <option *ngFor="let extension of extensions;" [value]="extension.idExtension" selected>{{extension.name}}</option>
         </select>
-       </div>
       </div>
+    </div>
     <button type="submit" class="btn  btn-lg btn-primary"><i class="fas fa-save"></i> Guardar</button>
   </form>
-</div>
-
+ </div>
 </div>
