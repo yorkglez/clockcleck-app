@@ -7,13 +7,13 @@
   $data = json_decode(file_get_contents("php://input",true));
   $model = json_decode($data->model);
   $values = [
-    'id'=> $data->id,
     'name' => $model->name,
     'lastname' => $model->lastname,
     'email' => $model->email,
     'type' => $model->type,
     'genere' => $model->genere,
-    'Extensions_idExtension' => $model->extension
+    'Extensions_idExtension' => $model->extension,
+    'idUser'=> $data->id
   ];
 
   $user = new User;

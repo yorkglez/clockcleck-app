@@ -141,7 +141,8 @@
       if($stmt->execute($values))
         $exc = true;
       $this->closeConnection(); //close conection
-      return $exc; //return response
+      return json_encode($exc); //return response
+      // echo $sql;
     }
     /**
      * [Delete description]

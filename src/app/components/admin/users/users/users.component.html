@@ -11,7 +11,9 @@
       </div>
       <!-- new user -->
       <div class="form-group col-12 col-sm-auto col-md-auto">
-        <button class="btn btn-success col-sd-2" routerLink="/createuser"><i class="fas fa-user-plus"></i> Nuevo usuario</button>
+        <button class="btn btn-success col-sd-2" routerLink="/createuser">
+          <i class="fas fa-user-plus"></i> Nuevo usuario
+        </button>
       </div>
       <!-- search -->
       <div class="form-group col-8 col-sm-5 col-md-auto search-container">
@@ -27,7 +29,9 @@
       </div>
       <!-- buton search -->
       <div class="form-group">
-        <button class="btn btn-primary my-2 my-sm-0" (click)="searchUser(searchText.value,type.value)"><i class="fas fa-search"></i></button>
+        <button class="btn btn-primary my-2 my-sm-0" (click)="searchUser(searchText.value,type.value)">
+          <i class="fas fa-search"></i>
+        </button>
       </div>
       <!-- select type -->
       <div class="form-group  col-md-2 col-sm-2">
@@ -69,7 +73,9 @@
             <td>
               <div class="accions-content">
                 <button class="btn btn-warning" (click)="Edit(user)"><i class="fas fa-pencil-alt"></i> <span> Editar</span></button>
-                <button class="btn btn-danger" data-toggle="modal" data-target="#modalDelete"  (click)="getId(user)" #deleteUser><i class="fas fa-trash-alt"></i> <span> Eliminar</span></button>
+                <button class="btn btn-danger" data-toggle="modal" data-target="#modalDelete"  (click)="getId(user)" #deleteUser>
+                  <i class="fas fa-trash-alt"></i> <span> Eliminar</span>
+                </button>
               </div>
             </td>
           </tr>
@@ -82,9 +88,6 @@
     </div>
     <!-- pagiantion settings -->
     <div class="pagination-container"   *ngIf="users.length > 0" #pagination>
-      <!-- <div class="showing">
-        Mostrando <b>{{pagination.pageCount}}</b> de <b>{{users.length}}</b> usuarios
-      </div> -->
       <pagination-controls  class="Pagination pagination justify-content-center"
       (pageChange)="p = $event"
       previousLabel="Anterior"
@@ -93,12 +96,7 @@
       </pagination-controls>
     </div>
   </div>
-
-  <!-- <app-alerts [type]="type" [message]= "message" [alertVisible]="alertVisible"  ></app-alerts> -->
-
-
 </div>
-
 <!-- modalal for delete accion -->
 <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">

@@ -47,7 +47,7 @@ export class ReportsComponent implements OnInit {
   notes: boolean = false
   alertVisible: boolean = false
   isAdmin: boolean = false
-  isJustification: boolean = false
+  isJustification: boolean = true
   date
   dateNow
   teachers: TeacherSelect [] = []
@@ -137,8 +137,8 @@ export class ReportsComponent implements OnInit {
       this.tcSubjects = data
     })
   }
-  getSchedulelist(id){
-    this._reportsService.getSchedulelist(id,this.model['teachersSelect']).subscribe(data=>{
+  getSchedulelist(id,date){
+    this._reportsService.getSchedulelist(id,this.model['teachersSelect'],date).subscribe(data=>{
       this.Schedule = data
     })
   }

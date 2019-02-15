@@ -142,7 +142,7 @@
         <div class="form-group col-md-2">
         <label for="showType">Materia</label>
         <ng-select
-        (change)="getSchedulelist(subjectSelect.value)"
+        (change)="getSchedulelist(subjectSelect.value,dateAt.value)"
         [items]="tcSubjects"
         bindLabel="name"
         bindValue="id"

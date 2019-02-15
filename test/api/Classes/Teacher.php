@@ -188,24 +188,30 @@
       return  json_encode($fetch);
     }
 
-    public function getSchedulelist($idsl, $code){
+    public function getSchedulelist($idsl, $code, $dateAt){
       $sql = "SELECT  at.Schedule_idSchedule  FROM attendances at
       INNER JOIN Subjects_list sl ON sl.idSubjectlist = at.Subjects_list_idSubjectlist
-      WHERE sl.Teachers_codeTeacher = :code AND at.date_At = '2019-02-11' AND sl.idSubjectlist = :idsl";
+      WHERE sl.Teachers_codeTeacher = :code AND at.date_At = :dateAt AND sl.idSubjectlist = :idsl";
       $stmt = $this->connect()->prepare($sql);
       $stmt->bindParam(':idsl',$idsl,PDO::PARAM_INT);
       $stmt->bindParam(':code',$code,PDO::PARAM_STR);
+      $stmt->bindParam(':dateAt',$dateAt,PDO::PARAM_STR);
       $stmt->execute();
+      /**/
       if($stmt->rowCount() > 0){
         while($row = $stmt->fetchColumn())
           $ids[] = $row;
         $cad =  implode(',',$ids);
         $this->closeConnection();
-
+        /*get day number*/
+        $timestamp = strtotime($dateAt);
+        $dayName = date("l", $timestamp);
+        $nDay = date('N',strtotime($dayName));
         $sql = "SELECT idSchedule AS id, concat(startTime, ' - ', endTime) as hours FROM schedule
-        WHERE idSchedule not in "."(".$cad.") AND Subjects_list_idSubjectlist = :idsl";
+        WHERE idSchedule not in "."(".$cad.") AND Subjects_list_idSubjectlist = :idsl AND day =:day";
         $stmt = $this->connect()->prepare($sql);
         $stmt->bindParam(':idsl',$idsl,PDO::PARAM_INT);
+        $stmt->bindParam(':day',$nDay,PDO::PARAM_INT);
         $stmt->execute();
         if($stmt->rowCount() > 0){
           while($row = $stmt->fetch(PDO::FETCH_ASSOC))
@@ -216,12 +222,15 @@
         $this->closeConnection();
       }
       else{
+        $this->closeConnection();
         $daynum = date("N", strtotime(date('l')));
+        $daynum = 3;
+        // echo $daynum;
         $sql = "SELECT idSchedule AS id, concat(startTime, ' - ', endTime) as hours FROM schedule
         WHERE Subjects_list_idSubjectlist = :idsl AND day = :day";
-        $stmt->bindParam(':idsl',$idsl,PDO::PARAM_INT);
-        $stmt->bindParam(':day',$daynum,PDO::PARAM_STR);
         $stmt = $this->connect()->prepare($sql);
+        $stmt->bindParam(':idsl',$idsl,PDO::PARAM_INT);
+        $stmt->bindParam(':day',$daynum,PDO::PARAM_INT);
         $stmt->execute();
         if($stmt->rowCount() > 0){
           while($row = $stmt->fetch(PDO::FETCH_ASSOC))
@@ -232,25 +241,6 @@
         $this->closeConnection();
       }
       return  json_encode($fetch);
-
-
-
-      // $sql = "CALL getScheduleList(:day,:id);";
-      // $stmt = $this->connect()->prepare($sql);
-      // $stmt->bindParam(':day',$day);
-      // $stmt->bindParam(':id',$id);
-      // $stmt->execute();
-      // if($stmt->rowCount() > 0){
-      //   while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-      //       $fetch[] = $row;
-      //   }
-      // }
-      // else{
-      //   $fetch = false;
-      // }
-      //
-      // $this->closeConnection();
-      // return  json_encode($fetch);
     }
     /*Automatic download finger file*/
     public function getFingerfile($fileName){

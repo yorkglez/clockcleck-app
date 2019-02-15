@@ -33,8 +33,8 @@ export class ReportsService {
   getSubjectbyDate(date,code){
     return this.http.get<subjectList[]>('api/queries/Helpers/getSelectsjbytc.php',{params:{date: date,code: code}})
   }
-  getSchedulelist(idSl,code){
-    return this.http.post<scheduleList[]>('api/queries/Teacher/getSchedulelist.php',{id: idSl, code: code})
+  getSchedulelist(idSl,code, date){
+    return this.http.post<scheduleList[]>('api/queries/Teacher/getSchedulelist.php',{id: idSl, code: code, date: date})
   }
   createAttendance(model){
     return this.http.post('api/queries/Attendance/createJustification.php',JSON.stringify(model))

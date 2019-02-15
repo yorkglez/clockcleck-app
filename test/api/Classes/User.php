@@ -194,14 +194,7 @@
     }
     /**/
     public function updateUser($values){
-      $resp = false;
-      $sql = 'UPDATE Users SET name=:name, lastname=:lastname, email=:email, type=:type,genere = :genere, Extensions_idExtension=:Extensions_idExtension WHERE idUser = :id';
-      $stmt = $this->connect()->prepare($sql);
-      if($stmt->execute($values)){
-        $resp = true;
-      }
-      return json_encode($resp);
-      $this->closeConnection();
+      return $this->Update('Users',$values);
     }
 
   }

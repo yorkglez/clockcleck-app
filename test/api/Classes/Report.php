@@ -13,10 +13,15 @@
    date_default_timezone_set('America/Mexico_City');
   class Report extends Connection
   {
+      /**
+       * [getReports description]
+       * @param  [type] $values [description]
+       * @return [type]         [description]
+       */
       public function getReports($values){
-        // return $this->Call('getReports',$values,true);
-        $sql = "CALL getReports(:week,:ter,:startDate,:endDate,:code,:extension,:subject)";
-        $stmt = $this->connect()->prepare($sql);
+        $sql = "CALL getReports(:week,:ter,:startDate,:endDate,:code,:extension,:subject)";//create sentence
+        $stmt = $this->connect()->prepare($sql); //prepare sentence
+        /*create params*/
         $stmt->bindParam(':week',$values['week'],PDO::PARAM_STR);
         $stmt->bindParam(':ter',$values['ter'],PDO::PARAM_STR);
         $stmt->bindParam(':startDate',$values['startDate'],PDO::PARAM_STR);
@@ -24,11 +29,12 @@
         $stmt->bindParam(':code',$values['code'],PDO::PARAM_STR);
         $stmt->bindParam(':extension',$values['extension'],PDO::PARAM_INT);
         $stmt->bindParam(':subject',$values['subject'],PDO::PARAM_INT);
-        $stmt->execute();
+        $stmt->execute(); //execute sentence
+        /*validate results*/
         if($stmt->rowCount() > 0){
           while($row = $stmt->fetch(PDO::FETCH_ASSOC))
-              $fetch[] = $row;
-          $this->closeConnection();
+              $fetch[] = $row; //get data
+          $this->closeConnection(); //close conection
         }
         else
           $fetch = false;
@@ -41,7 +47,6 @@
         $spreadsheet = new Spreadsheet(); //Call class
         $spreadsheet->setActiveSheetIndex(0);
         $sheet = $spreadsheet->getActiveSheet(); //Activate sheet
-
         /* Styles */
         $styleTitle = array(
           'font'  => array(
@@ -84,7 +89,6 @@
             'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
           ]
         ];
-
         /* Header doc */
         $sheet->mergeCells('A1:I1'); //Combinate cells
         $sheet->setCellValue('A1', 'INSTITUTO TECNOLOGICO JOSE MARIO MOLINA PASQUEL Y HENRIQUEZ'); //Set value cell
@@ -100,23 +104,17 @@
           $sheet->setCellValue('A3', 'Periodo 2018 al 2019 typereport del '
           .date("d-m-Y",strtotime($values['startDate'])).' al '.date("d-m-Y",strtotime($values['endDate'])));
         $sheet->getStyle('A3')->applyFromArray($styleSubtitle); //Apply styles
-
         $sheet->setCellValue('A4','Extension: '.$this->getExtensionName($values['extension'])); //Extension name
         $sheet->mergeCells('A4:B4'); //Combinate cells
-
         $sheet->setCellValue('C4','Tipo de reporte: Por '.$reportType);
         $sheet->mergeCells('C4:E4'); //Combinate cells
-
         $sheet->setCellValue('F4','Docente: Juan Luis Rivaz');
         $sheet->mergeCells('F4:H4'); //Combinate cells
-
         /* Date & time  */
         $sheet->setCellValue('I2','Fecha: '.$this->getDatetimeNow('date'));
         // $sheet->mergeCells('I2:J2'); //Combinate cells2
-
         $sheet->setCellValue('I3','Hora: '.$this->getDatetimeNow('time'));
         // $sheet->mergeCells('I3:J3'); //Combinate cells
-
         /* Header table */
         $sheet->setCellValue('A6', 'Departamento');
         $sheet->mergeCells('A6:A7'); //Combinate cells
@@ -125,7 +123,6 @@
         // $sheet->getColumnDimension('A')->setAutoSize(true);
         $sheet->setCellValue('C6', 'Hora');
         $sheet->mergeCells('C6:D6'); //Combinate cells
-
         // $sheet->mergeCells('E5:D5'); //Combinate cells
         /*Table header*/
         $sheet->setCellValue('C7', 'Entrada');
@@ -149,11 +146,9 @@
           $sheet->mergeCells('H6:H7'); //Combinate cells
           $sheet->getStyle('A6:H7')->applyFromArray($styleHeader); //Apply styles
         }
-
         /* Get report form database*/
         $reports = $this->getReports($values); //get report and cover to array
-        // print_r($reports);
-        $i = 8;
+        $i = 8; // columns numbers
         /* get data from database */
         foreach ($reports as $row) {
           $sheet->setCellValue('A'.$i, $row['alias']);  //Departamento
@@ -169,26 +164,15 @@
           $enTime = strtotime($row['checkEnd']);
           $total = round((abs($stTime-$enTime) / 60)/50);
           $sheet->setCellValue('I'.$i,  $total); //Materia
-
-          $i++; //count
+          $i++; //row position
         }
-
-        // $pdf->Cell(27,6,,1,0,'C',0);
-        // $pdf->Cell(16,6,,1,0,'C',0);
-        // $pdf->Cell(14,6,,1,0,'C',0);
-        // $pdf->Cell(12,6,$row['grade'],1,0,'C',0);
-        // $pdf->Cell(20,6,,1,0,'C',0);
-        // $pdf->Cell(55,6,,1,0,'C',0);
-        // $pdf->Cell(55,6,,1,1,'C',0);
-
         /* Cells format */
         $sheet->getStyle('A6:I'.($i-1))->applyFromArray($styleCells);
         /* Auto size cell */
         $cellIterator = $sheet->getRowIterator()->current()->getCellIterator();
         $cellIterator->setIterateOnlyExistingCells(true);
-        foreach( range('A','I') as $cell ) {
+        foreach( range('A','I') as $cell )
           $sheet->getColumnDimension($cell)->setAutoSize(true);
-        }
         /* Save file */
         $writer = new Xlsx($spreadsheet);
         try {
@@ -197,8 +181,6 @@
         } catch (\Exception $e) {
           echo $e->getMessage();
         }
-
-
       }
 
       public function generateReportPDF($values){
@@ -335,15 +317,13 @@
                 $pdf->Cell(55,6,$row['topic'],1,0,'C',0);
                 $pdf->Cell(55,6,$row['nameSubject'],1,1,'C',0);
               }
-
             }
-
-         $this->closeConnection();
+         $this->closeConnection(); //close conection
          $pdf->Output('reporte-'.date('d-m-Y-i:s').'.pdf','I');
         }
-        else{
+        else
           $fetch = false;
-        }
+
 
         // function Footer() {
         //   $pdf->SetY(-1);

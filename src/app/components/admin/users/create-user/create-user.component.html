@@ -44,18 +44,18 @@
         <div class="form-group col-md-6">
           <label for="email">Email</label>
           <input
-                pattern="^[a-z0-9._+%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-                (focusout)="validateEmail(email.value)"
-                type="email"
-                class="form-control invalid-input"
-                name="email"
-                ngModel [(ngModel)]="model.email"
-                #email="ngModel"
-                [ngClass]="{'is-invalid':form.submitted && email.invalid || email.invalid && email.dirty || model.email =='' || !emaiisValid,
-                'is-valid': emaiisValid && email.valid}"
-                [email]="model.email !==''"
-                placeholder="email@example.com"
-                required>
+          pattern="^[a-z0-9._+%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+          (focusout)="validateEmail(email.value)"
+          type="email"
+          class="form-control invalid-input"
+          name="email"
+          ngModel [(ngModel)]="model.email"
+          #email="ngModel"
+          [ngClass]="{'is-invalid':form.submitted && email.invalid || email.invalid && email.dirty || model.email =='' || !emaiisValid,
+          'is-valid': emaiisValid && email.valid}"
+          [email]="model.email !==''"
+          placeholder="email@example.com"
+          required>
           <div class="invalid-feedback" *ngIf="form.submitted || model.email ==''">
             Porfavor escriba un email.
           </div>
@@ -79,27 +79,6 @@
             <option value="normal">Normal</option>
           </select>
         </div>
-        <!-- input password -->
-        <!-- <div class="form-group col-md-6">
-          <label for="password">Contrasena</label>
-          <input type="password" class="form-control invalid-input" name="password" id="password" ngModel [(ngModel)]="model.password" #password="ngModel"
-            [ngClass]="{'is-invalid': form.submitted && password.invalid || password.errors?.minlength || !passwordsValid, 'is-valid': passwordsValid && password.valid}" required minlength="6"/>
-            <div  *ngIf="form.submitted && password.errors.required" class="invalid-feedback">
-              Porfavor escriba una contrasena.
-            </div>
-            <div *ngIf="password.invalid && password.errors?.minlength" class="invalid-feedback invalid min-password" >La contrasena debe contener un minimo de 6 caracteres.</div>
-        </div> -->
-        <!-- input repeat password -->
-        <!-- <div class="form-group col-md-6">
-          <label for="repeat-password">Repetir contrasena</label>
-          <input (focusout)="validatePasswords(password.value, repeatpassword.value)" type="password" class="form-control invalid-input" name="repeatpassword"  ngModel [(ngModel)]="model.repeatpassword" #repeatpassword="ngModel"
-            [ngClass]="{'is-invalid':form.submitted && repeatpassword.invalid || repeatpassword.errors?.minlength || !passwordsValid, 'is-valid': passwordsValid && repeatpassword.valid}" required minlength="6">
-            <div  *ngIf="form.submitted && repeatpassword.errors.required" class="invalid-feedback">
-              Porfavor escriba una contrasena.
-            </div>
-            <div *ngIf="repeatpassword.invalid && repeatpassword?.errors.minlength" class="invalid-feedback invalid min-password" >La contrasena debe contener un minimo de 6 caracteres.</div>
-            <div *ngIf="!passwordsValid" class="invalid-feedback">Las contrasenas no coinciden.</div>
-        </div> -->
         <!-- input extension -->
         <div class="form-group col-md-6">
           <label for="extension">Extencion </label>
@@ -108,11 +87,9 @@
           ngModel [(ngModel)]="model.extension"
           #extension="ngModel"
           required>
-            <option *ngFor="let extension of extensions;"   [value]="extension.idExtension">{{extension.name}}</option>
+            <option *ngFor="let extension of extensions;" [value]="extension.idExtension">{{extension.name}}</option>
           </select>
-
         </div>
-
         <!-- genere -->
         <div class="form-group col-md-6">
           <label for="genere">Genero </label>
@@ -126,13 +103,9 @@
           </select>
         </div>
       </div>
-      <!-- btn save -->
-      <!-- <div class="col-md-4"> -->
       <button [disabled]="!emaiisValid" type="submit" class="btn-form btn btn-lg btn-primary">
           <i class="fas fa-save"></i> Guardar
       </button>
-      <!-- </div> -->
     </form>
   </div>
-  <!-- inputs -->
 </div>
