@@ -22,7 +22,8 @@
            [(ngModel)]="model.code"
            #code="ngModel"
            (focusout)="validateCode(code.value)"
-           [ngClass]="{'is-valid': code.valid && code.dirty && codeValid, 'is-invalid':form.submitted && code.invalid || code.invalid || !codeValid || model.code ==''}"
+           [ngClass]="{'is-valid': code.valid && code.dirty && codeValid,
+           'is-invalid':form.submitted && code.invalid || code.invalid || !codeValid || model.code ==''}"
            required>
           <div class="invalid-feedback"  *ngIf="form.submitted && model.code ==''">
             Porfavor escriba un codigo.

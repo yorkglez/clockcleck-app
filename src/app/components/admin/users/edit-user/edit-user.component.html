@@ -2,8 +2,8 @@
 <app-navadmin></app-navadmin>
 <!-- content -->
 <div class="content animated fadeIn">
+  <!-- header -->
   <div class="content-header">
-    <!-- header -->
     <h1 class="title">Editar usuario</h1>
   </div>
   <div class="content-body">
@@ -22,7 +22,8 @@
         <!-- input address -->
         <div class="form-group col-md-6">
           <label for="lastname">Apellido</label>
-          <input type="text" class="form-control" name="lastname" id="lastname" ngModel [(ngModel)]="model.lastname" #lastname="ngModel"
+          <input type="text" class="form-control" name="lastname" id="lastname" ngModel [(ngModel)]="model.lastname"
+          #lastname="ngModel"
           [ngClass]="{'is-invalid':form.submitted && lastname.invalid}" required>
           <div class="invalid-feedback">
             Porfavor escriba un apellido.
@@ -55,7 +56,8 @@
         <!-- input user type -->
         <div class="form-group col-md-6">
           <label for="showType">Tipo de usuario </label>
-          <select  class="form-control custom-select" name="type" ngModel [(ngModel)]="model.type" #type="ngModel"  [ngClass]="{'is-invalid':form.submitted && type.invalid}" required>
+          <select  class="form-control custom-select" name="type" ngModel [(ngModel)]="model.type" #type="ngModel"
+          [ngClass]="{'is-invalid':form.submitted && type.invalid}" required>
             <option value="admin" selected>Admin</option>
             <option value="normal">Normal</option>
           </select>
@@ -83,17 +85,17 @@
           #genere="ngModel"
           [ngClass]="{'is-invalid':form.submitted && genere.invalid}"
           required>
-            <option value="H">Hombre</option>
-            <option value="M">Mujer</option>
-          </select>
-          <div  class="invalid-feedback">
-                 Porfavor selecciona un genero.
-          </div>
+          <option value="H">Hombre</option>
+          <option value="M">Mujer</option>
+        </select>
+        <div  class="invalid-feedback">
+          Porfavor selecciona un genero.
         </div>
       </div>
-      <!-- btn save -->
-      <button [disabled]="!emailValid" type="submit" class="btn btn-lg btn-primary"><i class="fas fa-save"></i> Guardar</button>
-    </form>
-    <!-- alerts -->
-    <app-alerts [type]="type" [message]= "message" [alertVisible]="alertVisible"  ></app-alerts>
-  </div>
+    </div>
+    <!-- btn save -->
+    <button [disabled]="!emailValid" type="submit" class="btn btn-lg btn-primary"><i class="fas fa-save"></i> Guardar</button>
+  </form>
+  <!-- alerts -->
+  <app-alerts [type]="type" [message]= "message" [alertVisible]="alertVisible"  ></app-alerts>
+</div>

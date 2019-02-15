@@ -26,11 +26,10 @@
           #code="ngModel"
           (focusout)="validateCode(code.value)"
           (keypress)="addCharater(code.value)"
-          [ngClass]="{'is-invalid':form.submitted && code.invalid || model.code == '' && code.dirty || !codeValid && code.valid || code.invalid && code.dirty,
+          [ngClass]="{'is-invalid':form.submitted && code.invalid || model.code == '' && code.dirty
+          || !codeValid && code.valid || code.invalid && code.dirty,
            'is-valid': code.valid && code.dirty && codeValid }"
           required>
-          <!-- [ngClass]="{'is-invalid':formSq.submitted && codeSq.invalid && subjects.code != null  || subjects.code == '' && codeSq.dirty ||  !secodeValid ,
-          'is-valid': codeSq.valid && codeSq.dirty && secodeValid }" -->
           <div class="invalid-feedback" *ngIf="form.submitted && code.invalid || model.code == '' && code.touched ">
             Porfavor escriba un codigo.
           </div>
@@ -101,8 +100,7 @@
            (change)="checkSequence(sequence.value)"
            [(ngModel)]="radio"
            #sequence="ngModel"
-           checked
-           >
+           checked>
            <label class="custom-control-label" for="customRadio2">Sin secuencia</label>
          </div>
         </div>
@@ -130,10 +128,10 @@
             #codeSq="ngModel"
             (focusout)="validateCodeSc(codeSq.value)"
             (keypress)="addCharaterSq(codeSq.value)"
-            [ngClass]="{'is-invalid':formSq.submitted && codeSq.invalid && subjects.code != null  || subjects.code == '' && codeSq.dirty ||  !secodeValid ,
+            [ngClass]="{'is-invalid':formSq.submitted && codeSq.invalid && subjects.code != null
+            || subjects.code == '' && codeSq.dirty ||  !secodeValid ,
             'is-valid': codeSq.valid && codeSq.dirty && secodeValid }"
             required>
-            <!--  -->
             <div class="invalid-feedback" *ngIf="formSq.submitted && codeSq.invalid || subjects.code == null && codeSq.touched">
               Porfavor escriba un codigo.
             </div>
@@ -164,7 +162,8 @@
             name="creditsSq"
             ngModel [(ngModel)]="subjects.credits"
             #creditsSq="ngModel"
-            [ngClass]="{'is-invalid':formSq.submitted && creditsSq.invalid && subjects.credits != null || creditsSq.invalid && creditsSq.dirty  && subjects.credits != null}"
+            [ngClass]="{'is-invalid':formSq.submitted && creditsSq.invalid && subjects.credits != null ||
+            creditsSq.invalid && creditsSq.dirty  && subjects.credits != null}"
             pattern="[0-9]{1}"
             maxlength="1"
             placeholder="5"
@@ -174,7 +173,9 @@
             </div>
           </div>
           <div class="form-group" style="position: relative;">
-              <button *ngIf="!updateItems" type="submit" name="btn-add" class="btn btn-success"  style="position: absolute; bottom: -70px;"><i class="fas fa-plus"></i> Anadir</button>
+              <button *ngIf="!updateItems" type="submit" name="btn-add" class="btn btn-success"  style="position: absolute; bottom: -70px;">
+                <i class="fas fa-plus"></i> Anadir
+              </button>
               <button *ngIf="updateItems" (click)="updateItem(idx)" type="button" name="btn-add" class="btn btn-primary">Actualizar</button>
           </div>
         </div>

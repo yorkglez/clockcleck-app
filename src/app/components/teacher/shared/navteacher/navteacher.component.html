@@ -1,24 +1,15 @@
 <header>
-  <!-- <div class="header-banner">
-     <img src="assets/images/tecmmlogo.jpg" alt="logo">
-  </div> -->
   <nav class="navbar navbar-expand-lg ">
     <button class="navbar-toggler" type="button"
     data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <!-- <span class="navbar-toggler-icon"></span> -->
-      <i class="fas fa-align-justify"></i>
+    <!-- <span class="navbar-toggler-icon"></span> -->
+    <i class="fas fa-align-justify"></i>
     </button>
     <div class="collapse navbar-collapse navbody" id="navbarNav">
       <ul class="navbar-nav">
         <a class="navbar-brand">
-            <img src="assets/images/navlogo.png" width="50" height="40" >
-            <!-- <span> Clock Check</span>
-            <span> Docente</span> -->
+          <img src="assets/images/navlogo.png" width="50" height="40" >
         </a>
-        <!-- home -->
-        <!-- <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" href="#"><i class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
-        </li> -->
         <!-- schedule -->
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="/scheduleteacher"><i class="fas fa-clock"></i> Horario</a>
@@ -27,14 +18,15 @@
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="/academicloadteacher">
             <i class="far fa-calendar-alt"></i> Carga horaria</a>
-        </li>
-        <!-- map -->
-        <!-- <li class="nav-item" >
+          </li>
+          <!-- map -->
+          <!-- <li class="nav-item" >
           <a class="nav-link" routerLink=""><i class="fas fa-map"></i> Mapa</a>
         </li> -->
         <!-- dropdown -->
         <li class="nav-item dropdown">
-          <a class="nav-link dropdowntoggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdowntoggle" href="#" id="navbarDropdownMenuLink" role="button"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user"></i> {{username}} <i class="fas fa-sort-down"></i>
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -42,12 +34,12 @@
             <a class="dropdown-item" routerLink="/logout"><i class="fas fa-sign-out-alt"></i> Cerrar sesion</a>
           </div>
         </li>
-      <li  class="nav-item navbar-toggler" data-toggle="collapse" data-target="#navbarNav" >
-            <a class="nav-link" routerLink="/porfileteacher"><i class="fas fa-user-circle"></i> Perfil</a>
-      </li>
-      <li  class="nav-item navbar-toggler" data-toggle="collapse" data-target="#navbarNav" >
-        <a class="nav-link" routerLink="/logout"><i class="fas fa-sign-out-alt"></i> Cerrar sesion</a>
-      </li>
+        <li  class="nav-item navbar-toggler" data-toggle="collapse" data-target="#navbarNav" >
+          <a class="nav-link" routerLink="/porfileteacher"><i class="fas fa-user-circle"></i> Perfil</a>
+        </li>
+        <li  class="nav-item navbar-toggler" data-toggle="collapse" data-target="#navbarNav" >
+          <a class="nav-link" routerLink="/logout"><i class="fas fa-sign-out-alt"></i> Cerrar sesion</a>
+        </li>
       </ul>
     </div>
   </nav>

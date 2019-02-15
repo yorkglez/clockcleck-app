@@ -9,7 +9,9 @@
       </div>
       <!-- create carer -->
       <div class="form-group col-2 col-sm-auto col-md-auto">
-        <button class="btn btn-success col-sd-2" [routerLink]="['/createcarer']"><i class="fas fa-plus"></i> Nueva carrera </button>
+        <button class="btn btn-success col-sd-2" [routerLink]="['/createcarer']">
+          <i class="fas fa-plus"></i> Nueva carrera
+        </button>
       </div>
       <!-- search -->
       <div class="form-group col-8 col-sm-5 col-md-auto search-container">
@@ -23,7 +25,9 @@
        </button>
       </div>
       <div class="form-group">
-        <button class="btn btn-primary my-2 my-sm-0" (click)="Search(searchText.value,extension.value,status.value)"><i class="fas fa-search"></i></button>
+        <button class="btn btn-primary my-2 my-sm-0" (click)="Search(searchText.value,extension.value,status.value)">
+          <i class="fas fa-search"></i>
+        </button>
       </div>
       <!-- extension -->
       <div class="form-group  col-md-2 col-sm-4">
@@ -68,9 +72,16 @@
           <td>{{carer.extensionName}}</td>
           <td>
             <div class="accions-content">
-              <button class="btn btn-warning" (click)="Edit(carer)"><i class="fas fa-pencil-alt"></i> <span> Editar</span></button>
-              <button *ngIf="carer.status =='0'"  (click)="Activate(carer)"   class="btn btn-success" ><i class="fas fa-check"></i> <span> Activar</span></button>
-              <button *ngIf="carer.status =='1'"  class="btn btn-danger" data-toggle="modal" data-target="#modalDelete"  (click)="getId(carer)"  #deleteUser><i class="fas fa-trash-alt"></i> <span> Eliminar</span></button>
+              <button class="btn btn-warning" (click)="Edit(carer)">
+                <i class="fas fa-pencil-alt"></i> <span> Editar</span>
+              </button>
+              <button *ngIf="carer.status =='0'"  (click)="Activate(carer)"   class="btn btn-success" >
+                <i class="fas fa-check"></i> <span> Activar</span>
+              </button>
+              <button *ngIf="carer.status =='1'"  class="btn btn-danger" data-toggle="modal" data-target="#modalDelete"
+              (click)="getId(carer)" #deleteUser>
+                <i class="fas fa-trash-alt"></i> <span> Eliminar</span>
+              </button>
             </div>
           </td>
         </tr>

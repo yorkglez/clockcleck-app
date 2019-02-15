@@ -25,7 +25,8 @@
       </div>
       <!-- show by -->
       <div class="form-group col-md-2 col-sm-3 col-8">
-        <select id="showType" class="form-control custom-select" (change)="filterData(searchText.value,type.value,extension.value); checkInactive(type.value)"  #type>
+        <select id="showType" class="form-control custom-select" (change)="filterData(searchText.value,type.value,extension.value);
+        checkInactive(type.value)"  #type>
           <option value="all" selected>Mostrar todo</option>
           <option value="A" >A</option>
           <option value="B">B</option>
@@ -34,7 +35,8 @@
         </select>
       </div>
       <div class="form-group col-md-2 col-sm-3 col-8">
-        <select   (change)="filterData(searchText.value,type.value,extension.value); checkInactive(type.value)" class="form-control custom-select"  name="extension"  ngModel [(ngModel)]="model.extension" #extension="ngModel">
+        <select   (change)="filterData(searchText.value,type.value,extension.value); checkInactive(type.value)" class="form-control custom-select"
+        name="extension"  ngModel [(ngModel)]="model.extension" #extension="ngModel">
           <option *ngFor="let extension of extensions;" [value]="extension.idExtension" >{{extension.name}}</option>
         </select>
       </div>
@@ -47,7 +49,6 @@
   <div class="alert alert-info" role="alert" *ngIf="searchAlert">
       <i class="fas fa-info-circle"></i> No se encontraron resultados con el termino: <b>{{ter}}</b>
   </div>
-
   <!-- table -->
   <div class="table-responsive-md">
     <table class="table table-sm table-hover table-responsive{-sm|-md|-lg|-xl}" *ngIf="teachers.length > 0">
@@ -78,9 +79,15 @@
           </td>
           <td>{{teacher.extensionName}}</td>
           <td  class="accions-content">
-            <button class="btn btn-warning" (click)="Edit(teacher)"><i class="fas fa-pencil-alt"></i> <span class="d-none d-md-inline "> Editar</span></button>
-            <button *ngIf="isInactive"  (click)="Activate(teacher)"   class="btn btn-success" ><i class="fas fa-check"></i> <span class="d-none d-md-inline "> Activar</span></button>
-            <button *ngIf="!isInactive"  class="btn btn-danger" data-toggle="modal" data-target="#modalDelete"  (click)="getId(teacher)"  #deleteUser><i class="fas fa-trash-alt"></i> <span> Eliminar</span></button>
+            <button class="btn btn-warning" (click)="Edit(teacher)">
+              <i class="fas fa-pencil-alt"></i> <span class="d-none d-md-inline "> Editar</span>
+            </button>
+            <button *ngIf="isInactive"  (click)="Activate(teacher)"   class="btn btn-success" >
+              <i class="fas fa-check"></i> <span class="d-none d-md-inline "> Activar</span>
+            </button>
+            <button *ngIf="!isInactive" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete" (click)="getId(teacher)" #deleteUser>
+              <i class="fas fa-trash-alt"></i> <span> Eliminar</span>
+            </button>
           </td>
         </tr>
       </tbody>
