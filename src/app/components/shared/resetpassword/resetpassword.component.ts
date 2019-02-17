@@ -56,8 +56,6 @@ export class ResetpasswordComponent implements OnInit {
             else
               this.url = '/loginteacher'
         }
-
-
       })
     }
   }

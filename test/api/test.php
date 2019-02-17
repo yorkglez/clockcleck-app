@@ -47,14 +47,14 @@
   // {
   // 	echo "E-Mail enviado";
   // }
-  //
-  //
+  //    <h3 style="font-family: Arial;">Bienvenid@: Jorge Gonzalez a la plataforma!</h3>
+  //Si este no es tu correo haz caso omiso de este este correo y contactate con el administrador de la plataforma para que cambie el correo.
   echo '
     <img src="./public/images/logocc.png"  alt="imagen..."  style=" width: 150px;">
-    <h3 style="font-family: Arial;">Bienvenid@: Jorge Gonzalez a la plataforma!</h3>
+    <h3 style="font-family: Arial;">Restablecer contraseña</h3>
     <p style="font-family: Arial;"><b>Correo:</b> test@hot.com</p>
-    <p style="font-family: Arial;">Si este no es tu correo haz caso omiso de este este correo y contactate con el administrador de la plataforma para que cambie el correo.</p>
-    <p style="font-family: Arial;">Para poder activar tu cuenta es necesario validar tu correo, haz clic en el siguiente boton para ser enviado a la pagina de activacion.</p>
+    <p style="font-family: Arial;">Para poder restablecer tu contraseña haz clic en el siguiente boton para ser eviado a la pagina de restablecimiento.</p>
+    <p style="font-family: Arial;">Si no has solicitado el restablecimiento de tu contraseña, haz caso omiso de este mensaje.</p>
     <a href=""
     style="
     font-family: Arial;
@@ -77,7 +77,7 @@
     border-radius: .25rem;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
         "
-    >Activar cuenta</a>
+    >Restablecer contraseña</a>
 
 
   ';

@@ -15,19 +15,19 @@ export class LogoutComponent implements OnInit {
      private _authService: AuthService)
      { }
 
-  ngOnInit() {
-    this._authService.logout().subscribe(resp => {
-      if(resp.success){
-        this._authService.setLoggedIn(false)
-        localStorage.clear()
-        if(resp.type =='teacher')
-          this.router.navigate(['/loginteacher'])
-        if(resp.type =='user')
-          this.router.navigate(['/login'])
-      }
-      else
-          window.alert('Some problem')
-    })
-  }
+     ngOnInit() {
+       this._authService.logout().subscribe(resp => {
+         if(resp.success){
+           this._authService.setLoggedIn(false)
+           localStorage.clear()
+           if(resp.type =='teacher')
+           this.router.navigate(['/loginteacher'])
+           if(resp.type =='user')
+           this.router.navigate(['/login'])
+         }
+         else
+         window.alert('Some problem')
+       })
+     }
 
 }

@@ -121,15 +121,23 @@
     <!-- buttons -->
     <div class="form-row">
       <div class="col-md-auto mb-2">
-          <button type="button" *ngIf="isNewconfig && isEditable" (click)="Save()" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-          <button type="button" *ngIf="isEditable && !isNewconfig" (click)="Update()" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar cambios</button>
+          <button type="button" *ngIf="isNewconfig && isEditable" (click)="Save()" class="btn btn-primary">
+            <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar
+          </button>
+          <button type="button" *ngIf="isEditable && !isNewconfig" (click)="Update()" class="btn btn-primary">
+            <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar cambios
+          </button>
       </div>
       <div class="col-md-auto mb-2">
-          <button type="button" (click)="Edit()" class="btn btn-info"><i class="fa fa-pencil" aria-hidden="true"></i> Editar</button>
+          <button type="button" (click)="Edit()" class="btn btn-info">
+            <i class="fa fa-pencil" aria-hidden="true"></i> Editar
+          </button>
       </div>
       <!-- change password buton -->
       <div class="col-md-auto mb-2">
-          <button type="button" (click)="newConfig()" class="btn btn-warning"><i class="fa fa-key" aria-hidden="true"></i> Nueva configuraccion</button>
+          <button type="button" (click)="newConfig()" class="btn btn-warning">
+            <i class="fa fa-key" aria-hidden="true"></i> Nueva configuraccion
+          </button>
       </div>
     </div>
   </div>
