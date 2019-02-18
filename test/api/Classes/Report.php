@@ -56,6 +56,7 @@
         $value = ['code' => $values['code']];
         $teacher = json_decode($this->getFirst('Teachers','WHERE codeTeacher =:code',$value));
         $teacherName = $teacher->name;
+        $teacherName  = $teacherName.' '.$teacher->lastname;
         /* Styles */
         $styleTitle = array(
           'font'  => array(
@@ -183,12 +184,16 @@
         foreach( range('A','I') as $cell )
           $sheet->getColumnDimension($cell)->setAutoSize(true);
         /* Save file */
-        $writer = new Xlsx($spreadsheet);
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
         try {
-            $writer->save('hello world.xlsx'); //Create file
-            echo 'save';
+          $fileName = 'Reporte-'.$teacherName.'-'.date('d-m-Y-i:s');
+          //   $writer->save('export.xlsx');
+          header('Content-Type: application/vnd.ms-excel');
+          header('Content-Disposition: attachment; filename="'.$fileName.'.xlsx"');
+          $writer->save("php://output");
+          exit;
         } catch (\Exception $e) {
-          echo $e->getMessage();
+            echo $e->getMessage();
         }
       }
       /**
@@ -328,7 +333,11 @@
       $this->closeConnection();
       return $extension;
     }
-
+    /**
+     * [dataBetween description]
+     * @param  [type] $type [description]
+     * @return [type]       [description]
+     */
     private function dataBetween($type){
       $dt = new DateTime();
       switch ($type) {
@@ -354,6 +363,11 @@
       }
       return $date;
     }
+    /**
+     * [getDatetimeNow description]
+     * @param  [type] $type [description]
+     * @return [type]       [description]
+     */
     private function getDatetimeNow($type){
       $tz_object = new DateTimeZone('America/Mexico_City');
    //date_default_timezone_set('Brazil/East');
