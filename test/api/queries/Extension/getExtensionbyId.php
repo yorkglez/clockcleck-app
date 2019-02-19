@@ -1,7 +1,6 @@
 <?php
     /*Includes*/
    require('../../Headers.php');
-   require('../../Classes/Connection.php');
    require('../../Classes/Extension.php');
    $id = $_GET['id'];
 

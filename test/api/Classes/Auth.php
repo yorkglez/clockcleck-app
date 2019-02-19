@@ -226,25 +226,25 @@
       }*/
 
       public function resetPassword($email,$type){
-        $token = bin2hex(random_bytes(20));
-        $realToken = '_token$'.$token;
-        $sql = "CALL resetPassword(:type,:email,:token)";
+        $token = bin2hex(random_bytes(20)); //generate token
+        $realToken = '_token$'.$token; //token
+        $sql = "CALL resetPassword(:type,:email,:token)"; //sentence
         $stmt = $this->connect()->prepare($sql);
+        /*params*/
         $stmt->bindParam(':email',$email,PDO::PARAM_STR);
         $stmt->bindParam(':type',$type,PDO::PARAM_STR);
         $stmt->bindParam(':token',$realToken,PDO::PARAM_STR);
-
+        /*validate execute*/
         if($stmt->execute()){
-          $resp = true;
           require_once('Helpers.php');
           $helper = new Helpers;
-          $url = 'http://localhost:4200/confirmemail/'.$type.'/'.$token.'/'.$email.'/reset';
-          echo $url;
+          $url = 'http://localhost:4200/confirmemail/'.$type.'/'.$token.'/'.$email.'/reset'; //url
           $body = '
           <h2>Clock Check</h2>
           <h3>Restablecimiento de contrasena</h3>
           <p><b>Correo:</b> emal@</p>
-          <p>Si este no es tu correo haz caso omiso de este este correo y contactate con el administrador de la plataforma para que cambie el correo.</p>
+          <p>Si este no es tu correo haz caso omiso de este este correo y contactate con
+           el administrador de la plataforma para que cambie el correo.</p>
           <p>Para poder restablecer tu contrasena haz clic en boton y sigue los pasos.</p>
           <a href=""
           style="
@@ -265,17 +265,17 @@
           font-size: 1rem;
           line-height: 1.5;
           border-radius: .25rem;
-          transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+          transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color
+          .15s ease-in-out,box-shadow .15s ease-in-out;
               "
           >Restablecer contrasena</a>
           ';
-        //  $resp = $helper->sendMail($email,'Restablecr contrasena',$body);
+          $resp = $helper->sendMail($email,'Restablecr contrasena',$body); //send email
         }
-
         else
           $resp = false;
-        $this->closeConnection();
-        return json_encode($resp);
+        $this->closeConnection(); //close connection
+        return json_encode($resp); //return response
       }
   }
  ?>

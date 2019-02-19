@@ -1,7 +1,6 @@
 <?php
   /*Includes*/
   require('../../Headers.php');
-  require('../../Classes/Connection.php');
   require('../../Classes/Helpers.php');
   $date =  $_GET['date'];
   $code =  $_GET['code'];

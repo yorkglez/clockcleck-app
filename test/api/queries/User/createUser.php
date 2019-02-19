@@ -1,7 +1,6 @@
 <?php
   /*includes*/
   include('../../Headers.php');
-  require('../../Classes/Connection.php');
   require('../../Classes/User.php');
   /**/
   $data = json_decode(file_get_contents("php://input",true));

@@ -1,7 +1,6 @@
 <?php
     /*Includes*/
    require('../../Headers.php');
-   // require('../../Classes/Connection.php');
    require('../../Classes/Teacher.php');
    /*Call Class Operations*/
    $ter = $_GET['ter'];

@@ -36,7 +36,7 @@ export class ReportsComponent implements OnInit {
   extension: string = localStorage.getItem('extension')
 
   model = {"week": "day","note": "", "search": "",
-  "startDate": "null", "endDate": "null","extension": this.extension,"atType":"","codeTeacher": "","subjectCode": null}
+  "startDate": "null", "endDate": "null","extension": this.extension,"atType":"","teachersSelect": "","subjectCode": null}
 
   modelJust = {}
   searchAlert: boolean
@@ -99,7 +99,7 @@ export class ReportsComponent implements OnInit {
     let week = this.model.week
     let startDate =  this.model.startDate
     let endDate =  this.model.endDate
-    var codeTeacher =  this.model.codeTeacher
+    var codeTeacher =  this.model.teachersSelect
     var subject =  this.model.subjectCode
     /*Validate if teachers is selected */
     if(codeTeacher =='')
@@ -252,13 +252,4 @@ export class ReportsComponent implements OnInit {
     this.model.atType = report.type
     this.id = report.idAttendance
   }
-
-  // downloadFile(data: Response) {
-  //   console.log('pits')
-  //   const blob = new Blob([data], { type: 'application/pdf' });
-  //   console.log(blob)
-  //   const url= window.URL.createObjectURL(blob);
-  //   window.open(url);
-  // }
-
 }

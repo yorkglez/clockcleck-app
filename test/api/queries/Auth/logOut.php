@@ -2,7 +2,6 @@
   session_start();
   /*Includes*/
   require('../../Headers.php');
-  require('../../Classes/Connection.php');
   require('../../Classes/Carer.php');
   $resp['type'] = $_SESSION['type'];
   $_SESSION = array();

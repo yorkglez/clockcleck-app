@@ -1,7 +1,6 @@
 <?php
   /*Includes*/
   require('../../Headers.php');
-  require('../../Classes/Connection.php');
   require('../../Classes/Helpers.php');
   $email = file_get_contents("php://input",true); //Get id
 

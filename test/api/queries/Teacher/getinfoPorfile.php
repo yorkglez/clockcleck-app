@@ -2,7 +2,6 @@
   session_start();
   /*Includes*/
  require('../../Headers.php');
- require('../../Classes/Connection.php');
  require('../../Classes/Teacher.php');
  /*Call Class Operations*/
  $code = $_SESSION['id'];

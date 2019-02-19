@@ -1,7 +1,6 @@
 <?php
   /*Includes*/
  require('../../Headers.php');
- require('../../Classes/Connection.php');
  require('../../Classes/Report.php');
  // echo $_GET['week'];// Get url data
  /*Call Class Report*/

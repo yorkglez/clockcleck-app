@@ -35,51 +35,38 @@
       $this->closeConnection();
       return  json_encode($resp);
     }
-
+    /**
+     * [sendMail description]
+     * @param  [type] $emailTo [description]
+     * @param  [type] $subject [description]
+     * @param  [type] $body    [description]
+     * @return [type]          [description]
+     */
     public function sendMail($emailTo,$subject,$body){
       $mail = new PHPMailer\PHPMailer\PHPMailer();   // Passing `true` enables exceptions
       $emailFrom = '';
       try {
-          /*Server settings*/
-          $mail->SMTPDebug = 2;                                 // Enable verbose debug output
-          $mail->isSMTP();                                      // Set mailer to use SMTP
-          $mail->Host = 'smtp1.example.com;smtp2.example.com';  // Specify main and backup SMTP servers
-          $mail->SMTPAuth = true;                               // Enable SMTP authentication
-          $mail->Username = $emailFrom;                 // SMTP username
-          $mail->Password = 'secret';                           // SMTP password
-          $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-          $mail->Port = 587;                                    // TCP port to connect to
-
-          //Recipients
-          $mail->setFrom($emailFrom, 'Mailer');
-          $mail->addAddress($emailTo, 'Joe User');     // Add a recipient
-          //$mail->addAddress('ellen@example.com');               // Name is optional
-          //$mail->addReplyTo('info@example.com', 'Information');
-      ///    $mail->addCC('cc@example.com');
-        //  $mail->addBCC('bcc@example.com');
-
-          //Attachments
-      ///    $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
-        //  $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-
-          //Content
-          $mail->isHTML(true);                                  // Set email format to HTML
-          $mail->Subject = $subject;
-          $mail->Body    = '
-              <h2>Clock Check</h2>
-              <h3>Bienvenid@:  a la plataforma!</h3>
-              <p>Correo: '.$emailTo.'</p>
-              <p>Si este no es tu correo haz caso omiso de este este correo y contactate con el administrador de la plataforma para que cambie el correo.</p>
-              <p>Para poder activar tu cuenta es necesario validar tu correo, haz clic en el siguiente boton para ser enviado a la pagina de activacion.</p>
-              <button>Activar cuenta</button>';
-          $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-          $mail->send();
-          echo 'Message has been sent';
-          return true;
+        /*Server settings*/
+        $mail->SMTPDebug = 2;                                 // Enable verbose debug output
+        $mail->isSMTP();                                      // Set mailer to use SMTP
+        $mail->Host = 'smtp1.example.com;smtp2.example.com';  // Specify main and backup SMTP servers
+        $mail->SMTPAuth = true;                               // Enable SMTP authentication
+        $mail->Username = $emailFrom;                 // SMTP username
+        $mail->Password = 'secret';                           // SMTP password
+        $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+        $mail->Port = 587;                                    // TCP port to connect to
+        /*Recipients*/
+        $mail->setFrom($emailFrom, 'Clock Check');
+        $mail->addAddress($emailTo, 'User');     // Add a recipient
+        /*Content*/
+        $mail->isHTML(true);                                  // Set email format to HTML
+        $mail->Subject = $subject;
+        $mail->Body = $body;
+        $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+        $mail->send();
+        return true;
       } catch (Exception $e) {
-          echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
-          return false;
+        return false;
       }
     }
 

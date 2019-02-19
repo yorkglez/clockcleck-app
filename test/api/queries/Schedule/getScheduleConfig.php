@@ -2,7 +2,6 @@
 
   /*Includes*/
   require('../../Headers.php');
-  require('../../Classes/Connection.php');
   require('../../Classes/Schedule.php');
   /**/
   if(!isset($_GET['code'])){

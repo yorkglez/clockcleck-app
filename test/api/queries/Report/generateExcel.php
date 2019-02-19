@@ -1,25 +1,22 @@
 <?php
     /*Includes*/
    require('../../Headers.php');
-   require('../../Classes/Connection.php');
    require('../../Classes/Report.php');
+   $week =  $_GET['week'];
+   $startDate =  $_GET['startDate'];
+   $endDate =  $_GET['endDate'];
+   $code = $_GET['codeTeacher'];
+   $extension = $_GET['extension'];
+   $subject =  $_GET['subject'];
 
-
-
-   // $extension = $_GET['extension'];
-   // $week =  $_GET['week'];
-   // $startDate =  $_GET['startDate'];
-   // $endDate =  $_GET['endDate'];
-   // $code = $_GET['codeTeacher'];
-   // $subject =  $_GET['subject'];
-
-   $extension = '1';
-   $week =  'week';
-   $startDate =  'null';
-   $endDate =  'null';
-   $code = '1414';
-   $carer =  '';
-   $subject = 50;
+   // TEMP:
+   // $extension = '1';
+   // $week =  'week';
+   // $startDate =  'null';
+   // $endDate =  'null';
+   // $code = '1414';
+   // $carer =  '';
+   // $subject = 50;
    //
    $values = [
       'week' => $week,
@@ -30,7 +27,6 @@
      'extension'=>$extension,
      'subject'=>$subject,
    ];
-
   $report= new Report;
   $report->generateReportExcel($values);
 
