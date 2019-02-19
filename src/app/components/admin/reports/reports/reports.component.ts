@@ -68,43 +68,54 @@ export class ReportsComponent implements OnInit {
               private _titleService: Title) {
                   this._titleService.setTitle('Reportes')
                }
-
+               // this.date = new Date()
+               // this.date =  this.date.toLocaleString('en-US', {timeZone: 'America/Mexico_City'})
+               /*Get carers*/
+              // this._carersService.getSelectCarers(this.extension).subscribe(data=>{
+              //   this.carers = data
+              // })
   ngOnInit() {
-    this.date = new Date()
-    this.date =  this.date.toLocaleString('en-US', {timeZone: 'America/Mexico_City'})
-    this._extensionsService.getExtension().subscribe(data=>{this.extensions = data})
-    // this.extension = localStorage.getItem('extension')
+    this._extensionsService.getExtension().subscribe(data=>{this.extensions = data})//get extension
+    /*get teachers*/
     this._reportsService.getselectTeacher(this.extension).subscribe(data=>{
           this.teachers = data
      })
-    this._carersService.getSelectCarers(this.extension).subscribe(data=>{
-      this.carers = data
-    })
+    /*Validate user type*/
     if(localStorage.getItem('type') == 'admin')
       this.isAdmin = true
     else
       this.isAdmin = false
     }
+
     getSelectSubjects(code){
+      /*get subjects*/
       this._subjectsService.getSubjectsListTeacher(code).subscribe(data=>{
         this.subjects = data
       })
     }
-  downloadReport(ex){
+  downloadReport(type){
+    /*get report params*/
     let extension = this.model.extension
     let week = this.model.week
     let startDate =  this.model.startDate
     let endDate =  this.model.endDate
     var codeTeacher =  this.model.codeTeacher
     var subject =  this.model.subjectCode
-    let rType = '';
+    /*Validate if teachers is selected */
     if(codeTeacher =='')
       codeTeacher = 'null'
     if(subject == null)
       subject = 'null'
     let params = 'extension='+extension+'&week='+week+'&startDate='+startDate
     +'&endDate='+endDate+'&codeTeacher='+codeTeacher+'&subject='+subject
-    window.open('http://localhost/clockcleck-app/test/api/queries/Report/generatePDF.php?'+params)
+    let route = ''
+    /*validate report type*/
+    if(type == 'pdf')
+      route = 'generatePDF.php?'
+    else
+      route = 'generateExcel.php?'
+    //download report
+    window.open('http://localhost/clockcleck-app/test/api/queries/Report/'+route+params)
   }
   Notes(){
     this.notes = true
@@ -133,46 +144,54 @@ export class ReportsComponent implements OnInit {
   }
 
   getSubjectbyDate(date){
+    /*get subjects*/
     this._reportsService.getSubjectbyDate(date,this.model['teachersSelect']).subscribe(data=>{
       this.tcSubjects = data
     })
   }
+
   getSchedulelist(id,date){
+    /*get Schedule*/
     this._reportsService.getSchedulelist(id,this.model['teachersSelect'],date).subscribe(data=>{
       this.Schedule = data
     })
   }
 
   createAttendance(){
-      console.table(this.modelJust)
-      this._reportsService.createAttendance(this.modelJust).subscribe(resp=>{
-        if(resp){
-          this.type  = "success"
-          this.message = 'La justificacion ha sido creada correctamente.'
-          this.modelJust = {}
-          // this.Schedule = []
-        }else{
-          this.type  = "error"
-          this.message = 'Ocurrio un error al intentar gurdar.'
-        }
-        this.alertVisible = true
-        setTimeout(() => {
-          this.alertVisible = false
-        }, 1300)
-      })
+    /*Call service*/
+    this._reportsService.createAttendance(this.modelJust).subscribe(resp=>{
+      /*Validate response*/
+      if(resp){
+        this.type  = "success" //type alert
+        this.message = 'La justificacion ha sido creada correctamente.' //alert message
+        this.modelJust = {}
+      }
+      else{
+        this.type  = "error" //type alert
+        this.message = 'Ocurrio un error al intentar gurdar.' //alert message
+      }
+      this.alertVisible = true //show alert
+      setTimeout(() => {
+        this.alertVisible = false //hide alert
+      }, 1300)
+    })
   }
+
   showJusti(){
+    /*validate isJustification status*/
     if(this.isJustification)
-      this.isJustification = false
+      this.isJustification = false // hide form
     else
-      this.isJustification = true
-    this.modelJust = {}
+      this.isJustification = true //show form
+    this.modelJust = {} //clear model
   }
 
   getReport(){
-    console.log(this.model.subjectCode)
+    /* Validate inputs date*/
     if((this.model.startDate != 'null' && this.model.endDate != 'null') || this.model.week != 'null'){
+      /*get Report*/
       this._reportsService.getReports(this.model).subscribe(data=>{
+        /* Validate response */
         if(!data){
           this.reports = []
           this.reportExists = false
@@ -184,15 +203,19 @@ export class ReportsComponent implements OnInit {
       })
     }
   }
+
   getTeachers(ex){
-    this.extension = ex
+    this.extension = ex //get extexion
+    /*get teachers*/
     this._reportsService.getselectTeacher(ex).subscribe(data=>{
+      /*validate response*/
       if(!data)
         this.teachers = []
       else
           this.teachers = data
      })
   }
+
   getCarers(ex){
     this._carersService.getSelectCarers(ex).subscribe(data=>{
       this.carers = data
@@ -212,12 +235,13 @@ export class ReportsComponent implements OnInit {
     }
   }
   showDate(value){
+    /* Validate option bydate*/
     if(value == 'bydate'){
-      this.checksDate = true
+      this.checksDate = true //enable inputs dates
       this.model.week = 'null'
     }
     else{
-      this.checksDate = false
+      this.checksDate = false //disabled inputs dates
       this.model.startDate ='null'
       this.model.endDate = 'null'
     }
@@ -229,12 +253,12 @@ export class ReportsComponent implements OnInit {
     this.id = report.idAttendance
   }
 
-  downloadFile(data: Response) {
-    console.log('pits')
-    const blob = new Blob([data], { type: 'application/pdf' });
-    console.log(blob)
-    const url= window.URL.createObjectURL(blob);
-    window.open(url);
-  }
+  // downloadFile(data: Response) {
+  //   console.log('pits')
+  //   const blob = new Blob([data], { type: 'application/pdf' });
+  //   console.log(blob)
+  //   const url= window.URL.createObjectURL(blob);
+  //   window.open(url);
+  // }
 
 }
