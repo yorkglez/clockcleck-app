@@ -1,10 +1,26 @@
-.th-hours {
+.schedule .th-hours {
   width: 200px;
   border-right: 1px solid rgba(128, 128, 128, 0.4); }
 
-td {
+.schedule td {
   border-right: 1px solid rgba(128, 128, 128, 0.4);
   text-align: center; }
 
-.td-break {
+.schedule .td-break {
   text-align: center; }
+
+.modal-body .table {
+  width: auto; }
+
+.modal-lg {
+  max-width: 60% !important; }
+  .modal-lg .modal-body {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center; }

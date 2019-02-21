@@ -46,7 +46,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let ac of aclist | paginate: { itemsPerPage: 10, currentPage: p }; let i = index ">
+        <tr *ngFor="let ac of aclist | paginate: { itemsPerPage: 25, currentPage: p }; let i = index ">
           <th>{{ac.codeTeacher}}</th>
           <td>{{ac.teacherName}}</td>
           <td>
@@ -90,7 +90,7 @@
       </div>
       <div class="modal-body">
         <!-- table for schedule -->
-        <table class="table table-sm" *ngIf="existsSchedule" style="min-width: auto;">
+        <table class="table schedule table-sm" *ngIf="existsSchedule" style="min-width: auto;">
           <thead>
             <tr class="tb-head">
             <th scope="col">Hora</th>

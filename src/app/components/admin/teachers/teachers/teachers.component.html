@@ -65,7 +65,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let teacher of teachers | paginate: { itemsPerPage: 2, currentPage: p }; let i = index ">
+        <tr *ngFor="let teacher of teachers | paginate: { itemsPerPage: 25, currentPage: p }; let i = index ">
           <th scope="row">{{teacher.codeTeacher}}</th>
           <td>{{teacher.name}}</td>
           <td>{{teacher.lastname}}</td>

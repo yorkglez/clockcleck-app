@@ -67,7 +67,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let subject of subjects | paginate: { itemsPerPage: 2, currentPage: p }; let i = index ">
+            <tr *ngFor="let subject of subjects | paginate: { itemsPerPage: 25, currentPage: p }; let i = index ">
               <th>{{subject.codeSubject}}</th>
               <td>{{subject.name}}</td>
               <td>{{subject.credits}}</td>
@@ -84,7 +84,7 @@
                   <button *ngIf="subject.status == '0'"  (click)="Activate(subject)"   class="btn btn-success" >
                     <i class="fas fa-check"></i> <span> Activar</span>
                   </button>
-                  <button *ngIf="subject.status == '1'" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete" 
+                  <button *ngIf="subject.status == '1'" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete"
                   (click)="getId(subject)" #deleteUser>
                     <i class="fas fa-trash-alt"></i> <span> Eliminar</span>
                   </button>

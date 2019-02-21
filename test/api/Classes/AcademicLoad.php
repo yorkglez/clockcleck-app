@@ -122,7 +122,7 @@ class AcademicLoad extends Connection
    * [This function delete the subject in database]
    * @param [int] $id [id subjectlist]
    */
-  public function Delete($id){
+  public function Remove($id){
     $sql ="CALL deleteSubjectList(:id)";
     $stmt = $this->connect()->prepare($sql);
     $stmt->bindParam(':id',$id,PDO::PARAM_INT);

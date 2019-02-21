@@ -8,6 +8,8 @@
   </div>
   <!-- body -->
   <div class="content-body">
+    <!-- alerts -->
+    <app-alerts [type]="type" [message]= "message" [alertVisible]="alertVisible"  ></app-alerts>
     <!-- form -->
     <form  (ngSubmit)="form.valid && saveExtension(form)" #form="ngForm" class="needs-validation" novalidate>
       <div class="form-row">
@@ -71,6 +73,4 @@
       <button type="submit" class="btn btn-lg btn-primary"><i class="fas fa-save"></i> Guardar</button>
     </form>
   </div>
-  <!-- alerts -->
-  <app-alerts [type]="type" [message]= "message" [alertVisible]="alertVisible"  ></app-alerts>
 </div>

@@ -5,7 +5,7 @@
   /**/
   $id = json_decode(file_get_contents("php://input",true));
   $academicLoad = new AcademicLoad;
-  $resp = $academicLoad->Delete($id);
+  $resp = $academicLoad->Remove($id);
   echo $resp;
 
 ?>
