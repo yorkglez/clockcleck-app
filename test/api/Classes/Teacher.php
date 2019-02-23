@@ -189,7 +189,7 @@
     }
 
     public function getSchedulelist($idsl, $code, $dateAt){
-      $sql = "SELECT  at.Schedule_idSchedule  FROM attendances at
+      $sql = "SELECT  at.Schedule_idSchedule  FROM Attendances at
       INNER JOIN Subjects_list sl ON sl.idSubjectlist = at.Subjects_list_idSubjectlist
       WHERE sl.Teachers_codeTeacher = :code AND at.date_At = :dateAt AND sl.idSubjectlist = :idsl";
       $stmt = $this->connect()->prepare($sql);
@@ -207,7 +207,7 @@
         $timestamp = strtotime($dateAt);
         $dayName = date("l", $timestamp);
         $nDay = date('N',strtotime($dayName));
-        $sql = "SELECT idSchedule AS id, concat(startTime, ' - ', endTime) as hours FROM schedule
+        $sql = "SELECT idSchedule AS id, concat(startTime, ' - ', endTime) as hours FROM Schedule
         WHERE idSchedule not in "."(".$cad.") AND Subjects_list_idSubjectlist = :idsl AND day =:day";
         $stmt = $this->connect()->prepare($sql);
         $stmt->bindParam(':idsl',$idsl,PDO::PARAM_INT);
@@ -226,7 +226,7 @@
         $daynum = date("N", strtotime(date('l')));
         $daynum = 3;
         // echo $daynum;
-        $sql = "SELECT idSchedule AS id, concat(startTime, ' - ', endTime) as hours FROM schedule
+        $sql = "SELECT idSchedule AS id, concat(startTime, ' - ', endTime) as hours FROM Schedule
         WHERE Subjects_list_idSubjectlist = :idsl AND day = :day";
         $stmt = $this->connect()->prepare($sql);
         $stmt->bindParam(':idsl',$idsl,PDO::PARAM_INT);

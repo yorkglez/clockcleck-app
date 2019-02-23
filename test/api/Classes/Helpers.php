@@ -93,7 +93,7 @@
     }
 
    public function getSchedulelist($idsl, $code){
-     $sql = "SELECT  at.Schedule_idSchedule FROM attendances at
+     $sql = "SELECT  at.Schedule_idSchedule FROM Attendances at
      INNER JOIN Subjects_list sl ON sl.idSubjectlist = at.Subjects_list_idSubjectlist
      WHERE sl.Teachers_codeTeacher = :code AND at.date_At = '2019-02-11' AND sl.idSubjectlist = :idsl";
      $stmt = $this->connect()->prepare($sql);
@@ -106,7 +106,7 @@
        $cad =  implode(',',$ids);
        $this->closeConnection();
 
-       $sql = "SELECT idSchedule, concat(startTime, ' - ', endTime) as hours FROM schedule WHERE idSchedule not in "."(".$cad.")";
+       $sql = "SELECT idSchedule, concat(startTime, ' - ', endTime) as hours FROM Schedule WHERE idSchedule not in "."(".$cad.")";
        $stmt = $this->connect()->prepare($sql);
        $stmt->execute();
        if($stmt->rowCount() > 0){

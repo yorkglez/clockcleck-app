@@ -36,7 +36,10 @@ export class UsersComponent implements OnInit {
    this._loaderService.display(true) //Show loader
     /* get user data from service */
    this._usersService.getData().subscribe(data=>{
-     this.users = data
+     if(!data)
+      this.users = []
+    else
+      this.users = data
      this._loaderService.display(false) //Hide loader
   })
 }
@@ -56,6 +59,7 @@ getId(user){
 }
 
   searchUser(ter:string,type:string){
+    console.log(ter)
       this._usersService.Search(ter,type).subscribe(data=>{
           this.users = data
           if(this.users.length > 0){

@@ -15,7 +15,7 @@ import { Title } from '@angular/platform-browser';
              ]
 })
 export class AcademicloadTeacherComponent implements OnInit {
-    type: string 
+    type: string
     message: string
 
     hours = []
@@ -33,7 +33,7 @@ export class AcademicloadTeacherComponent implements OnInit {
     idx: number
     i: number
     isEditable: boolean = false
-    alertisVisible: boolean = true
+    alertisVisible: boolean = false
     subject
     constructor(private config: NgSelectConfig,
       private _scheduleService: ScheduleService,

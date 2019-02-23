@@ -17,7 +17,7 @@ export class ReportsService {
   }
 
   getselectTeacher(ex): Observable<TeacherSelect[]>{
-    return this.http.get<TeacherSelect[]>('api/queries/Helpers/getselectTeacher.php',{params:{ex:ex}})
+    return this.http.get<TeacherSelect[]>('api/queries/Helpers/getSelectTeacher.php',{params:{ex:ex}})
   }
 
   saveChanges(id,note,type){

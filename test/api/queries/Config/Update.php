@@ -15,7 +15,7 @@
      'durationBreak' =>$data->durationBreak
    ];
    $config = new Config;
-   $resp =  $config->Update($values);
+   $resp =  $config->updateConfig($values);
    echo $resp;
 
  ?>

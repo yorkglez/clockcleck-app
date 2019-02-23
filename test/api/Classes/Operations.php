@@ -27,8 +27,12 @@
         $stmt->execute(); //execute sentente
       }
       /* Get data from db in fetch*/
-      while($row = $stmt->fetch(PDO::FETCH_ASSOC))
-        $fetch[] = $row; //get row
+      if($stmt->rowCount() > 0){
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC))
+          $fetch[] = $row; //get row
+      }
+      else
+        $fetch = false;
       $this->closeConnection(); //close conection
       return  json_encode($fetch); //return data
     }

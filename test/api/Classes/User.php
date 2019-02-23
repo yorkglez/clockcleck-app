@@ -118,10 +118,13 @@
     }
     /**/
     public function getUserForType($type){
+      session_start();
+      $id =  $_SESSION['id'];
       if($type == 'admin' || $type == 'normal'){
-        $sql = 'SELECT * FROM View_Users WHERE type = :type';
+        $sql = 'SELECT * FROM View_Users WHERE NOT idUser = :id AND type = :type';
         $stmt = $this->connect()->prepare($sql);
         $stmt->bindParam(':type',$type);
+        $stmt->bindParam(':id',$id);
       }else{
           $sql = 'SELECT * FROM View_Users ';
           $stmt = $this->connect()->prepare($sql);

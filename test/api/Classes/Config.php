@@ -21,7 +21,7 @@
      * [Update description]
      * @param [type] $values [description]
      */
-    public function Update($values){
+    public function updateConfig($values){
       $sql = "UPDATE Config SET durationModule = :durationModule , startTime = :startTime, endTime = :endTime,
       sbreakTime = :sbreakTime, ebreakTime = :ebreakTime, durationBreak = :durationBreak WHERE idConfig = :id";
       $stmt = $this->connect()->prepare($sql);

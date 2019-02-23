@@ -21,7 +21,7 @@
         type="search"
         placeholder="Buscar..."
         aria-label="Search"
-        (keypress)="searchUser(searchText.value,type.value)"
+        (keyup)="searchUser(searchText.value,type.value)"
         #searchText>
         <button class="btn-clear" (click)="searchText.value = ''; searchUser(searchText.value,type.value)">
          <i class="fa fa-times"></i>
@@ -83,6 +83,9 @@
       </table>
     </div>
     <!-- alerts -->
+    <div class="alert alert-info" role="alert" *ngIf="users.length == 0 && !searchAlert">
+        <i class="fas fa-info-circle"></i> No hay registros en la base de datos.
+    </div>
     <div class="alert alert-info" role="alert" *ngIf="searchAlert">
         <i class="fas fa-info-circle"></i> No se encontraron resultados con el termino: <b>{{ter}}</b>
     </div>

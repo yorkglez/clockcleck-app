@@ -34,7 +34,12 @@ export class TeachersComponent implements OnInit {
   ngOnInit() {
     this._extensionsService.getExtension().subscribe(data=>{this.extensions = data})
     this.  model = {"extension": localStorage.getItem('extension')}
-    this._teachersService.getData('','all',localStorage.getItem('extension')).subscribe(data=>{this.teachers = data})
+    this._teachersService.getData('','all',localStorage.getItem('extension')).subscribe(data=>{
+      if(!data)
+        this.teachers = []
+      else
+        this.teachers = data
+    })
   }
 
   getId(teacher){
