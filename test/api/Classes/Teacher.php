@@ -296,7 +296,7 @@
         $url = 'http://clock.malastareas.com/'.$type.'/'.$token.'/'.$email.'/activate'; // url for activate email
         /* html message*/
         $body = '
-          <img src="./Classes/public/images/logocc.png"  alt="imagen..."  style=" width: 150px;">
+          <img src="../Classes/public/images/logocc.png"  alt="imagen..."  style=" width: 150px;">
           <h3 style="font-family: Arial;">Bienvenid@: '.$values['name'].' '.$values['lastname'].' a la plataforma!</h3>
           <p style="font-family: Arial;"><b>Correo:</b> '.$values['email'].'</p>
           <p style="font-family: Arial;">Si este no es tu correo haz caso omiso de este este correo y contactate con el administrador de la plataforma para que cambie el correo.</p>
