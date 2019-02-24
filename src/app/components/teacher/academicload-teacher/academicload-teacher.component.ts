@@ -11,17 +11,17 @@ import { Title } from '@angular/platform-browser';
   selector: 'app-academicload-teacher',
   templateUrl: './academicload-teacher.component.html',
   styleUrls: ['../../../../assets/css/panelStyles.css',
-              '../../../../assets/css/tableStyles.css'
+              '../../../../assets/css/tableStyles.css',
+                '../../../../assets/css/academicloadStyles.css'
              ]
 })
 export class AcademicloadTeacherComponent implements OnInit {
     type: string
     message: string
-
     hours = []
     hoursSelect:any = []
     days = []
-    model ={}
+    model = {'day':'','nameSubject':'','alias':'','startTime':'','endTime':'','semester':'','objetive':''}
     semesters = [];
     subjects: SubjectList[] = []
   //  subjectsName = []
@@ -155,7 +155,8 @@ export class AcademicloadTeacherComponent implements OnInit {
       }
       else
         this.academicload.push(this.model) //add new subject
-      this.model = {} //clear model
+      // this.model = {} //clear model
+      this.model = {'day':'','nameSubject':'','alias':'','startTime':'','endTime':'','semester':'','objetive':''}
       form.resetForm() //clear form
     }
 
@@ -182,12 +183,10 @@ export class AcademicloadTeacherComponent implements OnInit {
       }
       else
         this.academicload.push(this.model) //add new subject
-      this.model = {} //clear model
+      // this.model = {} //clear model
+      this.model = {'day':'','nameSubject':'','alias':'','startTime':'','endTime':'','semester':'','objetive':''}
       form.resetForm() //clear form
     }
-
-
-
 
     sliceHours(idx){
       this.etSlice  = parseInt(idx) + 1

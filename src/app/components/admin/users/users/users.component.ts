@@ -10,7 +10,8 @@ import { LoaderService } from '../../../../services/loader.service';
   styleUrls: ['../../../../../assets/css/tableStyles.css',
               '../../../../../assets/css/panelStyles.css',
               '../../../../../assets/css/paginationStyles.css',
-              '../../../../../assets/css/alertStyles.css'
+              '../../../../../assets/css/alertStyles.css',
+              '../../../../../assets/css/containerStyles.css'
              ]
 })
 

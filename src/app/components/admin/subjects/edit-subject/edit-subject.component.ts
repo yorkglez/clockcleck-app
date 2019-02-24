@@ -10,11 +10,12 @@ import { Title } from '@angular/platform-browser';
   selector: 'app-edit-subject',
   templateUrl: './edit-subject.component.html',
   styleUrls: ['../../../../../assets/css/panelStyles.css',
-              '../../../../../assets/css/tableStyles.css'
+              '../../../../../assets/css/tableStyles.css',
+              '../../../../../assets/css/containerStyles.css'
 ]
 })
 export class EditSubjectComponent implements OnInit {
-  model = {}
+  model = {"code":'','name':'','credits':''}
   subjects = {}
   id:string;
   subjectsList = []
@@ -137,7 +138,7 @@ export class EditSubjectComponent implements OnInit {
   getId(idx){
     this.idx = idx
   }
-  Save(form: NgForm,sequence){
+  Save(form: NgForm){
     if(this.codeValid && this.secodeValid){
       this._subjectsService.updateSubject(this.model,this.id).subscribe(resp=>{
         if(resp){

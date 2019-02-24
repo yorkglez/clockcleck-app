@@ -7,18 +7,21 @@ import { FormBuilder, FormGroup, Validators   } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { HelpersService } from '../../../../services/helpers.service';
 
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
-  styleUrls: [  '../../../../../assets/css/panelStyles.css']
+  styleUrls: [  '../../../../../assets/css/panelStyles.css',
+  '../../../../../assets/css/containerStyles.css']
 })
 export class EditUserComponent implements OnInit {
   extensions = []
-  model = {}
-  id:string;
+  model = {'name': '','lastname': '','email': '','type':'','extension':'','genere':''}
+  id:string
+  oldEmail:string
   passwordsValid: boolean = true
-  emailValid: boolean = true
+  emaiisValid: boolean = true
   alertVisible: boolean = false
   type: string
   message: string
@@ -27,6 +30,7 @@ export class EditUserComponent implements OnInit {
               private activatedRoute:ActivatedRoute,
               private _usersService: UsersService,
               private router: Router,
+              private _helpersService: HelpersService,
               private _titleService: Title) {
                 this._titleService.setTitle('Editar usuario')
               }
@@ -45,10 +49,24 @@ export class EditUserComponent implements OnInit {
          this.model['type'] =  data.type
          this.model['extension'] = data['Extensions_idExtension']
          this.model['genere'] = data['genere']
+         this.oldEmail = data.email //get old email
       })
     })
   }
-
+  validateEmail(email){
+    /* Call function validaEmail from services */
+    if(this.oldEmail != email){
+      this._helpersService.validateEmail(email).subscribe(resp =>{
+        /*Validate response*/
+        if(!resp)
+          this.emaiisValid = true // email is invalid
+        else
+          this.emaiisValid = false //email is valid
+      })
+    }
+    else
+      this.emaiisValid = true
+  }
   Update(model){
     this._usersService.Update(model,this.id).subscribe(resp=>{
       if(resp){

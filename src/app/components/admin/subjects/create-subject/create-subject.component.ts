@@ -8,11 +8,12 @@ import { Title } from '@angular/platform-browser';
   selector: 'app-create-subject',
   templateUrl: './create-subject.component.html',
   styleUrls: ['../../../../../assets/css/panelStyles.css',
-  '../../../../../assets/css/tableStyles.css'
+  '../../../../../assets/css/tableStyles.css',
+  '../../../../../assets/css/containerStyles.css'
         ]
 })
 export class CreateSubjectComponent implements OnInit {
-  model = {"code":''}
+  model = {"code":'','name':'','credits':''}
   subjects = {"code":''}
   subjectsList = []
   idx: number
@@ -47,7 +48,7 @@ export class CreateSubjectComponent implements OnInit {
           this.message = 'La materia se ha guardado correctamente.'//alert message
           form.resetForm()//reset form
           this.subjectsList = []
-          this.model = {"code":''}
+          this.model.code = ''
           this.isSequence = false
         }else{
           this.type  = "error"//alert type

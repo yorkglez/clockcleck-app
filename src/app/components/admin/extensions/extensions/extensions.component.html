@@ -1,120 +1,125 @@
-<!-- navbar -->
-<app-navadmin></app-navadmin>
-<!-- content -->
-<div class="content animated fadeIn">
-  <!-- menu -->
-  <form class="options-panel">
-    <div class="form-row  align-items-end">
-      <div class= "form-group col-sm-12 col-2 col-md-auto">
-        <h1 class="title">Extenciones</h1>
+<!-- container -->
+<div class="container-fluid">
+  <!-- navbar -->
+  <app-navadmin></app-navadmin>
+  <!-- content -->
+  <div class="content animated fadeIn">
+    <!-- menu -->
+    <form class="options-panel">
+      <div class="form-row  align-items-end">
+        <div class= "form-group col-sm-12 col-2 col-md-auto">
+          <h1 class="title">Extenciones</h1>
+        </div>
+        <div class="form-group col-2 col-sm-auto col-md-auto search-container">
+          <button class="btn btn-success col-sd-2" [routerLink]="['/createextension']">
+            <i class="fas fa-plus"></i> Nueva extension
+          </button>
+        </div>
+        <!-- search -->
+        <div class="form-group col-8 col-sm-5 col-md-auto search-container">
+          <input class="form-control"
+          type="search" placeholder="Buscar..."
+          aria-label="Search"
+          (keypress)="Search(searchText.value,type.value)"
+          #searchText>
+          <button class="btn-clear" (click)="searchText.value = ''; Search(searchText.value,type.value)">
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary my-2 my-sm-0" (click)="Search(searchText.value,type.value)">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+        <!-- select status -->
+        <div class="form-group col-md-auto col-sm-4">
+          <select id="showType" class="form-control custom-select" (change)="getType(type.value)" #type>
+            <option value="1" >Activos</option>
+            <option value="0">Inactivos</option>
+          </select>
+        </div>
       </div>
-      <div class="form-group col-2 col-sm-auto col-md-auto search-container">
-        <button class="btn btn-success col-sd-2" [routerLink]="['/createextension']">
-          <i class="fas fa-plus"></i> Nueva extension
-        </button>
+    </form>
+    <div class="content-table">
+      <!-- alerts -->
+      <div class="alert alert-info" role="alert" *ngIf="extensions.length == 0 && !searchAlert">
+        <i class="fas fa-info-circle"></i> No hay registros en la base de datos.
       </div>
-      <!-- search -->
-      <div class="form-group col-8 col-sm-5 col-md-auto search-container">
-        <input class="form-control"
-        type="search" placeholder="Buscar..."
-        aria-label="Search"
-        (keypress)="Search(searchText.value,type.value)"
-        #searchText>
-        <button class="btn-clear" (click)="searchText.value = ''; Search(searchText.value,type.value)">
-          <i class="fa fa-times"></i>
-        </button>
+      <div class="alert alert-info" role="alert" *ngIf="searchAlert">
+          <i class="fas fa-info-circle"></i> No se encontraron resultados con el termino: <b>{{ter}}</b>
       </div>
-      <div class="form-group">
-        <button class="btn btn-primary my-2 my-sm-0" (click)="Search(searchText.value,type.value)">
-          <i class="fas fa-search"></i>
-        </button>
+      <!-- loader  -->
+      <app-loader></app-loader>
+      <!-- table -->
+      <div class="table-responsive-md">
+        <table class="table table-sm" *ngIf="extensions.length > 0">
+          <thead>
+            <tr class="tb-head">
+              <th scope="col">Nombre</th>
+              <th scope="col">Ciudad</th>
+              <th scope="col">Direccion</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let extension of extensions | paginate: { itemsPerPage: 25, currentPage: p }; let i = index ">
+              <th>{{extension.name}}</th>
+              <td>{{extension.city}}</td>
+              <td>{{extension.address}}</td>
+              <td>
+                <div class="accions-content">
+                  <button class="btn btn-warning" (click)="Edit(extension)"><i class="fas fa-pencil-alt"></i>
+                    <span> Editar</span>
+                  </button>
+                  <button *ngIf="extension.status == '0'"  (click)="Activate(extension)" class="btn btn-success" >
+                    <i class="fas fa-check"></i> <span> Activar</span>
+                  </button>
+                  <button *ngIf="extension.status == '1'"  class="btn btn-danger" data-toggle="modal" data-target="#modalDelete"
+                  (click)="getId(extension)"  #deleteUser>
+                    <i class="fas fa-trash-alt"></i> <span> Eliminar</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <!-- select status -->
-      <div class="form-group col-md-auto col-sm-4">
-        <select id="showType" class="form-control custom-select" (change)="getType(type.value)" #type>
-          <option value="1" >Activos</option>
-          <option value="0">Inactivos</option>
-        </select>
-      </div>
-    </div>
-  </form>
-  <div class="content-table">
-    <!-- alerts -->
-    <div class="alert alert-info" role="alert" *ngIf="extensions.length == 0 && !searchAlert">
-      <i class="fas fa-info-circle"></i> No hay registros en la base de datos.
-    </div>
-    <div class="alert alert-info" role="alert" *ngIf="searchAlert">
-        <i class="fas fa-info-circle"></i> No se encontraron resultados con el termino: <b>{{ter}}</b>
-    </div>
-    <!-- loader  -->
-    <app-loader></app-loader>
-    <!-- table -->
-    <div class="table-responsive-md">
-      <table class="table table-sm" *ngIf="extensions.length > 0">
-        <thead>
-          <tr class="tb-head">
-            <th scope="col">Nombre</th>
-            <th scope="col">Ciudad</th>
-            <th scope="col">Direccion</th>
-            <th scope="col">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let extension of extensions | paginate: { itemsPerPage: 25, currentPage: p }; let i = index ">
-            <th>{{extension.name}}</th>
-            <td>{{extension.city}}</td>
-            <td>{{extension.address}}</td>
-            <td>
-              <div class="accions-content">
-                <button class="btn btn-warning" (click)="Edit(extension)"><i class="fas fa-pencil-alt"></i>
-                  <span> Editar</span>
-                </button>
-                <button *ngIf="extension.status == '0'"  (click)="Activate(extension)" class="btn btn-success" >
-                  <i class="fas fa-check"></i> <span> Activar</span>
-                </button>
-                <button *ngIf="extension.status == '1'"  class="btn btn-danger" data-toggle="modal" data-target="#modalDelete"
-                (click)="getId(extension)"  #deleteUser>
-                  <i class="fas fa-trash-alt"></i> <span> Eliminar</span>
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!-- pagination -->
-    <div class="pagination-container"   *ngIf="extensions.length > 0">
-      <!-- <div class="showing">
-        Mostrando <b>{{itemsPerPage}}</b> de <b>{{rowCont}}</b> materias
-      </div> -->
-      <!-- pagiantion settings -->
-      <pagination-controls class="Pagination pagination justify-content-center"  (pageChange)="p = $event"
-      previousLabel="Anterior"
-      nextLabel="Siguiente"
-      screenReaderPaginationLabel="Pagination"
-      *ngIf="extensions.length > 0"
-      >
-      </pagination-controls>
-    </div>
-  </div>
-</div>
-<!-- modalal for delete accion -->
-<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="ModalCenterTitle">Estas seguro? <i class="fas fa-exclamation-triangle"></i></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Si eliminas esta extension, sera dada de baja en el sistema!.
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger" (click)="Delete()"  data-dismiss="modal">Eliminar</button>
+      <!-- pagination -->
+      <div class="pagination-container"   *ngIf="extensions.length > 0">
+        <!-- <div class="showing">
+          Mostrando <b>{{itemsPerPage}}</b> de <b>{{rowCont}}</b> materias
+        </div> -->
+        <!-- pagiantion settings -->
+        <pagination-controls class="Pagination pagination justify-content-center"  (pageChange)="p = $event"
+        previousLabel="Anterior"
+        nextLabel="Siguiente"
+        screenReaderPaginationLabel="Pagination"
+        *ngIf="extensions.length > 0"
+        >
+        </pagination-controls>
       </div>
     </div>
   </div>
+  <!-- modalal for delete accion -->
+  <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ModalCenterTitle">Estas seguro? <i class="fas fa-exclamation-triangle"></i></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Si eliminas esta extension, sera dada de baja en el sistema!.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" (click)="Delete()"  data-dismiss="modal">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+<!-- footer -->
+<app-footer></app-footer>

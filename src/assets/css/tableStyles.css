@@ -44,7 +44,7 @@ table, td, th {
       color: gray; }
 
 /*Responsive */
-@media (min-width: 576px) {
+@media (max-width: 576px) {
   .btn span {
     display: none; } }
 

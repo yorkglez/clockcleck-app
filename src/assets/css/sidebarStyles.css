@@ -16,17 +16,19 @@ body {
 .sidemenu .user-container {
   display: none; }
 
-.sidemenu .sidebar-nav li {
-  position: relative; }
-  .sidemenu .sidebar-nav li .sub-nav {
-    display: none; }
-  .sidemenu .sidebar-nav li a {
-    position: absolute;
-    left: -10px; }
-    .sidemenu .sidebar-nav li a span {
+.sidemenu .sidebar-nav {
+  width: 60.5px; }
+  .sidemenu .sidebar-nav li {
+    position: relative; }
+    .sidemenu .sidebar-nav li .sub-nav {
       display: none; }
-    .sidemenu .sidebar-nav li a i {
-      font-size: 25px; }
+    .sidemenu .sidebar-nav li a {
+      position: absolute;
+      left: -10px; }
+      .sidemenu .sidebar-nav li a span {
+        display: none; }
+      .sidemenu .sidebar-nav li a i {
+        font-size: 25px; }
 
 .side-scroll {
   top: 0; }
@@ -40,9 +42,10 @@ body {
   position: fixed;
   left: 250px;
   width: 0;
-  height: 100%;
+  height: 900px;
   margin-left: -250px;
-  overflow-y: auto;
+  overflow-y: hidden;
+  overflow-x: hidden;
   background-color: #222831;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -161,7 +164,6 @@ body {
   .user-container .imguser-content {
     margin-left: 10px;
     margin-top: 5px;
-    background: white;
     width: 70px;
     height: 70px;
     border-radius: 50%;
@@ -190,7 +192,7 @@ body {
         color: #d11141;
         cursor: pointer; }
     .user-container .user-info p i {
-      color: green; }
+      color: #0fb442; }
 
 .sub-nav {
   display: none;

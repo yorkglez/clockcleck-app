@@ -9,7 +9,8 @@ import { Title } from '@angular/platform-browser';
   templateUrl: './extensions.component.html',
   styleUrls: ['../../../../../assets/css/tableStyles.css',
               '../../../../../assets/css/paginationStyles.css',
-              '../../../../../assets/css/panelStyles.css'
+              '../../../../../assets/css/panelStyles.css',
+              '../../../../../assets/css/containerStyles.css'
              ]
 })
 export class ExtensionsComponent implements OnInit {

@@ -21,7 +21,9 @@ import { Title } from '@angular/platform-browser';
   '../../../../../assets/css/alertStyles.css',
   '../../../../../assets/css/paginationStyles.css',
   '../../../../../assets/css/tableStyles.css',
-  '../../../../../assets/css/reportStyles.css'
+  '../../../../../assets/css/reportStyles.css',
+  '../../../../../assets/css/containerStyles.css'
+
 ]
 })
 export class ReportsComponent implements OnInit {

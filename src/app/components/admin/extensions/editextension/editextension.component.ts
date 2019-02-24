@@ -9,12 +9,13 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-editextension',
   templateUrl: './editextension.component.html',
-  styleUrls: ['../../../../../assets/css/panelStyles.css']
+  styleUrls: ['../../../../../assets/css/panelStyles.css',
+  '../../../../../assets/css/containerStyles.css']
 })
 export class EditextensionComponent implements OnInit {
   id: string
   name: string
-  model = {}
+  model = {'name':'','city':'','address':''}
   nameValid: boolean = true
 
   constructor(private _extensionsService: ExtensionsService,

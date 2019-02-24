@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UsersService } from '../../../../services/users.service';
+import { UsersService, newUser } from '../../../../services/users.service';
 import { NgForm } from '@angular/forms';
 import { ExtensionsService } from '../../../../services/extensions.service';
 import { HelpersService } from '../../../../services/helpers.service';
@@ -8,10 +8,11 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-create-user',
   templateUrl: './create-user.component.html',
-  styleUrls: [  '../../../../../assets/css/panelStyles.css']
+  styleUrls: [  '../../../../../assets/css/panelStyles.css',
+  '../../../../../assets/css/containerStyles.css']
 })
 export class CreateUserComponent implements OnInit {
-  model = {}
+  model = {'name': '','lastname': '','email': '','type':'','extension':'','genere':''}
   extensions: any[];
   // passwordsValid: boolean = true
   emaiisValid: boolean = true

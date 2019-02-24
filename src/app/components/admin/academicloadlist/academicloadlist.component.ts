@@ -3,6 +3,7 @@ import { AcademicloadTeacherService } from '../../../services/academicload-teach
 import { ScheduleService,Hour,Schedule  } from '../../../services/schedule.service';
 import { ExtensionsService } from '../../../services/extensions.service';
 import { Title } from '@angular/platform-browser';
+import { LoaderService } from '../../../services/loader.service';
 
 @Component({
   selector: 'app-academicloadlist',
@@ -10,7 +11,8 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['../../../../assets/css/tableStyles.css',
               '../../../../assets/css/panelStyles.css',
               '../../../../assets/css/paginationStyles.css',
-              '../../../../assets/css/scheduleStyles.css'
+              '../../../../assets/css/scheduleStyles.css',
+              '../../../../assets/css/containerStyles.css'
             ]
 })
 export class AcademicloadlistComponent implements OnInit {
@@ -29,23 +31,27 @@ export class AcademicloadlistComponent implements OnInit {
   jueves  = []
   viernes  = []
   extensions = []
-  model = {}
+  model = {'extension':''}
 
   constructor(private _academicloadteacherService: AcademicloadTeacherService,
               private _scheduleService: ScheduleService,
               private _extensionsService: ExtensionsService,
+              private _loaderService: LoaderService,
               private _titleService: Title) {
                 this._titleService.setTitle('Horarios')
               }
 
   ngOnInit() {
+     this._loaderService.display(true) //Show loader
     /*Call function getAcademicloadList from service */
     this._academicloadteacherService.getAcademicloadList().subscribe(data=>{
       /*Validate data*/
       if(!data)
         this.aclist = [] //clear array
-      else
+      else{
+        this._loaderService.display(false) //Hide loader
         this.aclist = data //get data
+      }
     })
     this._extensionsService.getExtension().subscribe(data=>{this.extensions = data}) //get extensions list
     this.model = {"extension": localStorage.getItem('extension')} //set user extension

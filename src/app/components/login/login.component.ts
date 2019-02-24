@@ -10,7 +10,7 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['../../../assets/css/loginStyles.css']
 })
 export class LoginComponent implements OnInit {
-  model= {}
+  model= {'email':'','password':''}
   isError: boolean = false
   constructor(private _authService: AuthService,
               private router: Router,
@@ -36,7 +36,6 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('type','user') //Create session in localStorage
       }
     })
-
     this.model['email']  = ''
     this.model['password']  = ''
 }

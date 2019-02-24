@@ -10,11 +10,12 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-edit-teacher',
   templateUrl: './edit-teacher.component.html',
-    styleUrls: [  '../../../../../assets/css/panelStyles.css']
+    styleUrls: [  '../../../../../assets/css/panelStyles.css',
+    '../../../../../assets/css/containerStyles.css']
 })
 export class EditTeacherComponent implements OnInit {
   extensions = []
-  model = {}
+  model = {'name':'','lastname':'','email':'','code':'','phone':'','type':'','extension':''}
   data = {}
   id:string;
   oldEmail:string

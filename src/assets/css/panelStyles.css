@@ -12,7 +12,9 @@ sellect:hover {
   background-color: rgba(255, 255, 255, 0.85);
   -webkit-box-shadow: 5px 5px 5px rgba(128, 128, 128, 0.5);
   box-shadow: 5px 5px 5px rgba(128, 128, 128, 0.5);
-  margin-bottom: 50px; }
+  margin-bottom: 50px;
+  height: 100%;
+  min-height: 600px; }
   .content .options-panel {
     position: relative;
     border-radius: 10px 10px 0px  0px;
@@ -48,8 +50,11 @@ sellect:hover {
 
 @media (min-width: 992px) {
   .content {
-    width: auto; } }
+    width: auto;
+    min-height: 300px; } }
 
 @media (min-width: 1200px) {
   .content {
-    min-width: 1200px; } }
+    width: 90%;
+    min-width: 1000px;
+    min-height: 300px; } }

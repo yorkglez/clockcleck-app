@@ -1,307 +1,312 @@
-<!-- navbar -->
-<app-navadmin></app-navadmin>
-<!-- content -->
-<div class="content animated fadeIn">
-  <!-- menu -->
-  <form class="options-panel" #form="ngForm">
-    <div class= "form-group col-sm-12 col-2 col-md-auto">
-      <h1 class="title">Reportes</h1>
-    </div>
-    <div class="form-row align-items-end">
-      <!-- input extension -->
-      <div class="form-group col-md-auto col-sm-4" *ngIf="isAdmin">
-        <label for="showType">Extencion</label>
-        <select
-        class="form-control custom-select"
-        (change)="getTeachers(extension.value); getCarers(extension.value)"
-        name="extension"
-        ngModel [(ngModel)]="model.extension"
-        #extension="ngModel">
-        <option *ngFor="let extension of extensions let index = index;" [value]="extension.idExtension">
-          {{extension.name}}
-        </option>
-        </select>
+<!-- container -->
+<div class="container-fluid">
+  <!-- navbar -->
+  <app-navadmin></app-navadmin>
+  <!-- content -->
+  <div class="content animated fadeIn">
+    <!-- menu -->
+    <form class="options-panel" #form="ngForm">
+      <div class= "form-group col-sm-12 col-2 col-md-auto">
+        <h1 class="title">Reportes</h1>
       </div>
-      <!-- select time -->
-      <div  class="form-group col-md-2 col-sm-4">
-        <label for="showType">Mostrar por</label>
-        <select class="form-control custom-select" (change)="showDate(week.value)" name="week" ngModel
-        [(ngModel)]="model.week" #week="ngModel"  #week>
-          <option value="day" selected>Dia</option>
-          <option value="week" >Semana</option>
-          <option value="2weeks" >Quincena</option>
-          <option value="month" >Mes</option>
-          <option value="bydate" >Elegir fecha</option>
-        </select>
-      </div>
-      <!-- custom date -->
-      <div  class="form-group col-md-auto">
-        <label for="dateStart">Fecha inicial</label>
-        <input [disabled]="!checksDate" type="date"  class="form-control" name="startDate" ngModel
-        [(ngModel)]="model.startDate" #startDate="ngModel" #startDate>
-      </div>
-      <div   class="form-group col-md-auto">
-        <label for="dateEnd">Fecha final</label>
-        <input  [disabled]="!checksDate" type="date"  class="form-control" name="endDate" ngModel
-        [(ngModel)]="model.endDate" #dateEnd="ngModel" #endDate>
-      </div>
-      <!-- select teacher -->
-      <div class="form-group col-md-2">
-        <label for="showType">Docente</label>
-        <ng-select
-        (change)="getSelectSubjects(teachersSelect.value)"
-        [items]="teachers"
-        bindLabel="name"
-        bindValue="codeTeacher"
-        name="teachersSelect"
-        ngModel [(ngModel)]="model.teachersSelect"
-        #teachersSelect ="ngModel"
-        placeholder ="Seleccionar docente"
-        notFoundText = "Sin resultados"
-        required>
-        </ng-select>
-      </div>
-      <!-- select subjects -->
-      <div class="form-group col-md-2">
-        <label for="showType">Materia</label>
-        <ng-select
-        [items]="subjects"
-        bindLabel="name"
-        bindValue="id"
-        name="subjectSelect"
-        ngModel [(ngModel)]="model.subjectCode"
-        #carersSelect ="ngModel"
-        placeholder = "Seleccionar materia"
-        notFoundText = "Sin resultados"
-        required>
-        </ng-select>
-      </div>
-    </div>
-    <div class="form-row ">
-      <!-- input search -->
-      <div class="form-group col-md-auto  search-container">
-        <input
-        class="custom-ops form-control"
-        type="search"
-        placeholder="Buscar..."
-        aria-label="Search"
-        name="search"
-        ngModel  [(ngModel)]="model.search"
-        #search="ngModel"
-        #search>
-        <button class="btn-clear" (click)="model.search = ''">
-          <i class="fa fa-times"></i>
-        </button>
-      </div>
-      <!-- button search -->
-      <div class="form-group mr-sm-2">
-        <button class="btn btn-primary my-2 my-sm-0" (click)="getReport()">
-          <i class="fas fa-search"></i>
-        </button>
-      </div>
-      <div class="form-group mr-sm-2">
-        <button class="btn btn-info" (click)="getReport()">
-          <i class="fas fa-clipboard-list"></i> Generar reporte
-        </button>
-      </div>
-      <div class="form-group mr-sm-2">
-        <button [disabled]="reports.length == 0" class="btn btn-danger" (click)="downloadReport('pdf')">
-          <i class="fas fa-file-pdf"></i> Descargar pdf
-        </button>
-      </div>
-      <div class="form-group mr-sm-2">
-        <button [disabled]="reports.length == 0" class="btn btn-success" (click)="downloadReport('excel')">
-          <i class="fas fa-file-excel"></i> Descargar excel
-        </button>
-      </div>
-      <div class="form-group mr-sm-2">
-        <button [disabled]="reports.length == 0" class="btn btn-warning" (click)="showJusti()">
-          Crear justificacion
-        </button>
-      </div>
-    </div>
-    <form *ngIf="isJustification">
-      <!-- <hr> -->
-      <h4 style="color: white;">Nueva justificacion</h4>
       <div class="form-row align-items-end">
-        <!-- input date -->
-        <div class="form-group col-md-auto col-sm-4">
-          <label for="">Fecha</label>
-          <input class="form-control"
-          type="date"
-          (focusout)="getSubjectbyDate(dateAt.value)"
-          name="dateAt"
-          ngModel [(ngModel)]="modelJust.dateAt"
-          #dateAt = "ngModel">
+        <!-- input extension -->
+        <div class="form-group col-md-auto col-sm-4" *ngIf="isAdmin">
+          <label for="showType">Extencion</label>
+          <select
+          class="form-control custom-select"
+          (change)="getTeachers(extension.value); getCarers(extension.value)"
+          name="extension"
+          ngModel [(ngModel)]="model.extension"
+          #extension="ngModel">
+          <option *ngFor="let extension of extensions let index = index;" [value]="extension.idExtension">
+            {{extension.name}}
+          </option>
+          </select>
         </div>
-        <!-- subject -->
+        <!-- select time -->
+        <div  class="form-group col-md-2 col-sm-4">
+          <label for="showType">Mostrar por</label>
+          <select class="form-control custom-select" (change)="showDate(week.value)" name="week" ngModel
+          [(ngModel)]="model.week" #week="ngModel"  #week>
+            <option value="day" selected>Dia</option>
+            <option value="week" >Semana</option>
+            <option value="2weeks" >Quincena</option>
+            <option value="month" >Mes</option>
+            <option value="bydate" >Elegir fecha</option>
+          </select>
+        </div>
+        <!-- custom date -->
+        <div  class="form-group col-md-auto">
+          <label for="dateStart">Fecha inicial</label>
+          <input [disabled]="!checksDate" type="date"  class="form-control" name="startDate" ngModel
+          [(ngModel)]="model.startDate" #startDate="ngModel" #startDate>
+        </div>
+        <div   class="form-group col-md-auto">
+          <label for="dateEnd">Fecha final</label>
+          <input  [disabled]="!checksDate" type="date"  class="form-control" name="endDate" ngModel
+          [(ngModel)]="model.endDate" #dateEnd="ngModel" #endDate>
+        </div>
+        <!-- select teacher -->
+        <div class="form-group col-md-2">
+          <label for="showType">Docente</label>
+          <ng-select
+          (change)="getSelectSubjects(teachersSelect.value)"
+          [items]="teachers"
+          bindLabel="name"
+          bindValue="codeTeacher"
+          name="teachersSelect"
+          ngModel [(ngModel)]="model.teachersSelect"
+          #teachersSelect ="ngModel"
+          placeholder ="Seleccionar docente"
+          notFoundText = "Sin resultados"
+          required>
+          </ng-select>
+        </div>
+        <!-- select subjects -->
         <div class="form-group col-md-2">
           <label for="showType">Materia</label>
           <ng-select
-          (change)="getSchedulelist(subjectSelect.value,dateAt.value)"
-          [items]="tcSubjects"
+          [items]="subjects"
           bindLabel="name"
           bindValue="id"
           name="subjectSelect"
-          ngModel [(ngModel)]="modelJust.subjectCode"
-          #subjectSelect ="ngModel"
+          ngModel [(ngModel)]="model.subjectCode"
+          #carersSelect ="ngModel"
           placeholder = "Seleccionar materia"
           notFoundText = "Sin resultados"
           required>
           </ng-select>
         </div>
-        <!-- schedule -->
-        <div class="form-group col-md-2">
-          <label for="showType">Horario</label>
-          <ng-select
-          [items]="Schedule"
-          bindLabel="hours"
-          bindValue="id"
-          name="schedueleSelect"
-          ngModel [(ngModel)]="modelJust.schedule"
-          #schedueleSelect ="ngModel"
-          placeholder = "Seleccionar horario"
-          notFoundText = "Sin resultados"
-          required>
-          </ng-select>
+      </div>
+      <div class="form-row ">
+        <!-- input search -->
+        <div class="form-group col-md-auto  search-container">
+          <input
+          class="custom-ops form-control"
+          type="search"
+          placeholder="Buscar..."
+          aria-label="Search"
+          name="search"
+          ngModel  [(ngModel)]="model.search"
+          #search="ngModel"
+          #search>
+          <button class="btn-clear" (click)="model.search = ''">
+            <i class="fa fa-times"></i>
+          </button>
         </div>
-        <div class="form-group col-md-4">
-          <label for="">Nota</label>
-          <textarea name="note"
-          ngModel [(ngModel)]="modelJust.note"
-          #note ="ngModel"
-          class="form-control"
-          rows="3"
-          style="height:38px; resize: none;" >
-          </textarea>
+        <!-- button search -->
+        <div class="form-group mr-sm-2">
+          <button class="btn btn-primary my-2 my-sm-0" (click)="getReport()">
+            <i class="fas fa-search"></i>
+          </button>
         </div>
         <div class="form-group mr-sm-2">
-          <button [disabled] = "Schedule.length == 0" class="btn btn-success" (click)="createAttendance()">
-            <i class="fas fa-check"></i> Jusficiar
+          <button class="btn btn-info" (click)="getReport()">
+            <i class="fas fa-clipboard-list"></i> Generar reporte
+          </button>
+        </div>
+        <div class="form-group mr-sm-2">
+          <button [disabled]="reports.length == 0" class="btn btn-danger" (click)="downloadReport('pdf')">
+            <i class="fas fa-file-pdf"></i> Descargar pdf
+          </button>
+        </div>
+        <div class="form-group mr-sm-2">
+          <button [disabled]="reports.length == 0" class="btn btn-success" (click)="downloadReport('excel')">
+            <i class="fas fa-file-excel"></i> Descargar excel
+          </button>
+        </div>
+        <div class="form-group mr-sm-2">
+          <button [disabled]="reports.length == 0" class="btn btn-warning" (click)="showJusti()">
+            Crear justificacion
           </button>
         </div>
       </div>
-    </form>
-  </form>
-  <!-- table   -->
-  <div class="table-responsive-md"  id="reportContainer" #reportContainer >
-    <table class="table table-sm" >
-      <thead>
-        <tr class="tb-head">
-          <th scope="col">Departamento</th>
-          <th scope="col">Codigo</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Entrada</th>
-          <th scope="col">Salida</th>
-          <th scope="col">Asistencia</th>
-          <th scope="col">Notas</th>
-          <th scope="col">Grupo</th>
-          <th scope="col">Tema/Actividad</th>
-          <th scope="col">Materia</th>
-          <th scope="col">Fecha</th>
-          <!-- <th scope="col">Acciones</th> -->
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let report of reports | paginate: { itemsPerPage: 25, currentPage: 1 }; let i = index ">
-          <td>{{report.alias}}</td>
-          <td>{{report.codeTeacher}}</td>
-          <td>{{report.nameTeacher}}</td>
-          <td>{{report.checkEntry}}</td>
-          <td>{{report.checkEnd}}</td>
-          <td >
-            <div *ngIf="id != report.idAttendance">
-              <span *ngIf="report.type =='presente'" class="badge badge-success">{{report.type}}</span>
-              <span *ngIf="report.type =='retardo'" class="badge badge-warning">{{report.type}}</span>
-              <span *ngIf="report.type =='ausente'" class="badge badge-danger">{{report.type}}</span>
-              <span *ngIf="report.type =='justificado'" class="badge badge-info">{{report.type}}</span>
-            </div>
-            <div  *ngIf="id == report.idAttendance && editable" class="attendance-type">
-              <select class="form-control custom-select"  name="atType"  ngModel [(ngModel)]="model.atType" #atType="ngModel" #atType>
-                <option value="presente" >Presente</option>
-                <option value="retardo" >Retardo</option>
-                <option value="ausente" >Ausente</option>
-                <option value="justificado" >Justificado</option>
-              </select>
-            </div>
-            <button *ngIf="id == report.idAttendance && editable"
-            data-toggle="modal" data-target="#exampleModalCenter"
-            class="btn btn-info  btn-sm mx-auto" (click)="Notes()">
-              <i class="fas fa-sticky-note"></i> Anadir nota
+      <form *ngIf="isJustification">
+        <!-- <hr> -->
+        <h4 style="color: white;">Nueva justificacion</h4>
+        <div class="form-row align-items-end">
+          <!-- input date -->
+          <div class="form-group col-md-auto col-sm-4">
+            <label for="">Fecha</label>
+            <input class="form-control"
+            type="date"
+            (focusout)="getSubjectbyDate(dateAt.value)"
+            name="dateAt"
+            ngModel [(ngModel)]="modelJust.dateAt"
+            #dateAt = "ngModel">
+          </div>
+          <!-- subject -->
+          <div class="form-group col-md-2">
+            <label for="showType">Materia</label>
+            <ng-select
+            (change)="getSchedulelist(subjectSelect.value,dateAt.value)"
+            [items]="tcSubjects"
+            bindLabel="name"
+            bindValue="id"
+            name="subjectSelect"
+            ngModel [(ngModel)]="modelJust.subjectCode"
+            #subjectSelect ="ngModel"
+            placeholder = "Seleccionar materia"
+            notFoundText = "Sin resultados"
+            required>
+            </ng-select>
+          </div>
+          <!-- schedule -->
+          <div class="form-group col-md-2">
+            <label for="showType">Horario</label>
+            <ng-select
+            [items]="Schedule"
+            bindLabel="hours"
+            bindValue="id"
+            name="schedueleSelect"
+            ngModel [(ngModel)]="modelJust.schedule"
+            #schedueleSelect ="ngModel"
+            placeholder = "Seleccionar horario"
+            notFoundText = "Sin resultados"
+            required>
+            </ng-select>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="">Nota</label>
+            <textarea name="note"
+            ngModel [(ngModel)]="modelJust.note"
+            #note ="ngModel"
+            class="form-control"
+            rows="3"
+            style="height:38px; resize: none;" >
+            </textarea>
+          </div>
+          <div class="form-group mr-sm-2">
+            <button [disabled] = "Schedule.length == 0" class="btn btn-success" (click)="createAttendance()">
+              <i class="fas fa-check"></i> Jusficiar
             </button>
-          </td>
-          <td>
-            <!-- popover -->
-            <div>
-              <popover-content #myPopover [closeOnClickOutside]="true" [animation]="true">
-                <div class="popover-container">
-                  <div class="popover-header"><h6>Notas</h6></div>
-                  <div class="popover-body" *ngIf="report.notes !=''">
-                    {{report.notes}}
-                  </div>
-                  <div class="popover-body" *ngIf="report.notes ==''">
-                    No existen notas.
-                  </div>
-                </div>
-              </popover-content>
-              <button class="btn btn-info btn-sm" popoverPlacement="right" [popoverOnHover]="true" [popover]="myPopover">
-                Ver notas
-              </button>
-            </div>
-          </td>
-          <td>{{report.grade}}</td>
-          <td>{{report.topic}}</td>
-          <td>{{report.nameSubject}}</td>
-          <td> {{date | date:'dd-MM-yyyy'}}</td>
-          <!-- <td> -->
-            <!-- <button *ngIf="id != report.idAttendance" class="btn btn-warning" (click)="Edit(report, i)"><i class="fas fa-pencil-alt"></i> Editar</button> -->
-            <!-- <button *ngIf="id == report.idAttendance && editable"  class="btn btn-primary" (click)="saveChanges()"> -->
-              <!-- <i class="fas fa-save"></i> Guardar -->
-            <!-- </button> -->
-          <!-- </td> -->
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <!-- alerts -->
-  <app-alerts [type]="type" [message]= "message" [alertVisible]="alertVisible"  ></app-alerts>
-  <div class="alert alert-info" role="alert" *ngIf="searchAlert">
-    <i class="fas fa-info-circle"></i> No se encontraron resultados con el termino: <b>{{ter}}</b>
-  </div>
-  <div class="alert alert-info" role="alert" *ngIf="reports.length == 0  && !reportExists">
-    <i class="fas fa-info-circle"></i> No se encontraron resultados en la base de datos.
-  </div>
-  <!-- pagination -->
-  <div class="pagination-container"  *ngIf="reports.length > 0">
-    <!-- pagiantion settings -->
-    <pagination-controls class="Pagination pagination justify-content-center"  (pageChange)="p = $event"
-    previousLabel="Anterior"
-    nextLabel="Siguiente"
-    screenReaderPaginationLabel="Pagination">
-    </pagination-controls>
-  </div>
-</div>
-<!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenterTitle">Nueva nota</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <!-- <label for="exampleFormControlTextarea1">Notas</label> -->
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="note"
-          ngModel [(ngModel)]="model.note" #note="ngModel" #note></textarea>
+          </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button (click)="saveChanges()" type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+      </form>
+    </form>
+    <!-- table   -->
+    <div class="table-responsive-md"  id="reportContainer" #reportContainer >
+      <table class="table table-sm" >
+        <thead>
+          <tr class="tb-head">
+            <th scope="col">Departamento</th>
+            <th scope="col">Codigo</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Entrada</th>
+            <th scope="col">Salida</th>
+            <th scope="col">Asistencia</th>
+            <th scope="col">Notas</th>
+            <th scope="col">Grupo</th>
+            <th scope="col">Tema/Actividad</th>
+            <th scope="col">Materia</th>
+            <th scope="col">Fecha</th>
+            <!-- <th scope="col">Acciones</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let report of reports | paginate: { itemsPerPage: 25, currentPage: 1 }; let i = index ">
+            <td>{{report.alias}}</td>
+            <td>{{report.codeTeacher}}</td>
+            <td>{{report.nameTeacher}}</td>
+            <td>{{report.checkEntry}}</td>
+            <td>{{report.checkEnd}}</td>
+            <td >
+              <div *ngIf="id != report.idAttendance">
+                <span *ngIf="report.type =='presente'" class="badge badge-success">{{report.type}}</span>
+                <span *ngIf="report.type =='retardo'" class="badge badge-warning">{{report.type}}</span>
+                <span *ngIf="report.type =='ausente'" class="badge badge-danger">{{report.type}}</span>
+                <span *ngIf="report.type =='justificado'" class="badge badge-info">{{report.type}}</span>
+              </div>
+              <div  *ngIf="id == report.idAttendance && editable" class="attendance-type">
+                <select class="form-control custom-select"  name="atType"  ngModel [(ngModel)]="model.atType" #atType="ngModel" #atType>
+                  <option value="presente" >Presente</option>
+                  <option value="retardo" >Retardo</option>
+                  <option value="ausente" >Ausente</option>
+                  <option value="justificado" >Justificado</option>
+                </select>
+              </div>
+              <button *ngIf="id == report.idAttendance && editable"
+              data-toggle="modal" data-target="#exampleModalCenter"
+              class="btn btn-info  btn-sm mx-auto" (click)="Notes()">
+                <i class="fas fa-sticky-note"></i> Anadir nota
+              </button>
+            </td>
+            <td>
+              <!-- popover -->
+              <div>
+                <popover-content #myPopover [closeOnClickOutside]="true" [animation]="true">
+                  <div class="popover-container">
+                    <div class="popover-header"><h6>Notas</h6></div>
+                    <div class="popover-body" *ngIf="report.notes !=''">
+                      {{report.notes}}
+                    </div>
+                    <div class="popover-body" *ngIf="report.notes ==''">
+                      No existen notas.
+                    </div>
+                  </div>
+                </popover-content>
+                <button class="btn btn-info btn-sm" popoverPlacement="right" [popoverOnHover]="true" [popover]="myPopover">
+                  Ver notas
+                </button>
+              </div>
+            </td>
+            <td>{{report.grade}}</td>
+            <td>{{report.topic}}</td>
+            <td>{{report.nameSubject}}</td>
+            <td> {{date | date:'dd-MM-yyyy'}}</td>
+            <!-- <td> -->
+              <!-- <button *ngIf="id != report.idAttendance" class="btn btn-warning" (click)="Edit(report, i)"><i class="fas fa-pencil-alt"></i> Editar</button> -->
+              <!-- <button *ngIf="id == report.idAttendance && editable"  class="btn btn-primary" (click)="saveChanges()"> -->
+                <!-- <i class="fas fa-save"></i> Guardar -->
+              <!-- </button> -->
+            <!-- </td> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- alerts -->
+    <app-alerts [type]="type" [message]= "message" [alertVisible]="alertVisible"  ></app-alerts>
+    <div class="alert alert-info" role="alert" *ngIf="searchAlert">
+      <i class="fas fa-info-circle"></i> No se encontraron resultados con el termino: <b>{{ter}}</b>
+    </div>
+    <div class="alert alert-info" role="alert" *ngIf="reports.length == 0  && !reportExists">
+      <i class="fas fa-info-circle"></i> No se encontraron resultados en la base de datos.
+    </div>
+    <!-- pagination -->
+    <div class="pagination-container"  *ngIf="reports.length > 0">
+      <!-- pagiantion settings -->
+      <pagination-controls class="Pagination pagination justify-content-center"  (pageChange)="p = $event"
+      previousLabel="Anterior"
+      nextLabel="Siguiente"
+      screenReaderPaginationLabel="Pagination">
+      </pagination-controls>
+    </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Nueva nota</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <!-- <label for="exampleFormControlTextarea1">Notas</label> -->
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="note"
+            ngModel [(ngModel)]="model.note" #note="ngModel" #note></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button (click)="saveChanges()" type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
+<!-- footer -->
+<app-footer></app-footer>

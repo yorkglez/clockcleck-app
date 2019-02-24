@@ -1,119 +1,19 @@
-<!-- navbar -->
-<app-navadmin></app-navadmin>
-<!-- content -->
-<div class="content animated fadeIn">
-  <!-- header -->
-  <div class="content-header">
-    <h1 class="title">Nueva materia</h1>
-  </div>
-  <!-- body -->
-  <div class="content-body">
-    <!-- alerts -->
-    <app-alerts [type]="type" [message]= "message" [alertVisible]="alertVisible"  ></app-alerts>
-    <form  (ngSubmit)="form.valid && Save(form)" #form="ngForm" class="needs-validation" novalidate>
-      <div class="form-row">
-        <!-- input code -->
-        <div class="form-group col-md-4">
-          <label for="code">Codigo</label>
-          <input
-          placeholder="ACA-0907"
-          maxlength="8"
-          minlength="8"
-          type="text"
-          class="form-control"
-          name="code"
-          [(ngModel)]="model.code"
-          #code="ngModel"
-          (focusout)="validateCode(code.value)"
-          (keypress)="addCharater(code.value)"
-          [ngClass]="{'is-invalid':form.submitted && code.invalid || model.code == '' && code.dirty
-          || !codeValid && code.valid || code.invalid && code.dirty,
-           'is-valid': code.valid && code.dirty && codeValid }"
-          required>
-          <div class="invalid-feedback" *ngIf="form.submitted && code.invalid || model.code == '' && code.touched ">
-            Porfavor escriba un codigo.
-          </div>
-          <div class="valid-feedback" *ngIf="codeValid">
-            Codigo valido.
-          </div>
-          <div class="invalid-feedback" *ngIf="code.invalid && code.dirty && model.code != ''">
-            Codigo no valido.
-          </div>
-          <div *ngIf="!codeValid && code.valid" class="invalid-feedback">
-            Este codigo ya existe, porfavor escribe uno valido.
-          </div>
-        </div>
-        <!-- input name -->
-        <div class="form-group col-md-4">
-          <label for="name">Nombre</label>
-          <input type="text"
-          class="form-control"
-          name="name"
-          [(ngModel)]="model.name"
-          #name="ngModel"
-          [ngClass]="{'is-invalid':form.submitted && name.invalid}"
-          maxlength="48"
-          placeholder="Fundamentos de programacion"
-          required>
-          <div class="invalid-feedback">
-            Porfavor escriba un nombre.
-          </div>
-        </div>
-        <!-- input credits -->
-        <div class="form-group col-md-4">
-          <label for="alias">Creditos</label>
-          <input type="number"
-          pattern="[0-9]{1}"
-          class="form-control"
-          name="credits"
-          ngModel [(ngModel)]="model.credits"
-          #credits="ngModel"
-          [ngClass]="{'is-invalid':form.submitted && credits.invalid || credits.invalid && credits.dirty}"
-          maxlength="1"
-          placeholder="5"
-          required>
-          <div class="invalid-feedback">
-            Porfavor escriba el numero de creditos.
-          </div>
-        </div>
-        <!-- Radio secuence -->
-        <!-- <label for="">Secuencia</label> -->
-        <div class="form-group col-md-4">
-          <div class="custom-control custom-radio custom-control-inline">
-            <input [disabled] ="!codeValid"
-            type="radio" id="customRadio1"
-            name="sequence"
-            class="custom-control-input"
-            [value]="true"
-            (change)="checkSequence(sequence.value)"
-            [(ngModel)]="radio"
-            #sequence="ngModel">
-            <label class="custom-control-label" for="customRadio1">Secuencia</label>
-         </div>
-         <!-- radio without squence -->
-         <div class="custom-control custom-radio custom-control-inline">
-           <input type="radio"
-           id="customRadio2"
-           name="sequence"
-           class="custom-control-input"
-           [value]="false"
-           (change)="checkSequence(sequence.value)"
-           [(ngModel)]="radio"
-           #sequence="ngModel"
-           checked>
-           <label class="custom-control-label" for="customRadio2">Sin secuencia</label>
-         </div>
-        </div>
-      </div>
-      <button type="submit" class="btn btn-lg btn-primary"><i class="fas fa-save"></i> Guardar</button>
-    </form>
-    <br>
-    <!-- form subject with secuencie -->
-    <div *ngIf="isSequence">
-      <h5>Agregar las materias de secuencia</h5>
-      <hr>
-      <form  (ngSubmit)="formSq.valid && addSubject()" #formSq="ngForm" class="needs-validation" novalidate>
-        <div class="form-row align-items-start">
+<!-- container -->
+<div class="container-fluid">
+  <!-- navbar -->
+  <app-navadmin></app-navadmin>
+  <!-- content -->
+  <div class="content animated fadeIn">
+    <!-- header -->
+    <div class="content-header">
+      <h1 class="title">Nueva materia</h1>
+    </div>
+    <!-- body -->
+    <div class="content-body">
+      <!-- alerts -->
+      <app-alerts [type]="type" [message]= "message" [alertVisible]="alertVisible"  ></app-alerts>
+      <form  (ngSubmit)="form.valid && Save(form)" #form="ngForm" class="needs-validation" novalidate>
+        <div class="form-row">
           <!-- input code -->
           <div class="form-group col-md-4">
             <label for="code">Codigo</label>
@@ -123,88 +23,193 @@
             minlength="8"
             type="text"
             class="form-control"
-            name="codeSq"
-            [(ngModel)]="subjects.code"
-            #codeSq="ngModel"
-            (focusout)="validateCodeSc(codeSq.value)"
-            (keypress)="addCharaterSq(codeSq.value)"
-            [ngClass]="{'is-invalid':formSq.submitted && codeSq.invalid && subjects.code != null
-            || subjects.code == '' && codeSq.dirty ||  !secodeValid ,
-            'is-valid': codeSq.valid && codeSq.dirty && secodeValid }"
+            name="code"
+            [(ngModel)]="model.code"
+            #code="ngModel"
+            (focusout)="validateCode(code.value)"
+            (keypress)="addCharater(code.value)"
+            [ngClass]="{'is-invalid':form.submitted && code.invalid || model.code == '' && code.dirty
+            || !codeValid && code.valid || code.invalid && code.dirty,
+             'is-valid': code.valid && code.dirty && codeValid }"
             required>
-            <div class="invalid-feedback" *ngIf="formSq.submitted && codeSq.invalid || subjects.code == null && codeSq.touched">
+            <div class="invalid-feedback" *ngIf="form.submitted && code.invalid || model.code == '' && code.touched ">
               Porfavor escriba un codigo.
             </div>
-            <div class="valid-feedback" *ngIf="secodeValid">
+            <div class="valid-feedback" *ngIf="codeValid">
               Codigo valido.
             </div>
-            <div class="invalid-feedback" *ngIf="code.invalid ">
+            <div class="invalid-feedback" *ngIf="code.invalid && code.dirty && model.code != ''">
               Codigo no valido.
             </div>
-            <div *ngIf="!secodeValid && codeSq.valid" class="invalid-feedback">
+            <div *ngIf="!codeValid && code.valid" class="invalid-feedback">
               Este codigo ya existe, porfavor escribe uno valido.
             </div>
           </div>
-          <!-- input subject secuencie -->
+          <!-- input name -->
           <div class="form-group col-md-4">
             <label for="name">Nombre</label>
-            <input type="text" class="form-control" name="nameSq" [(ngModel)]="subjects.name" #nameSq="ngModel"
-            [ngClass]="{'is-invalid':formSq.submitted && nameSq.invalid && subjects.name != null}" maxlength="48" placeholder="Fundamentos de programacion" required>
+            <input type="text"
+            class="form-control"
+            name="name"
+            [(ngModel)]="model.name"
+            #name="ngModel"
+            [ngClass]="{'is-invalid':form.submitted && name.invalid}"
+            maxlength="48"
+            placeholder="Fundamentos de programacion"
+            required>
             <div class="invalid-feedback">
               Porfavor escriba un nombre.
             </div>
           </div>
-          <!-- input credits secuencie -->
-          <div class="form-group col-md-1">
+          <!-- input credits -->
+          <div class="form-group col-md-4">
             <label for="alias">Creditos</label>
-            <input type="text"
-            class="form-control"
-            name="creditsSq"
-            ngModel [(ngModel)]="subjects.credits"
-            #creditsSq="ngModel"
-            [ngClass]="{'is-invalid':formSq.submitted && creditsSq.invalid && subjects.credits != null ||
-            creditsSq.invalid && creditsSq.dirty  && subjects.credits != null}"
+            <input type="number"
             pattern="[0-9]{1}"
+            class="form-control"
+            name="credits"
+            ngModel [(ngModel)]="model.credits"
+            #credits="ngModel"
+            [ngClass]="{'is-invalid':form.submitted && credits.invalid || credits.invalid && credits.dirty}"
             maxlength="1"
             placeholder="5"
             required>
             <div class="invalid-feedback">
-              Porfavor escriba el N de creditos.
+              Porfavor escriba el numero de creditos.
             </div>
           </div>
-          <div class="form-group" style="position: relative;">
-              <button *ngIf="!updateItems" type="submit" name="btn-add" class="btn btn-success"  style="position: absolute; bottom: -70px;">
-                <i class="fas fa-plus"></i> Anadir
-              </button>
-              <button *ngIf="updateItems" (click)="updateItem(idx)" type="button" name="btn-add" class="btn btn-primary">Actualizar</button>
+          <!-- Radio secuence -->
+          <!-- <label for="">Secuencia</label> -->
+          <div class="form-group col-md-4">
+            <div class="custom-control custom-radio custom-control-inline">
+              <input [disabled] ="!codeValid"
+              type="radio" id="customRadio1"
+              name="sequence"
+              class="custom-control-input"
+              [value]="true"
+              (change)="checkSequence(sequence.value)"
+              [(ngModel)]="radio"
+              #sequence="ngModel">
+              <label class="custom-control-label" for="customRadio1">Secuencia</label>
+           </div>
+           <!-- radio without squence -->
+           <div class="custom-control custom-radio custom-control-inline">
+             <input type="radio"
+             id="customRadio2"
+             name="sequence"
+             class="custom-control-input"
+             [value]="false"
+             (change)="checkSequence(sequence.value)"
+             [(ngModel)]="radio"
+             #sequence="ngModel"
+             checked>
+             <label class="custom-control-label" for="customRadio2">Sin secuencia</label>
+           </div>
           </div>
         </div>
+        <button type="submit" class="btn btn-lg btn-primary"><i class="fas fa-save"></i> Guardar</button>
       </form>
-    </div>
-
-    <!-- table for subjects with secuencie -->
-    <table *ngIf="isSequence" class="table table-bordered table-striped table-sm table-editable">
-      <thead class="">
-        <tr class="tb-head">
-          <th  scope="col">Codigo</th>
-          <th scope="col">Materia</th>
-          <th scope="col">Creditos</th>
-          <th scope="col">Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of subjectsList let idx=index">
-          <th scope="row">{{item.code}}</th>
-          <td>{{item.name}}</td>
-          <td>{{item.credits}}</td>
-          <td>
-            <div class="accions-content" *ngIf="idx  > 0">
-              <button class="btn btn-danger"  (click)="deleteItem(idx)"  #delete *ngIf="idx > 0"><i class="fas fa-trash-alt"></i> Eliminar</button>
-              <button class="btn btn-warning"  (click)="Edit(idx)"  #delete><i class="fas fa-trash-alt"></i> Editar</button>
+      <br>
+      <!-- form subject with secuencie -->
+      <div *ngIf="isSequence">
+        <h5>Agregar las materias de secuencia</h5>
+        <hr>
+        <form  (ngSubmit)="formSq.valid && addSubject()" #formSq="ngForm" class="needs-validation" novalidate>
+          <div class="form-row align-items-start">
+            <!-- input code -->
+            <div class="form-group col-md-4">
+              <label for="code">Codigo</label>
+              <input
+              placeholder="ACA-0907"
+              maxlength="8"
+              minlength="8"
+              type="text"
+              class="form-control"
+              name="codeSq"
+              [(ngModel)]="subjects.code"
+              #codeSq="ngModel"
+              (focusout)="validateCodeSc(codeSq.value)"
+              (keypress)="addCharaterSq(codeSq.value)"
+              [ngClass]="{'is-invalid':formSq.submitted && codeSq.invalid && subjects.code != null
+              || subjects.code == '' && codeSq.dirty ||  !secodeValid ,
+              'is-valid': codeSq.valid && codeSq.dirty && secodeValid }"
+              required>
+              <div class="invalid-feedback" *ngIf="formSq.submitted && codeSq.invalid || subjects.code == null && codeSq.touched">
+                Porfavor escriba un codigo.
+              </div>
+              <div class="valid-feedback" *ngIf="secodeValid">
+                Codigo valido.
+              </div>
+              <div class="invalid-feedback" *ngIf="code.invalid ">
+                Codigo no valido.
+              </div>
+              <div *ngIf="!secodeValid && codeSq.valid" class="invalid-feedback">
+                Este codigo ya existe, porfavor escribe uno valido.
+              </div>
             </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            <!-- input subject secuencie -->
+            <div class="form-group col-md-4">
+              <label for="name">Nombre</label>
+              <input type="text" class="form-control" name="nameSq" [(ngModel)]="subjects.name" #nameSq="ngModel"
+              [ngClass]="{'is-invalid':formSq.submitted && nameSq.invalid && subjects.name != null}" maxlength="48" placeholder="Fundamentos de programacion" required>
+              <div class="invalid-feedback">
+                Porfavor escriba un nombre.
+              </div>
+            </div>
+            <!-- input credits secuencie -->
+            <div class="form-group col-md-1">
+              <label for="alias">Creditos</label>
+              <input type="text"
+              class="form-control"
+              name="creditsSq"
+              ngModel [(ngModel)]="subjects.credits"
+              #creditsSq="ngModel"
+              [ngClass]="{'is-invalid':formSq.submitted && creditsSq.invalid && subjects.credits != null ||
+              creditsSq.invalid && creditsSq.dirty  && subjects.credits != null}"
+              pattern="[0-9]{1}"
+              maxlength="1"
+              placeholder="5"
+              required>
+              <div class="invalid-feedback">
+                Porfavor escriba el N de creditos.
+              </div>
+            </div>
+            <div class="form-group" style="position: relative;">
+                <button *ngIf="!updateItems" type="submit" name="btn-add" class="btn btn-success"  style="position: absolute; bottom: -70px;">
+                  <i class="fas fa-plus"></i> Anadir
+                </button>
+                <button *ngIf="updateItems" (click)="updateItem(idx)" type="button" name="btn-add" class="btn btn-primary">Actualizar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- table for subjects with secuencie -->
+      <table *ngIf="isSequence" class="table table-bordered table-striped table-sm table-editable">
+        <thead class="">
+          <tr class="tb-head">
+            <th  scope="col">Codigo</th>
+            <th scope="col">Materia</th>
+            <th scope="col">Creditos</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of subjectsList let idx=index">
+            <th scope="row">{{item.code}}</th>
+            <td>{{item.name}}</td>
+            <td>{{item.credits}}</td>
+            <td>
+              <div class="accions-content" *ngIf="idx  > 0">
+                <button class="btn btn-danger"  (click)="deleteItem(idx)"  #delete *ngIf="idx > 0"><i class="fas fa-trash-alt"></i> Eliminar</button>
+                <button class="btn btn-warning"  (click)="Edit(idx)"  #delete><i class="fas fa-trash-alt"></i> Editar</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
+<!-- footer -->
+<app-footer></app-footer>

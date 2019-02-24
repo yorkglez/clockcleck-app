@@ -16,7 +16,8 @@
           <a (click)="logout()" class="logout-link"><i class="fas fa-power-off"></i> Cerrar sesion</a>
         </div>
         <div>
-          <button  (click)="toggledSidebar()" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <button  (click)="toggledSidebar()" class="navbar-toggler" type="button" data-toggle="collapse"
+          data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-times"></i>
           </button>
         </div>
@@ -112,17 +113,10 @@
   <!-- content -->
   <div class="page-content">
     <!-- container -->
-    <div class="container-fluid ">
+    <div class="container-fluid">
       <router-outlet  (activate)='onActivate()'></router-outlet>
     </div>
-    <!-- Footer -->
-    <footer class="page-footer">
-      <!-- Items -->
-      <ul class="footer-nav">
-        <li class="footer-item"><span>Clock Check </span>© {{date| date:'yyyy'}}</li>
-        <li class="footer-item">Desarrollado por: <a href=""> Malastareas</a></li>
-      </ul>
-    </footer>
+
   </div>
   <!-- <button  *ngIf="sidebar && !showSidebar" (click)="toggledSidebar()" class="btn-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <i class="fas fa-bars"></i>

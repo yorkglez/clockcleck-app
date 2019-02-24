@@ -1,6 +1,6 @@
 {
   "/api":{
-      "target": "http://tester.malastareas.com",
+      "target": "http://localhost:1235",
       "secure": false,
       "changeOrigin": true
   }

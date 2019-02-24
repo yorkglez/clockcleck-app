@@ -1,88 +1,93 @@
-<!-- navbar -->
-<app-navadmin></app-navadmin>
-<!-- contentr -->
-<div class="content animated fadeIn">
-  <!-- header -->
-  <div class="content-header">
-    <h1 class="title">Editar carrera</h1>
-  </div>
-  <!-- body -->
-  <div class="content-body">
-    <!-- form -->
-    <form  (ngSubmit)="form.valid && Update()" #form="ngForm" class="needs-validation" novalidate>
-      <div class="form-row">
-        <!-- input code -->
-        <div class="form-group col-md-6">
-          <label for="code">Codigo</label>
-          <input
-          maxlength="13"
-          minlength="13"
-          type="text"
-          class="form-control"
-          name="code"
-          [(ngModel)]="model.code"
-          #code="ngModel"
-          (focusout)="validateCode(code.value)"
-          (keypress)="addCharacter(code.value)"
-          [ngClass]="{'is-invalid': form.submitted && code.invalid || model.code == null && code.touched || !codeValid || code.invalid && code.dirty,
-          'is-valid': code.valid && code.dirty && codeValid }"
-          required>
-          <!-- 'is-valid': code.valid && code.dirty && codeValid, 'is-invalid':form.submitted && code.invalid || code.invalid && code.touched|| !codeValid || model.code =='' -->
-          <div class="invalid-feedback" *ngIf="form.submitted && code.invalid || model.code == null && code.touched || code.invalid">
-            Porfavor escriba un codigo.
+<!-- container -->
+<div class="container-fluid">
+  <!-- navbar -->
+  <app-navadmin></app-navadmin>
+  <!-- contentr -->
+  <div class="content animated fadeIn">
+    <!-- header -->
+    <div class="content-header">
+      <h1 class="title">Editar carrera</h1>
+    </div>
+    <!-- body -->
+    <div class="content-body">
+      <!-- form -->
+      <form  (ngSubmit)="form.valid && Update()" #form="ngForm" class="needs-validation" novalidate>
+        <div class="form-row">
+          <!-- input code -->
+          <div class="form-group col-md-6">
+            <label for="code">Codigo</label>
+            <input
+            maxlength="13"
+            minlength="13"
+            type="text"
+            class="form-control"
+            name="code"
+            [(ngModel)]="model.code"
+            #code="ngModel"
+            (focusout)="validateCode(code.value)"
+            (keypress)="addCharacter(code.value)"
+            [ngClass]="{'is-invalid': form.submitted && code.invalid || model.code == null && code.touched || !codeValid || code.invalid && code.dirty,
+            'is-valid': code.valid && code.dirty && codeValid }"
+            required>
+            <!-- 'is-valid': code.valid && code.dirty && codeValid, 'is-invalid':form.submitted && code.invalid || code.invalid && code.touched|| !codeValid || model.code =='' -->
+            <div class="invalid-feedback" *ngIf="form.submitted && code.invalid || model.code == null && code.touched || code.invalid">
+              Porfavor escriba un codigo.
+            </div>
+            <div class="valid-feedback" *ngIf="codeValid">
+              Codigo valido.
+            </div>
+            <div class="invalid-feedback" *ngIf="code.invalid && !codeValid">
+              Codigo no valido.
+            </div>
+            <div *ngIf="!codeValid" class="invalid-feedback">
+              Este codigo ya existe, porfavor escribe uno valido.
+            </div>
           </div>
-          <div class="valid-feedback" *ngIf="codeValid">
-            Codigo valido.
+          <!-- input name -->
+          <div class="form-group col-md-6">
+            <label for="name">Nombre</label>
+            <input type="text"
+            class="form-control"
+            name="name"
+            [(ngModel)]="model.name"
+            #name="ngModel"
+            [ngClass]="{'is-invalid':form.submitted && name.invalid || name.invalid}"
+            required>
+            <div class="invalid-feedback">
+              Porfavor escriba un nombre.
+            </div>
           </div>
-          <div class="invalid-feedback" *ngIf="code.invalid && !codeValid">
-            Codigo no valido.
+          <!-- input alias -->
+          <div class="form-group col-md-6">
+            <label for="alias">Alias</label>
+            <input
+            type="text"
+            class="form-control"
+            name="alias"
+            ngModel [(ngModel)]="model.alias"
+            #alias="ngModel"
+            [ngClass]="{'is-invalid':form.submitted && alias.invalid || alias.invalid}"
+            required>
+            <div class="invalid-feedback">
+              Porfavor escriba un alias.
+            </div>
           </div>
-          <div *ngIf="!codeValid" class="invalid-feedback">
-            Este codigo ya existe, porfavor escribe uno valido.
-          </div>
+          <!-- select extension -->
+          <div class="form-group col-md-6">
+            <label for="extension">Extencion </label>
+            <select  class="form-control custom-select"
+            name="extension"
+            ngModel [(ngModel)]="model.extension"
+            #extension="ngModel"
+            required>
+            <option *ngFor="let extension of extensions;" [value]="extension.idExtension" selected>{{extension.name}}</option>
+          </select>
         </div>
-        <!-- input name -->
-        <div class="form-group col-md-6">
-          <label for="name">Nombre</label>
-          <input type="text"
-          class="form-control"
-          name="name"
-          [(ngModel)]="model.name"
-          #name="ngModel"
-          [ngClass]="{'is-invalid':form.submitted && name.invalid || name.invalid}"
-          required>
-          <div class="invalid-feedback">
-            Porfavor escriba un nombre.
-          </div>
         </div>
-        <!-- input alias -->
-        <div class="form-group col-md-6">
-          <label for="alias">Alias</label>
-          <input
-          type="text"
-          class="form-control"
-          name="alias"
-          ngModel [(ngModel)]="model.alias"
-          #alias="ngModel"
-          [ngClass]="{'is-invalid':form.submitted && alias.invalid || alias.invalid}"
-          required>
-          <div class="invalid-feedback">
-            Porfavor escriba un alias.
-          </div>
-        </div>
-        <!-- select extension -->
-        <div class="form-group col-md-6">
-          <label for="extension">Extencion </label>
-          <select  class="form-control custom-select"
-          name="extension"
-          ngModel [(ngModel)]="model.extension"
-          #extension="ngModel"
-          required>
-          <option *ngFor="let extension of extensions;" [value]="extension.idExtension" selected>{{extension.name}}</option>
-        </select>
-      </div>
-      </div>
-      <button type="submit" class="btn  btn-lg btn-primary"><i class="fas fa-save"></i> Guardar</button>
-    </form>
+        <button type="submit" class="btn  btn-lg btn-primary"><i class="fas fa-save"></i> Guardar</button>
+      </form>
+    </div>
   </div>
 </div>
+<!-- footer -->
+<app-footer></app-footer>

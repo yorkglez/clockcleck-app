@@ -8,10 +8,11 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-create-extensions',
   templateUrl: './create-extensions.component.html',
-  styleUrls: ['../../../../../assets/css/panelStyles.css']
+  styleUrls: ['../../../../../assets/css/panelStyles.css',
+  '../../../../../assets/css/containerStyles.css']
 })
 export class CreateExtensionsComponent implements OnInit {
-  model = {}
+  model = {'name':'','city':'','address':''}
   alertVisible: boolean = false
   nameValid: boolean = true
   type: string

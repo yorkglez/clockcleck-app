@@ -1,101 +1,107 @@
-<!-- navbar -->
-<app-navadmin></app-navadmin>
-<!-- content -->
-<div class="content animated fadeIn">
-  <!-- header -->
-  <div class="content-header">
-    <h1 class="title">Editar usuario</h1>
-  </div>
-  <div class="content-body">
-    <form  name="form" (ngSubmit)="form.valid && Update(form.value)" #form="ngForm" class="needs-validation" novalidate>
-      <!-- {{form.value | json}} -->
-      <div class="form-row">
-        <!-- input name -->
-        <div class="form-group col-md-6">
-          <label for="name">Nombre</label>
-          <input type="text" class="form-control" name="name" [(ngModel)]="model.name" #name="ngModel"
-          [ngClass]="{'is-invalid':form.submitted && name.invalid}" required>
-          <div class="invalid-feedback">
-            Porfavor escriba un nombre.
+<!-- container -->
+<div class="container-fluid">
+  <!-- navbar -->
+  <app-navadmin></app-navadmin>
+  <!-- content -->
+  <div class="content animated fadeIn">
+    <!-- header -->
+    <div class="content-header">
+      <h1 class="title">Editar usuario</h1>
+    </div>
+    <div class="content-body">
+      <form  name="form" (ngSubmit)="form.valid && Update(form.value)" #form="ngForm" class="needs-validation" novalidate>
+        <!-- {{form.value | json}} -->
+        <div class="form-row">
+          <!-- input name -->
+          <div class="form-group col-md-6">
+            <label for="name">Nombre</label>
+            <input type="text" class="form-control" name="name" [(ngModel)]="model.name" #name="ngModel"
+            [ngClass]="{'is-invalid':form.submitted && name.invalid}" required>
+            <div class="invalid-feedback">
+              Porfavor escriba un nombre.
+            </div>
           </div>
-        </div>
-        <!-- input address -->
-        <div class="form-group col-md-6">
-          <label for="lastname">Apellido</label>
-          <input type="text" class="form-control" name="lastname" id="lastname" ngModel [(ngModel)]="model.lastname"
-          #lastname="ngModel"
-          [ngClass]="{'is-invalid':form.submitted && lastname.invalid}" required>
-          <div class="invalid-feedback">
-            Porfavor escriba un apellido.
+          <!-- input address -->
+          <div class="form-group col-md-6">
+            <label for="lastname">Apellido</label>
+            <input type="text" class="form-control" name="lastname" id="lastname" ngModel [(ngModel)]="model.lastname"
+            #lastname="ngModel"
+            [ngClass]="{'is-invalid':form.submitted && lastname.invalid}" required>
+            <div class="invalid-feedback">
+              Porfavor escriba un apellido.
+            </div>
           </div>
-        </div>
-        <!-- input email -->
-        <div class="form-group col-md-6">
-          <label for="email">Email</label>
-          <input pattern="^[a-z0-9._+%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-          (focusout)="validateEmail(email.value)"
-          type="email"
-          class="form-control invalid-input"
-          name="email"
-          ngModel [(ngModel)]="model.email"
-          #email="ngModel"
-          [ngClass]="{'is-invalid':form.submitted && email.invalid || email.invalid && email.dirty || model.email =='' || !emailValid,
-          'is-valid': emailValid && email.valid && email.dirty}"
-          [email]="model.email !==''" required>
-          <div class="invalid-feedback" *ngIf="form.submitted || model.email ==''">
-            Porfavor escriba un email.
+          <!-- input email -->
+          <div class="form-group col-md-6">
+            <label for="email">Email</label>
+            <input pattern="^[a-z0-9._+%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+            (focusout)="validateEmail(email.value)"
+            type="email"
+            class="form-control invalid-input"
+            name="email"
+            ngModel [(ngModel)]="model.email"
+            #email="ngModel"
+            [ngClass]="{'is-invalid':form.submitted && email.invalid || email.invalid && email.dirty || model.email =='' || !emaiisValid,
+            'is-valid': emaiisValid && email.valid && email.dirty}"
+            [email]="model.email !==''" required>
+            <div class="invalid-feedback" *ngIf="form.submitted || model.email ==''">
+              Porfavor escriba un email.
+            </div>
+            <div class="valid-feedback" *ngIf="emaiisValid && email.valid"  >
+              El email es valido.
+            </div>
+            <div *ngIf="!emaiisValid && email.valid" class="invalid-feedback">
+              Este email ya existe, porfavor escribe uno valido.
+            </div>
+            <div *ngIf="email.errors?.email " class="invalid-feedback">Escribe un email valido.</div>
           </div>
-          <div class="valid-feedback" *ngIf="emailValid && email.valid"  >
-            El email es valido.
+          <!-- input user type -->
+          <div class="form-group col-md-6">
+            <label for="showType">Tipo de usuario </label>
+            <select  class="form-control custom-select" name="type" ngModel [(ngModel)]="model.type" #type="ngModel"
+            [ngClass]="{'is-invalid':form.submitted && type.invalid}" required>
+              <option value="admin" selected>Admin</option>
+              <option value="normal">Normal</option>
+            </select>
+            <div  class="invalid-feedback">
+              Porfavor selecciona un tipo de usuario.
+            </div>
           </div>
-          <div *ngIf="!emailValid && email.valid" class="invalid-feedback">
-            Este email ya existe, porfavor escribe uno valido.
+          <!-- extension -->
+          <div class="form-group col-md-6">
+            <label for="extension">Extencion </label>
+            <select  class="form-control custom-select"  name="extension" id="extension" ngModel [(ngModel)]="model.extension" #extension="ngModel"  [ngClass]="{'is-invalid':form.submitted && extension.invalid}" required>
+              <option *ngFor="let extension of extensions;"   [value]="extension.idExtension" selected>{{extension.name}}</option>
+            </select>
+            <div  class="invalid-feedback">
+              Porfavor selecciona una extension.
+            </div>
           </div>
-          <div *ngIf="email.errors?.email " class="invalid-feedback">Escribe un email valido.</div>
-        </div>
-        <!-- input user type -->
-        <div class="form-group col-md-6">
-          <label for="showType">Tipo de usuario </label>
-          <select  class="form-control custom-select" name="type" ngModel [(ngModel)]="model.type" #type="ngModel"
-          [ngClass]="{'is-invalid':form.submitted && type.invalid}" required>
-            <option value="admin" selected>Admin</option>
-            <option value="normal">Normal</option>
-          </select>
-          <div  class="invalid-feedback">
-            Porfavor selecciona un tipo de usuario.
-          </div>
-        </div>
-        <!-- extension -->
-        <div class="form-group col-md-6">
-          <label for="extension">Extencion </label>
-          <select  class="form-control custom-select"  name="extension" id="extension" ngModel [(ngModel)]="model.extension" #extension="ngModel"  [ngClass]="{'is-invalid':form.submitted && extension.invalid}" required>
-            <option *ngFor="let extension of extensions;"   [value]="extension.idExtension" selected>{{extension.name}}</option>
-          </select>
-          <div  class="invalid-feedback">
-            Porfavor selecciona una extension.
-          </div>
-        </div>
 
-        <!-- genere -->
-        <div class="form-group col-md-6">
-          <label for="genere">Genero </label>
-          <select  class="form-control custom-select"
-          name="genere"
-          ngModel [(ngModel)]="model.genere"
-          #genere="ngModel"
-          [ngClass]="{'is-invalid':form.submitted && genere.invalid}"
-          required>
-          <option value="H">Hombre</option>
-          <option value="M">Mujer</option>
-        </select>
-        <div  class="invalid-feedback">
-          Porfavor selecciona un genero.
+          <!-- genere -->
+          <div class="form-group col-md-6">
+            <label for="genere">Genero </label>
+            <select  class="form-control custom-select"
+            name="genere"
+            ngModel [(ngModel)]="model.genere"
+            #genere="ngModel"
+            [ngClass]="{'is-invalid':form.submitted && genere.invalid}"
+            required>
+            <option value="H">Hombre</option>
+            <option value="M">Mujer</option>
+          </select>
+          <div  class="invalid-feedback">
+            Porfavor selecciona un genero.
+          </div>
         </div>
       </div>
-    </div>
-    <!-- btn save -->
-    <button [disabled]="!emailValid" type="submit" class="btn btn-lg btn-primary"><i class="fas fa-save"></i> Guardar</button>
-  </form>
-  <!-- alerts -->
-  <app-alerts [type]="type" [message]= "message" [alertVisible]="alertVisible"  ></app-alerts>
+      <!-- btn save -->
+      <button [disabled]="!emaiisValid" type="submit" class="btn btn-lg btn-primary"><i class="fas fa-save"></i> Guardar</button>
+    </form>
+    <!-- alerts -->
+    <app-alerts [type]="type" [message]= "message" [alertVisible]="alertVisible"  ></app-alerts>
+  </div>
+  </div>
 </div>
+<!-- footer -->
+<app-footer></app-footer>

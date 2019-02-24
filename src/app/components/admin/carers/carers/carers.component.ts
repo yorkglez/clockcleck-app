@@ -10,7 +10,8 @@ import { Title } from '@angular/platform-browser';
   templateUrl: './carers.component.html',
   styleUrls: ['../../../../../assets/css/tableStyles.css',
               '../../../../../assets/css/paginationStyles.css',
-              '../../../../../assets/css/panelStyles.css'
+              '../../../../../assets/css/panelStyles.css',
+              '../../../../../assets/css/containerStyles.css'
              ]
 })
 
@@ -27,7 +28,7 @@ export class CarersComponent implements OnInit {
   carers = []
   carer: Carer
   extensions: any = []
-  model = {}
+  model = {'extension':''}
   constructor(private _carersService: CarersService,
               private _loaderService: LoaderService,
               private router: Router,

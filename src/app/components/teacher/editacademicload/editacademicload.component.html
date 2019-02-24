@@ -1,18 +1,18 @@
 <!-- navbar teacher -->
-<app-navteacher></app-navteacher>
+<!-- <app-navteacher></app-navteacher> -->
 <!-- content -->
-<div class="content">
+<!-- <div class="content"> -->
   <!-- header -->
-  <div class="content-head">
+  <!-- <div class="content-head">
     <h1 class="title">Carga horaria</h1>
-  </div>
+  </div> -->
   <!-- body -->
-  <div class="content-body">
+  <!-- <div class="content-body"> -->
     <!-- table -->
-    <form  (ngSubmit)="form.valid && addSubject(form)" #form="ngForm" class="needs-validation" novalidate>
+    <!-- <form  (ngSubmit)="form.valid && addSubject(form)" #form="ngForm" class="needs-validation" novalidate> -->
       <!-- {{form.value | json}} -->
       <!-- select day -->
-      <div class="form-row">
+      <!-- <div class="form-row">
         <div class="form-group col-md-auto mb-2">
           <label for="day">Dia</label>
           <select name="day" id="day" ngModel [(ngModel)]="model.day" #day="ngModel"  class="form-control"
@@ -22,9 +22,9 @@
         <div class="invalid-feedback">
           Porfavor seleccione un dia
         </div>
-      </div>
+      </div> -->
       <!-- select subject -->
-      <div class="form-group col-md-2 mb-2">
+      <!-- <div class="form-group col-md-2 mb-2">
         <label for="day">Materia</label>
         <ng-select name="nameSubject" ngModel [(ngModel)]="model.nameSubject"  #nameSubject ="ngModel" (change)="getSelectedSubject(nameSubject.value)" required>
           <ng-option *ngFor="let subject  of subjects let idx=index" [value]="idx" >{{subject.name}}</ng-option>
@@ -32,9 +32,9 @@
         <div class="invalid-feedback">
           Porfavor seleccione una materia.
         </div>
-      </div>
+      </div> -->
       <!-- select carer -->
-      <div class="form-group col-md-2 mb-2">
+      <!-- <div class="form-group col-md-2 mb-2">
         <label for="day">Carreras</label>
         <ng-select name="alias" ngModel [(ngModel)]="model.alias"  #alias ="ngModel" (change)="getSelectedCarer(alias.value)" required>
           <ng-option *ngFor="let carer  of carers let idx=index" [value]="idx" >{{carer.alias}}</ng-option>
@@ -42,9 +42,9 @@
         <div class="invalid-feedback">
           Porfavor seleccione una carrera.
         </div>
-      </div>
+      </div> -->
       <!-- select start time -->
-      <div class="form-group col-md-auto mb-3">
+      <!-- <div class="form-group col-md-auto mb-3">
         <label for="start_time">Hora de entrada</label>
         <select  class="form-control"
         name="startTime" ngModel
@@ -60,9 +60,9 @@
       <div class="invalid-feedback">
         Porfavor seleccione una hora.
       </div>
-    </div>
+    </div> -->
     <!-- select end time -->
-    <div class="form-group col-md-auto mb-3">
+    <!-- <div class="form-group col-md-auto mb-3">
       <label for="end_time">Hora de salida</label>
       <select  class="form-control"   name="endTime"  ngModel [(ngModel)]="model.endTime" #endTime="ngModel" [ngClass]="{'is-invalid':form.submitted && endTime.invalid}" required>
         <ng-container *ngFor="let hour of hours | slice:etSlice; let i=idx" >
@@ -75,11 +75,11 @@
         Porfavor seleccione una hora.
       </div>
     </div>
-  </div>
+  </div> -->
 
-  <div class="form-row">
+  <!-- <div class="form-row"> -->
     <!-- select semester -->
-    <div class="form-group col-md-1 mb-3">
+    <!-- <div class="form-group col-md-1 mb-3">
       <label for="end_time">Semestre</label>
       <select  class="form-control"  name="semester" id="semester" ngModel [(ngModel)]="model.semester" #semester="ngModel" [ngClass]="{'is-invalid':form.submitted && semester.invalid}" required>
         <ng-container *ngFor="let semester of semesters let i=index" >
@@ -89,24 +89,24 @@
       <div class="invalid-feedback">
         Porfavor seleccione un semestre.
       </div>
-    </div>
+    </div> -->
     <!-- textarea ojetive -->
-    <div class="form-group col-md-4">
+    <!-- <div class="form-group col-md-4">
       <label for="exampleFormControlTextarea1">Objetivo</label>
       <textarea name="objetive" ngModel [(ngModel)]="model.objetive"   #objetive ="ngModel" class="form-control" rows="2" style="height:38px; resize: none;" ></textarea>
-    </div>
+    </div> -->
     <!-- add subject button -->
-    <div class="col-md-auto" style="position: relative;">
+    <!-- <div class="col-md-auto" style="position: relative;">
       <button  (cl)="addSubject(form)" type="submit" class="btn btn-success" style="position: relative; bottom: -30px;"><i class="fas fa-plus"></i> Agregar</button>
-    </div>
+    </div> -->
     <!-- generate shedule button -->
-    <div class="col-md-1" style="position: relative;">
+    <!-- <div class="col-md-1" style="position: relative;">
       <button (click)="saveSchedule($event)"  class="btn btn-primary" style="position: relative; bottom: -30px;"><i class="fas fa-save"></i> Guardar cambios</button>
     </div>
   </div>
-    </form>
+    </form> -->
 <!-- table for create schedule -->
-    <table class="table table-bordered table-striped table-sm table-editable">
+    <!-- <table class="table table-bordered table-striped table-sm table-editable">
       <thead class="">
         <tr>
           <th id="hhour" scope="col">Materia</th>
@@ -117,10 +117,10 @@
           <th scope="col">Acciones</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody> -->
         <!-- old ac -->
 
-        <tr *ngFor="let ac of academicload let idx=index">
+        <!-- <tr *ngFor="let ac of academicload let idx=index">
           <th>{{ac.nameSubject}}</th>
           <th>{{ac.alias}}</th>
           <th scope="row">{{ac.day}}</th>
@@ -132,7 +132,7 @@
               <button class="btn btn-warning" data-toggle="modal" data-target="#modalDelete"  (click)="Edit(idx)"  #deleteUser><i class="fas fa-edit"></i> Editar</button>
             </div>
           </td>
-        </tr>
+        </tr> -->
         <!--new academicload -->
         <!-- <tr *ngFor="let item of schedule let idx=index">
         <th>{{item.subjectSelect}}</th>
@@ -146,7 +146,7 @@
       </div>
     </td>
     </tr> -->
-      </tbody>
+      <!-- </tbody>
     </table>
   </div>
-</div>
+</div> -->

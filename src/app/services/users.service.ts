@@ -48,7 +48,15 @@ export interface  User {
     type:string
     idExtension:string
 }
+export interface newUser{
+  name: string,
+  lastname: string,
+  email: string,
+  type: string,
+  extension: string,
+  genere: string,
 
+}
 export interface Response{
   success: boolean
 }

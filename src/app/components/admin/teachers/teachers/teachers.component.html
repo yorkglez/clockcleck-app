@@ -1,131 +1,137 @@
-<!-- navbar -->
-<app-navadmin></app-navadmin>
-<!-- content -->
-<div class="content animated fadeIn">
-  <!-- menu -->
-  <form class="options-panel">
-    <div class="form-row align-items-end">
-      <div class= "form-group col-sm-12 col-12 col-md-auto">
-        <h1 class="title">Docentes</h1>
+<!-- container -->
+<div class="container-fluid">
+  <!-- navbar -->
+  <app-navadmin></app-navadmin>
+  <!-- content -->
+  <div class="content animated fadeIn">
+    <!-- menu -->
+    <form class="options-panel">
+      <div class="form-row align-items-end">
+        <div class= "form-group col-sm-12 col-12 col-md-auto">
+          <h1 class="title">Docentes</h1>
+        </div>
+        <div class="form-group  col-7 col-sm-4 col-md-auto search-container">
+          <input class="btn-search form-control"
+          type="search"
+          placeholder="Buscar..."
+          aria-label="Search"
+          (keypress)="filterData(searchText.value,type.value,extension.value); checkInactive(type.value)"
+          #searchText>
+          <button class="btn-clear" (click)="searchText.value = ''; filterData(searchText.value,type.value,extension.value); checkInactive(type.value)">
+           <i class="fa fa-times"></i>
+         </button>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary"
+          (click)="filterData(searchText.value,type.value,extension.value); checkInactive(type.value)"><i class="fas fa-search"></i></button>
+        </div>
+        <!-- show by -->
+        <div class="form-group col-md-2 col-sm-3 col-8">
+          <select id="showType" class="form-control custom-select" (change)="filterData(searchText.value,type.value,extension.value);
+          checkInactive(type.value)"  #type>
+            <option value="all" selected>Mostrar todo</option>
+            <option value="A" >A</option>
+            <option value="B">B</option>
+            <option value="PTC">PTC</option>
+            <option value="inactive">Inactivos</option>
+          </select>
+        </div>
+        <div class="form-group col-md-2 col-sm-3 col-8">
+          <select   (change)="filterData(searchText.value,type.value,extension.value); checkInactive(type.value)" class="form-control custom-select"
+          name="extension"  ngModel [(ngModel)]="model.extension" #extension="ngModel">
+            <option *ngFor="let extension of extensions;" [value]="extension.idExtension" >{{extension.name}}</option>
+          </select>
+        </div>
       </div>
-      <div class="form-group  col-7 col-sm-4 col-md-auto search-container">
-        <input class="btn-search form-control"
-        type="search"
-        placeholder="Buscar..."
-        aria-label="Search"
-        (keypress)="filterData(searchText.value,type.value,extension.value); checkInactive(type.value)"
-        #searchText>
-        <button class="btn-clear" (click)="searchText.value = ''; filterData(searchText.value,type.value,extension.value); checkInactive(type.value)">
-         <i class="fa fa-times"></i>
-       </button>
-      </div>
-      <div class="form-group">
-        <button class="btn btn-primary"
-        (click)="filterData(searchText.value,type.value,extension.value); checkInactive(type.value)"><i class="fas fa-search"></i></button>
-      </div>
-      <!-- show by -->
-      <div class="form-group col-md-2 col-sm-3 col-8">
-        <select id="showType" class="form-control custom-select" (change)="filterData(searchText.value,type.value,extension.value);
-        checkInactive(type.value)"  #type>
-          <option value="all" selected>Mostrar todo</option>
-          <option value="A" >A</option>
-          <option value="B">B</option>
-          <option value="PTC">PTC</option>
-          <option value="inactive">Inactivos</option>
-        </select>
-      </div>
-      <div class="form-group col-md-2 col-sm-3 col-8">
-        <select   (change)="filterData(searchText.value,type.value,extension.value); checkInactive(type.value)" class="form-control custom-select"
-        name="extension"  ngModel [(ngModel)]="model.extension" #extension="ngModel">
-          <option *ngFor="let extension of extensions;" [value]="extension.idExtension" >{{extension.name}}</option>
-        </select>
+    </form>
+    <!-- alerts -->
+    <div class="alert alert-info" role="alert" *ngIf="teachers.length == 0 && !searchAlert">
+        <i class="fas fa-info-circle"></i> No hay registros en la base de datos.
+    </div>
+    <div class="alert alert-info" role="alert" *ngIf="searchAlert">
+        <i class="fas fa-info-circle"></i> No se encontraron resultados con el termino: <b>{{ter}}</b>
+    </div>
+    <!-- loader  -->
+    <app-loader></app-loader>
+    <!-- table -->
+    <div class="table-responsive-md">
+      <table class="table table-sm table-hover table-responsive{-sm|-md|-lg|-xl}" *ngIf="teachers.length > 0">
+        <thead>
+          <tr class="tb-head">
+            <th scope="col">Codigo</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Email</th>
+            <th scope="col">Telefono</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Extension</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let teacher of teachers | paginate: { itemsPerPage: 25, currentPage: p }; let i = index ">
+            <th scope="row">{{teacher.codeTeacher}}</th>
+            <td>{{teacher.name}}</td>
+            <td>{{teacher.lastname}}</td>
+            <td>{{teacher.email}}</td>
+            <td>{{teacher.phone}}</td>
+            <td>
+              <!-- show user type  -->
+              <span *ngIf="teacher.type == 'A'" class="badge badge-primary">A</span>
+              <span *ngIf="teacher.type == 'B'" class="badge badge-info">B</span>
+              <span *ngIf="teacher.type == 'PTC'" class="badge badge-success">PTC</span>
+            </td>
+            <td>{{teacher.extensionName}}</td>
+            <td  class="accions-content">
+              <button class="btn btn-warning" (click)="Edit(teacher)">
+                <i class="fas fa-pencil-alt"></i> <span class="d-none d-md-inline "> Editar</span>
+              </button>
+              <button *ngIf="isInactive"  (click)="Activate(teacher)"   class="btn btn-success" >
+                <i class="fas fa-check"></i> <span class="d-none d-md-inline "> Activar</span>
+              </button>
+              <button *ngIf="!isInactive" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete" (click)="getId(teacher)" #deleteUser>
+                <i class="fas fa-trash-alt"></i> <span> Eliminar</span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- pagination -->
+    <div class="pagination-container" *ngIf="teachers.length > 0">
+      <!-- <div class="showing">
+        Mostrando <b>{{itemsPerPage}}</b> de <b>{{rowCont}}</b> materias
+      </div> -->
+    </div>
+    <!-- pagiantion settings -->
+    <pagination-controls *ngIf="teachers.length > 0" class="Pagination pagination  pa justify-content-center"  (pageChange)="p = $event"
+    previousLabel="Anterior"
+    nextLabel="Siguiente"
+    maxSize ="4"
+    screenReaderPaginationLabel="Pagination"
+    >
+  </pagination-controls>
+  </div>
+  <!-- modalal for delete accion -->
+  <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ModalCenterTitle">Estas seguro?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Si eliminas este usuario, no podras deshacer esta accion!.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" (click)="Delete()"  data-dismiss="modal">Eliminar</button>
+        </div>
       </div>
     </div>
-  </form>
-  <!-- alerts -->
-  <div class="alert alert-info" role="alert" *ngIf="teachers.length == 0 && !searchAlert">
-      <i class="fas fa-info-circle"></i> No hay registros en la base de datos.
-  </div>
-  <div class="alert alert-info" role="alert" *ngIf="searchAlert">
-      <i class="fas fa-info-circle"></i> No se encontraron resultados con el termino: <b>{{ter}}</b>
-  </div>
-  <!-- table -->
-  <div class="table-responsive-md">
-    <table class="table table-sm table-hover table-responsive{-sm|-md|-lg|-xl}" *ngIf="teachers.length > 0">
-      <thead>
-        <tr class="tb-head">
-          <th scope="col">Codigo</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Apellido</th>
-          <th scope="col">Email</th>
-          <th scope="col">Telefono</th>
-          <th scope="col">Tipo</th>
-          <th scope="col">Extension</th>
-          <th scope="col">Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let teacher of teachers | paginate: { itemsPerPage: 25, currentPage: p }; let i = index ">
-          <th scope="row">{{teacher.codeTeacher}}</th>
-          <td>{{teacher.name}}</td>
-          <td>{{teacher.lastname}}</td>
-          <td>{{teacher.email}}</td>
-          <td>{{teacher.phone}}</td>
-          <td>
-            <!-- show user type  -->
-            <span *ngIf="teacher.type == 'A'" class="badge badge-primary">A</span>
-            <span *ngIf="teacher.type == 'B'" class="badge badge-info">B</span>
-            <span *ngIf="teacher.type == 'PTC'" class="badge badge-success">PTC</span>
-          </td>
-          <td>{{teacher.extensionName}}</td>
-          <td  class="accions-content">
-            <button class="btn btn-warning" (click)="Edit(teacher)">
-              <i class="fas fa-pencil-alt"></i> <span class="d-none d-md-inline "> Editar</span>
-            </button>
-            <button *ngIf="isInactive"  (click)="Activate(teacher)"   class="btn btn-success" >
-              <i class="fas fa-check"></i> <span class="d-none d-md-inline "> Activar</span>
-            </button>
-            <button *ngIf="!isInactive" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete" (click)="getId(teacher)" #deleteUser>
-              <i class="fas fa-trash-alt"></i> <span> Eliminar</span>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <!-- pagination -->
-  <div class="pagination-container" *ngIf="teachers.length > 0">
-    <!-- <div class="showing">
-      Mostrando <b>{{itemsPerPage}}</b> de <b>{{rowCont}}</b> materias
-    </div> -->
-  </div>
-  <!-- pagiantion settings -->
-  <pagination-controls *ngIf="teachers.length > 0" class="Pagination pagination  pa justify-content-center"  (pageChange)="p = $event"
-  previousLabel="Anterior"
-  nextLabel="Siguiente"
-  maxSize ="4"
-  screenReaderPaginationLabel="Pagination"
-  >
-</pagination-controls>
-</div>
-
-<!-- modalal for delete accion -->
-<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="ModalCenterTitle">Estas seguro?</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Si eliminas este usuario, no podras deshacer esta accion!.
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger" (click)="Delete()"  data-dismiss="modal">Eliminar</button>
-      </div>
-    </div>
   </div>
 </div>
+<!-- footer -->
+<app-footer></app-footer>

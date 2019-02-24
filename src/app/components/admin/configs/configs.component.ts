@@ -6,7 +6,8 @@ import { Title } from '@angular/platform-browser';
   selector: 'app-configs',
   templateUrl: './configs.component.html',
   styleUrls:['../../../../assets/css/panelStyles.css',
-              '../../../../assets/css/porfileStyles.css'
+              '../../../../assets/css/porfileStyles.css',
+              '../../../../assets/css/containerStyles.css'
 ]
 })
 export class ConfigsComponent implements OnInit {

@@ -9,11 +9,12 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-create-carers',
   templateUrl: './create-carers.component.html',
-  styleUrls: ['../../../../../assets/css/panelStyles.css']
+  styleUrls: ['../../../../../assets/css/panelStyles.css',
+  '../../../../../assets/css/containerStyles.css']
 
 })
 export class CreateCarersComponent implements OnInit {
-  model = {"code": ''}
+  model = {"code": '','name':'','alias':'','extension':''}
   extensions: any[]
   codeValid: boolean = true
   alertVisible: boolean = false

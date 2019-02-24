@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { ExtensionsService } from '../../../../services/extensions.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { LoaderService } from '../../../../services/loader.service';
 @Component({
   selector: 'app-teachers',
   templateUrl: './teachers.component.html',
@@ -12,6 +13,7 @@ import { Title } from '@angular/platform-browser';
               '../../../../../assets/css/panelStyles.css',
               '../../../../../assets/css/alertStyles.css',
               '../../../../../assets/css/paginationStyles.css',
+              '../../../../../assets/css/containerStyles.css'
              ]
 })
 export class TeachersComponent implements OnInit {
@@ -24,21 +26,26 @@ export class TeachersComponent implements OnInit {
   extensions = []
   teacher:any[]
   //itemsPerPage: number = 10
-  model = {}
+  model = {'extension':''}
   constructor(private _teachersService: TeachersService,
               private _extensionsService: ExtensionsService,
               private router: Router,
+              private _loaderService: LoaderService,
               private _titleService: Title) {
                 this._titleService.setTitle('Docentes')}
 
   ngOnInit() {
     this._extensionsService.getExtension().subscribe(data=>{this.extensions = data})
     this.  model = {"extension": localStorage.getItem('extension')}
+     this._loaderService.display(true) //Show loader
     this._teachersService.getData('','all',localStorage.getItem('extension')).subscribe(data=>{
-      if(!data)
+      if(!data){
         this.teachers = []
-      else
+      }
+      else{
         this.teachers = data
+        this._loaderService.display(false) //Hide loader
+      }
     })
   }
 

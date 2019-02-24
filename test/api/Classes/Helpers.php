@@ -2,10 +2,6 @@
   /**
    *
    */
-   /*require('././libs/PHPMailer/src/PHPMailer.php');
-   require('././libs/PHPMailer/src/SMTP.php');
-   require('././libs/PHPMailer/src/Exception.php');
-   require('././libs/PHPMailer/src/OAuth.php');*/
    require_once('Connection.php');
   class Helpers extends Connection
   {
@@ -42,33 +38,37 @@
      * @param  [type] $body    [description]
      * @return [type]          [description]
      */
-    public function sendMail($emailTo,$subject,$body){
-      $mail = new PHPMailer\PHPMailer\PHPMailer();   // Passing `true` enables exceptions
-      $emailFrom = '';
-      try {
-        /*Server settings*/
-        $mail->SMTPDebug = 2;                                 // Enable verbose debug output
-        $mail->isSMTP();                                      // Set mailer to use SMTP
-        $mail->Host = 'smtp1.example.com;smtp2.example.com';  // Specify main and backup SMTP servers
-        $mail->SMTPAuth = true;                               // Enable SMTP authentication
-        $mail->Username = $emailFrom;                 // SMTP username
-        $mail->Password = 'secret';                           // SMTP password
-        $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-        $mail->Port = 587;                                    // TCP port to connect to
-        /*Recipients*/
-        $mail->setFrom($emailFrom, 'Clock Check');
-        $mail->addAddress($emailTo, 'User');     // Add a recipient
-        /*Content*/
-        $mail->isHTML(true);                                  // Set email format to HTML
-        $mail->Subject = $subject;
-        $mail->Body = $body;
-        $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-        $mail->send();
-        return true;
-      } catch (Exception $e) {
-        return false;
-      }
-    }
+     public function sendMail($emailTo,$subject,$body){
+       require('././libs/PHPMailer/src/PHPMailer.php');
+       require('././libs/PHPMailer/src/SMTP.php');
+       require('././libs/PHPMailer/src/Exception.php');
+       require('././libs/PHPMailer/src/OAuth.php');
+       $mail = new PHPMailer\PHPMailer\PHPMailer();   // Passing `true` enables exceptions
+       $emailFrom = 'clockcheck@malastareas.com';
+       try {
+         /*Server settings*/
+         $mail->SMTPDebug = 2;                                 // Enable verbose debug output
+         $mail->isSMTP();                                      // Set mailer to use SMTP
+         $mail->Host = 'mail.malastareas.com ';  // Specify main and backup SMTP servers
+         $mail->SMTPAuth = true;                               // Enable SMTP authentication
+         $mail->Username = $emailFrom;                 // SMTP username
+         $mail->Password = 'ilovetamales123';                           // SMTP password
+         $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+         $mail->Port = 587;                                    // TCP port to connect to
+         /*Recipients*/
+         $mail->setFrom($emailFrom, 'Clock Check');
+         $mail->addAddress($emailTo, 'User');     // Add a recipient
+         /*Content*/
+         $mail->isHTML(true);                                  // Set email format to HTML
+         $mail->Subject = $subject;
+         $mail->Body = $body;
+         $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+         $mail->send();
+         return true;
+       } catch (Exception $e) {
+         return false;
+       }
+     }
 
     public function getSelectsjbytc($date,$code){
       $timestamp = strtotime($date);

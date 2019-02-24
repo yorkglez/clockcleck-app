@@ -9,7 +9,7 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['../../../../assets/css/loginStyles.css']
 })
 export class LoginteacherComponent implements OnInit {
-  model= {}
+  model= {'email':'','password':''}
   error: boolean = false
   constructor(private _authService: AuthService,
               private router: Router,
@@ -36,7 +36,7 @@ export class LoginteacherComponent implements OnInit {
     this.model['password']  = ''
   }
 
-  loginUser(event){
+  loginUser(){
     if (this.model['email'] !='' && this.model['password'] !='') {
       this._authService.authTeacher(this.model).subscribe(resp => {
 

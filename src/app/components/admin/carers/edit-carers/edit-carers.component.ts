@@ -10,11 +10,12 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-edit-carers',
   templateUrl: './edit-carers.component.html',
-  styleUrls: ['../../../../../assets/css/panelStyles.css']
+  styleUrls: ['../../../../../assets/css/panelStyles.css',
+  '../../../../../assets/css/containerStyles.css']
 })
 export class EditCarersComponent implements OnInit {
   extensions = []
-  model = {}
+  model = {"code": '','name':'','alias':'','extension':''}
   id:string;
   codeValid: boolean = true
   constructor(private _extensionsService: ExtensionsService,

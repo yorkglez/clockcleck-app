@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto:400");
+@import url("https://fonts.googleapis.com/css?family=Roboto");
 label {
   font-family: "Roboto", sans-serif; }
 
@@ -42,7 +42,7 @@ header {
   width: 550px;
   height: auto;
   top: 150px;
-  right: 50px; }
+  right: 90px; }
   .login-content .header {
     position: relative;
     display: -webkit-box;
@@ -69,7 +69,6 @@ header {
     .login-content .body .title-login {
       text-align: center;
       color: #d11141;
-      font-weight: 500;
       font-family: "Roboto", sans-serif; }
     .login-content .body input {
       background: none;
@@ -81,8 +80,6 @@ header {
         border-color: #d11141;
         -webkit-box-shadow: none;
         box-shadow: none; }
-    .login-content .body label {
-      font-weight: 600; }
     .login-content .body .forgot-container {
       display: -webkit-box;
       display: -ms-flexbox;
@@ -105,3 +102,35 @@ header {
 
 footer {
   display: none; }
+
+/*Responsive */
+@media (max-width: 700px) {
+  .container-log {
+    display: block; }
+  .login-content {
+    position: relative;
+    top: 90px;
+    width: 100%;
+    left: 1px; }
+    .login-content .body {
+      padding: 10px 0px; }
+      .login-content .body .btn-login {
+        height: 50px;
+        width: 250px;
+        margin: auto; } }
+
+@media (min-width: 768px) {
+  .btn span {
+    display: none; } }
+
+@media (min-width: 992px) {
+  .container-log {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center; } }

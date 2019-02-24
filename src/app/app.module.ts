@@ -63,6 +63,7 @@ import { PopoverModule } from 'ngx-popover';
 import { ForgotpasswordComponent } from './components/shared/forgotpassword/forgotpassword.component';
 import { PorfileComponent } from './components/shared/porfile/porfile.component';
 import { LoaderComponent } from './components/shared/loader/loader.component';
+import { FooterComponent } from './components/shared/footer/footer.component';
 //     import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 // import {ToastModule} from 'ng6-toastr/ng2-toastr';
 
@@ -107,6 +108,7 @@ import { LoaderComponent } from './components/shared/loader/loader.component';
     ForgotpasswordComponent,
     PorfileComponent,
     LoaderComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
@@ -118,11 +120,9 @@ import { LoaderComponent } from './components/shared/loader/loader.component';
     NgxPaginationModule,
     ReactiveFormsModule,
     PopoverModule,
-    // BrowserAnimationsModule,
-    // ToastModule.forRoot(),
     RouterModule.forRoot([
     {
-      path:'login',
+      path:'',
       component: LoginComponent,
       canActivate: [GuestGuard]
     },
@@ -283,8 +283,7 @@ import { LoaderComponent } from './components/shared/loader/loader.component';
     {
       path:'forgotpassword',
       component: ForgotpasswordComponent,
-      canActivate: [ValidGuard],
-      data: { title: 'My Calendar' }
+      canActivate: [ValidGuard]
     }
 
 
