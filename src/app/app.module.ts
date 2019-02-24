@@ -27,7 +27,7 @@ import { UsersComponent } from './components/admin/users/users/users.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 //import {PopoverModule} from 'ngx-bootstrap';
-
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { CreateUserComponent } from './components/admin/users/create-user/create-user.component';
 import { EditUserComponent } from './components/admin/users/edit-user/edit-user.component';
 import { CreateTeacherComponent } from './components/admin/teachers/create-teacher/create-teacher.component';
@@ -64,10 +64,208 @@ import { ForgotpasswordComponent } from './components/shared/forgotpassword/forg
 import { PorfileComponent } from './components/shared/porfile/porfile.component';
 import { LoaderComponent } from './components/shared/loader/loader.component';
 import { FooterComponent } from './components/shared/footer/footer.component';
+import { Routes } from '@angular/router';
 //     import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 // import {ToastModule} from 'ng6-toastr/ng2-toastr';
 
+  const routes: Routes = [
+    /*Redirects*/
+  {path: '' , redirectTo:'/login',pathMatch:'full'},
+  {path: 'users' , redirectTo:'/users',pathMatch:'full'},
+  {path: 'createuser' , redirectTo:'/createuser',pathMatch:'full'},
+  {path: 'edituser/:id' , redirectTo:'/edituser/:id',pathMatch:'full'},
+  {path: 'teachers' , redirectTo:'/teachers',pathMatch:'full'},
+  {path: 'editteacher/:id' , redirectTo:'/editteacher/:id',pathMatch:'full'},
+  {path: 'carers' , redirectTo:'/carers',pathMatch:'full'},
+  {path: 'createcarer' , redirectTo:'/createcarer',pathMatch:'full'},
+  {path: 'editcarer/:id' , redirectTo:'/editcarer/:id',pathMatch:'full'},
+  {path: 'subjects' , redirectTo:'/subjects',pathMatch:'full'},
+  {path: 'createsubject' , redirectTo:'/createsubject',pathMatch:'full'},
+  {path: 'editsubject/:id' , redirectTo:'/editsubject/:id',pathMatch:'full'},
+  {path: 'extensions' , redirectTo:'/extensions',pathMatch:'full'},
+  {path: 'createextension' , redirectTo:'/createextension',pathMatch:'full'},
+  {path: 'editextension/:id' , redirectTo:'/editextension/:id',pathMatch:'full'},
+  {path: 'reports' , redirectTo:'/reports',pathMatch:'full'},
+  {path: 'porfile' , redirectTo:'/porfile',pathMatch:'full'},
+  {path: 'academicloadlist' , redirectTo:'/academicloadlist',pathMatch:'full'},
+  {path: 'config' , redirectTo:'/config',pathMatch:'full'},
+  {path: 'scheduleteacher' , redirectTo:'/scheduleteacher',pathMatch:'full'},
+  {path: 'porfileteacher' , redirectTo:'/porfileteacher',pathMatch:'full'},
+  {path: 'academicloadteacher' , redirectTo:'/academicloadteacher',pathMatch:'full'},
+  {path: 'editcacademicload' , redirectTo:'/editcacademicload',pathMatch:'full'},
+  {path: 'forgotpassword' , redirectTo:'/forgotpassword',pathMatch:'full'},
 
+  {path: 'loginteacher' , redirectTo:'/loginteacher',pathMatch:'full'},
+  {path: 'activate/:type/:token/:id/:action' , redirectTo:'/confirmemail/:type/:token/:id/:action',pathMatch:'full'},
+  {path: 'reset/:type/:token/:id/:action' , redirectTo:'/resetpassword/:type/:token/:id/:action',pathMatch:'full'},
+  /*Routes*/
+  {
+    path:'login',
+    component: LoginComponent,
+    pathMatch: 'full',
+    canActivate: [GuestGuard]
+  },
+  {
+    path:'logout',
+    component: LogoutComponent
+  },
+  //Admin
+  {
+    path:'users',
+    component: UsersComponent,
+    canActivate: [AdminGuard]
+  },
+  {
+    path:'createuser',
+    component: CreateUserComponent,
+    canActivate: [AdminGuard]
+
+  },
+  {
+    path:'edituser/:id',
+    component: EditUserComponent,
+    canActivate: [AdminGuard]
+  },
+  {
+    path:'teachers',
+    component: TeachersComponent,
+    canActivate: [AdminGuard]
+
+  },
+  {
+    path:'createteacher',
+    component: CreateTeacherComponent,
+    canActivate: [AdminGuard]
+
+  },
+  {
+    path:'editteacher/:id',
+    component: EditTeacherComponent,
+    canActivate: [AdminGuard]
+
+  },
+  {
+    path:'carers',
+    component: CarersComponent,
+    canActivate: [AdminGuard]
+
+  },
+  {
+    path:'createcarer',
+    component: CreateCarersComponent,
+    canActivate: [AdminGuard]
+
+  },
+  {
+    path:'editcarer/:id',
+    component: EditCarersComponent,
+    canActivate: [AdminGuard]
+
+  },
+  {
+    path:'subjects',
+    component: SubjectsComponent,
+    canActivate: [AdminGuard]
+
+  },
+  {
+    path:'createsubject',
+    component: CreateSubjectComponent,
+    canActivate: [AdminGuard]
+
+  },
+  {
+    path:'editsubject/:id',
+    component: EditSubjectComponent,
+    canActivate: [AdminGuard]
+
+  },
+  {
+    path:'extensions',
+    component: ExtensionsComponent,
+    canActivate: [AdminGuard]
+  },
+  {
+    path:'createextension',
+    component: CreateExtensionsComponent,
+    canActivate: [AdminGuard]
+  },
+  {
+    path:'editextension/:id',
+    component: EditextensionComponent,
+    canActivate: [AdminGuard]
+  },
+  {
+    path:'reports',
+    component: ReportsComponent,
+    canActivate: [AdminGuard,UserGuard]
+  },
+  {
+    path:'porfile',
+    component: PorfileComponent,
+    canActivate: [AdminGuard,UserGuard]
+  },
+  {
+    path:'academicloadlist',
+    component: AcademicloadlistComponent,
+    canActivate: [AdminGuard]
+  },
+  {
+    path:'config',
+    component: ConfigsComponent,
+    canActivate: [AdminGuard]
+  },
+  //teacher
+  {
+    path:'hometeacher',
+    component: HomeTeacherComponent,
+    canActivate: [TeacherGuard]
+  },
+  {
+    path:'scheduleteacher',
+    component: ScheduleTeacherComponent,
+    canActivate: [TeacherGuard]
+  },
+  {
+    path:'porfileteacher',
+    component: PorfileTeacherComponent,
+    canActivate: [TeacherGuard]
+  },
+  {
+    path:'academicloadteacher',
+    component: AcademicloadTeacherComponent,
+    canActivate: [TeacherGuard]
+  },
+  {
+    path:'loginteacher',
+    component: LoginteacherComponent,
+
+  },
+  {
+    path:'editcacademicload',
+    component: EditacademicloadComponent,
+
+  },
+  //users
+
+  //shared
+  {
+    path:'confirmemail/:type/:token/:id/:action',
+    component: ConfirmemailComponent,
+    canActivate: [ValidGuard]
+  },
+  {
+    path:'resetpassword/:type/:token/:id/:action',
+    component: ResetpasswordComponent,
+    canActivate: [ValidGuard]
+  },
+  {
+    path:'forgotpassword',
+    component: ForgotpasswordComponent,
+    canActivate: [ValidGuard]
+  }
+
+  ]
 @NgModule({
   declarations: [
     AppComponent,
@@ -110,6 +308,7 @@ import { FooterComponent } from './components/shared/footer/footer.component';
     LoaderComponent,
     FooterComponent,
   ],
+
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -120,205 +319,9 @@ import { FooterComponent } from './components/shared/footer/footer.component';
     NgxPaginationModule,
     ReactiveFormsModule,
     PopoverModule,
-    RouterModule.forRoot([
-      /*Redirects*/
-    {path: '' , redirectTo:'/login',pathMatch:'full'},
-    {path: 'users' , redirectTo:'/users',pathMatch:'full'},
-    {path: 'createuser' , redirectTo:'/createuser',pathMatch:'full'},
-    {path: 'edituser/:id' , redirectTo:'/edituser/:id',pathMatch:'full'},
-    {path: 'teachers' , redirectTo:'/teachers',pathMatch:'full'},
-    {path: 'editteacher/:id' , redirectTo:'/editteacher/:id',pathMatch:'full'},
-    {path: 'carers' , redirectTo:'/carers',pathMatch:'full'},
-    {path: 'createcarer' , redirectTo:'/createcarer',pathMatch:'full'},
-    {path: 'editcarer/:id' , redirectTo:'/editcarer/:id',pathMatch:'full'},
-    {path: 'subjects' , redirectTo:'/subjects',pathMatch:'full'},
-    {path: 'createsubject' , redirectTo:'/createsubject',pathMatch:'full'},
-    {path: 'editsubject/:id' , redirectTo:'/editsubject/:id',pathMatch:'full'},
-    {path: 'extensions' , redirectTo:'/extensions',pathMatch:'full'},
-    {path: 'createextension' , redirectTo:'/createextension',pathMatch:'full'},
-    {path: 'editextension/:id' , redirectTo:'/editextension/:id',pathMatch:'full'},
-    {path: 'reports' , redirectTo:'/reports',pathMatch:'full'},
-    {path: 'porfile' , redirectTo:'/porfile',pathMatch:'full'},
-    {path: 'academicloadlist' , redirectTo:'/academicloadlist',pathMatch:'full'},
-    {path: 'config' , redirectTo:'/config',pathMatch:'full'},
-    {path: 'scheduleteacher' , redirectTo:'/scheduleteacher',pathMatch:'full'},
-    {path: 'porfileteacher' , redirectTo:'/porfileteacher',pathMatch:'full'},
-    {path: 'academicloadteacher' , redirectTo:'/academicloadteacher',pathMatch:'full'},
-    {path: 'editcacademicload' , redirectTo:'/editcacademicload',pathMatch:'full'},
-    {path: 'forgotpassword' , redirectTo:'/forgotpassword',pathMatch:'full'},
-
-    {path: 'loginteacher' , redirectTo:'/loginteacher',pathMatch:'full'},
-    {path: 'activate/:type/:token/:id/:action' , redirectTo:'/confirmemail/:type/:token/:id/:action',pathMatch:'full'},
-    {path: 'reset/:type/:token/:id/:action' , redirectTo:'/resetpassword/:type/:token/:id/:action',pathMatch:'full'},
-    /*Routes*/
-    {
-      path:'login',
-      component: LoginComponent,
-      pathMatch: 'full',
-      canActivate: [GuestGuard]
-    },
-    {
-      path:'logout',
-      component: LogoutComponent
-    },
-    //Admin
-    {
-      path:'users',
-      component: UsersComponent,
-      canActivate: [AdminGuard]
-    },
-    {
-      path:'createuser',
-      component: CreateUserComponent,
-      canActivate: [AdminGuard]
-
-    },
-    {
-      path:'edituser/:id',
-      component: EditUserComponent,
-      canActivate: [AdminGuard]
-    },
-    {
-      path:'teachers',
-      component: TeachersComponent,
-      canActivate: [AdminGuard]
-
-    },
-    {
-      path:'createteacher',
-      component: CreateTeacherComponent,
-      canActivate: [AdminGuard]
-
-    },
-    {
-      path:'editteacher/:id',
-      component: EditTeacherComponent,
-      canActivate: [AdminGuard]
-
-    },
-    {
-      path:'carers',
-      component: CarersComponent,
-      canActivate: [AdminGuard]
-
-    },
-    {
-      path:'createcarer',
-      component: CreateCarersComponent,
-      canActivate: [AdminGuard]
-
-    },
-    {
-      path:'editcarer/:id',
-      component: EditCarersComponent,
-      canActivate: [AdminGuard]
-
-    },
-    {
-      path:'subjects',
-      component: SubjectsComponent,
-      canActivate: [AdminGuard]
-
-    },
-    {
-      path:'createsubject',
-      component: CreateSubjectComponent,
-      canActivate: [AdminGuard]
-
-    },
-    {
-      path:'editsubject/:id',
-      component: EditSubjectComponent,
-      canActivate: [AdminGuard]
-
-    },
-    {
-      path:'extensions',
-      component: ExtensionsComponent,
-      canActivate: [AdminGuard]
-    },
-    {
-      path:'createextension',
-      component: CreateExtensionsComponent,
-      canActivate: [AdminGuard]
-    },
-    {
-      path:'editextension/:id',
-      component: EditextensionComponent,
-      canActivate: [AdminGuard]
-    },
-    {
-      path:'reports',
-      component: ReportsComponent,
-      canActivate: [AdminGuard,UserGuard]
-    },
-    {
-      path:'porfile',
-      component: PorfileComponent,
-      canActivate: [AdminGuard,UserGuard]
-    },
-    {
-      path:'academicloadlist',
-      component: AcademicloadlistComponent,
-      canActivate: [AdminGuard]
-    },
-    {
-      path:'config',
-      component: ConfigsComponent,
-      canActivate: [AdminGuard]
-    },
-    //teacher
-    {
-      path:'hometeacher',
-      component: HomeTeacherComponent,
-      canActivate: [TeacherGuard]
-    },
-    {
-      path:'scheduleteacher',
-      component: ScheduleTeacherComponent,
-      canActivate: [TeacherGuard]
-    },
-    {
-      path:'porfileteacher',
-      component: PorfileTeacherComponent,
-      canActivate: [TeacherGuard]
-    },
-    {
-      path:'academicloadteacher',
-      component: AcademicloadTeacherComponent,
-      canActivate: [TeacherGuard]
-    },
-    {
-      path:'loginteacher',
-      component: LoginteacherComponent,
-
-    },
-    {
-      path:'editcacademicload',
-      component: EditacademicloadComponent,
-
-    },
-    //users
-
-    //shared
-    {
-      path:'confirmemail/:type/:token/:id/:action',
-      component: ConfirmemailComponent,
-      canActivate: [ValidGuard]
-    },
-    {
-      path:'resetpassword/:type/:token/:id/:action',
-      component: ResetpasswordComponent,
-      canActivate: [ValidGuard]
-    },
-    {
-      path:'forgotpassword',
-      component: ForgotpasswordComponent,
-      canActivate: [ValidGuard]
-    }
-
-
-    ])
+    RouterModule.forRoot(
+    routes,  { useHash: true },
+    )
   ],
   providers: [AuthService, UserService, TeacherService, AuthGuard,AdminGuard,UserGuard,TeacherGuard,ValidGuard,GuestGuard],
   bootstrap: [AppComponent]
