@@ -11,26 +11,10 @@
      */
     public function getTeachers($values){
       return $this->Call('getTeachers',$values,true);
-      // $sql = "SELECT * FROM View_Teachers WHERE NOT status = '0'" ;
-      // $stmt = $this->connect()
-      // ->query($sql);
-      // $fetch = array();
-      // while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-      //     $fetch[] = $row;
-      // }
-      // $this->closeConnection();
-      // return  json_encode($fetch);
     }
     public function getTeacher($id){
       $values = ['id' => $id];
       return $this->getFirst('View_Teachers', "WHERE codeTeacher = :id", $values );
-      // $sql = "SELECT * FROM View_Teachers WHERE codeTeacher = :id";
-      // $stmt = $this->connect()->prepare($sql);
-      // $stmt->bindParam(':id',$id,PDO::PARAM_STR);
-      // $stmt->execute();
-      // $row = $stmt->fetch(PDO::FETCH_ASSOC);
-      // $this->closeConnection();
-      // return  json_encode($row);
     }
     public function getSelect($ex){
       $sql = "SELECT name,codeTeacher FROM Teachers WHERE Extensions_idExtension = :ex";
@@ -94,13 +78,8 @@
      */
     public function validateEmail($data){
       session_start();
-
-        $code = $_SESSION['id'];
-        $email = $data;
-
-
-
-
+      $code = $_SESSION['id'];
+      $email = $data;
       $sql = "SELECT email FROM View_Teachers WHERE codeTeacher = :id";
       $stmt = $this->connect()->prepare($sql);
       $stmt->bindParam(':id',$code,PDO::PARAM_STR);
@@ -304,14 +283,55 @@
       $values['password'] = $encrypt;
       $token = bin2hex(random_bytes(25));
       $token = $token;
-      $values['token'] = '__token'.$token;
+      $values['token'] = '_token$'.$token;
       $sql = 'INSERT INTO Teachers (codeTeacher,name,lastname,type,password,email,phone,genere,fingerRoute,Extensions_idExtension,token)
       VALUES (:code,:name,:lastname,:type,:password,:email,:phone,:genere,:fingerRoute,:extension,:token)';
       $stmt = $this->connect()->prepare($sql);
-      if ($stmt->execute($values))
-        $resp = true;
-      $this->closeConnection();
-      return json_encode($resp);
+      if ($stmt->execute($values)){
+        require_once('Helpers.php');
+        $helper = new Helpers;
+        $type = 'teacher';
+        $email = $values['email'];
+        //$email = 'jorgeglez.alva94@gmail.com';
+        $url = 'http://clock.malastareas.com/'.$type.'/'.$token.'/'.$email.'/activate'; // url for activate email
+        /* html message*/
+        $body = '
+          <img src="./Classes/public/images/logocc.png"  alt="imagen..."  style=" width: 150px;">
+          <h3 style="font-family: Arial;">Bienvenid@: '.$values['name'].' '.$values['lastname'].' a la plataforma!</h3>
+          <p style="font-family: Arial;"><b>Correo:</b> '.$values['email'].'</p>
+          <p style="font-family: Arial;">Si este no es tu correo haz caso omiso de este este correo y contactate con el administrador de la plataforma para que cambie el correo.</p>
+          <p style="font-family: Arial;">Para poder activar tu cuenta es necesario validar tu correo, haz clic en el siguiente boton para ser enviado a la pagina de activacion.</p>
+          <a href="'.$url.'"
+          style="
+          text-decoration: none;
+          background-color: #28a745;
+          border-color: #1e7e34;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+          border: 1px solid transparent;
+          color: white;
+          font-weight: 400;
+          text-align: center;
+          white-space: nowrap;
+          vertical-align: middle;
+          padding: .600rem .85rem;
+          font-size: 1rem;
+          line-height: 1.5;
+          border-radius: .25rem;
+          transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+              "
+          >Activar cuenta</a>
+        ';
+        $resp = $helper->sendMail($email,'Activar email',$body);
+      }
+      else
+        $resp = false;
+
+      // $resp = true;
+      $this->closeConnection(); //close conection
+      return json_encode($resp); //return response
     }
     private function sendConfirmEmail($to,$type,$token,$id){
       $from = "test@hostinger-tutorials.com";

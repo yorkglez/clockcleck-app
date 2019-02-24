@@ -39,15 +39,15 @@
      * @return [type]          [description]
      */
      public function sendMail($emailTo,$subject,$body){
-       require('././libs/PHPMailer/src/PHPMailer.php');
-       require('././libs/PHPMailer/src/SMTP.php');
-       require('././libs/PHPMailer/src/Exception.php');
-       require('././libs/PHPMailer/src/OAuth.php');
+       require('../../libs/PHPMailer/src/PHPMailer.php');
+       require('../../libs/PHPMailer/src/SMTP.php');
+       require('../../libs/PHPMailer/src/Exception.php');
+       require('../../libs/PHPMailer/src/OAuth.php');
        $mail = new PHPMailer\PHPMailer\PHPMailer();   // Passing `true` enables exceptions
        $emailFrom = 'clockcheck@malastareas.com';
        try {
          /*Server settings*/
-         $mail->SMTPDebug = 2;                                 // Enable verbose debug output
+         //$mail->SMTPDebug = 2;                                 // Enable verbose debug output
          $mail->isSMTP();                                      // Set mailer to use SMTP
          $mail->Host = 'mail.malastareas.com ';  // Specify main and backup SMTP servers
          $mail->SMTPAuth = true;                               // Enable SMTP authentication

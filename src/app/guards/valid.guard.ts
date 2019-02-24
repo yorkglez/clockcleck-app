@@ -55,7 +55,7 @@ export class ValidGuard implements CanActivate {
       /*Call function isLoggedIn from service*/
       return this._authService.verifyToken(type,token, id, action).pipe(map(resp=> {
         if(resp && localStorage.length == 1)
-        return true
+          return true
         else if(localStorage.getItem('type') == 'admin'){
           this.router.navigate(['users']) // rederect to user
           return false
@@ -67,6 +67,10 @@ export class ValidGuard implements CanActivate {
         else if(localStorage.getItem('type') == 'teacher'){
           this.router.navigate(['porfileteacher']) // rederect to porfile
           return false
+        }
+        else{
+          this.router.navigate(['login'])
+          return false;
         }
         // return true
       }))

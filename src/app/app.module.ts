@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
 
-import {RouterModule} from '@angular/router';
+import {RouterModule, Route} from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';
 
 import { ReactiveFormsModule, FormsModule} from '@angular/forms';
@@ -121,9 +121,14 @@ import { FooterComponent } from './components/shared/footer/footer.component';
     ReactiveFormsModule,
     PopoverModule,
     RouterModule.forRoot([
+    {path: '' , redirectTo:'/login',pathMatch:'full'},
+    {path: 'loginteacher' , redirectTo:'/loginteacher',pathMatch:'full'},
+    {path: 'activate/:type/:token/:id/:action' , redirectTo:'/confirmemail/:type/:token/:id/:action',pathMatch:'full'},
+    {path: 'reset/:type/:token/:id/:action' , redirectTo:'/resetpassword/:type/:token/:id/:action',pathMatch:'full'},
     {
-      path:'',
+      path:'login',
       component: LoginComponent,
+      pathMatch: 'full',
       canActivate: [GuestGuard]
     },
     {
