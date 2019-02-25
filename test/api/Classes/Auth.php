@@ -159,7 +159,6 @@
         $stmt->bindParam(':password',$encrypt);
         $stmt->bindParam(':id',$id);
         $stmt->bindParam(':action',$action);
-
         if($stmt->execute())
           $resp = true;
         $this->closeConnection();
@@ -183,7 +182,7 @@
             $sql = "SELECT token FROM Teachers WHERE email = :id AND status = '1' AND validate = '1'"; //create sentence
         }
         /*If action is type validate*/
-        else if($action == 'validate'){
+        else if($action == 'activate'){
           /*validate user type*/
           if($userType == 'user')
             $sql = "SELECT token FROM Users WHERE email = :id AND status = '1' AND validate = '0'"; //create sentence

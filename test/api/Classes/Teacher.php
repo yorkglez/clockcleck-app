@@ -223,7 +223,7 @@
     }
     /*Automatic download finger file*/
     public function getFingerfile($fileName){
-      $path = 'C:/FingersServer/';
+      $path = '../../../Fingerfiles/';
         $fingerRoute = $path.$fileName.".fpt";
         if (file_exists($fingerRoute)) {
             $mm_type="application/octet-stream";
@@ -293,7 +293,7 @@
         $type = 'teacher';
         $email = $values['email'];
         //$email = 'jorgeglez.alva94@gmail.com';
-        $url = 'http://clock.malastareas.com/#/activate/'.$type.'/'.$token.'/'.$email.'/activate'; // url for activate email
+        $url = 'http://clock.malastareas.com/#/confirmemail/'.$type.'/'.$token.'/'.$email.'/activate'; // url for activate email
         /* html message*/
         $body = '
           <img src="../Classes/public/images/logocc.png"  alt="imagen..."  style=" width: 150px;">
