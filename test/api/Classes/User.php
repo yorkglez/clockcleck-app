@@ -28,7 +28,7 @@
         $helper = new Helpers;
         $type = 'user';
         $email = $values['email'];
-        $url = 'http://clock.malastareas.com/activate/'.$type.'/'.$token.'/'.$email.'/activate'; // url for activate email
+        $url = 'http://clock.malastareas.com/#/activate/'.$type.'/'.$token.'/'.$email.'/activate'; // url for activate email
         /* html message*/
         $body = '
           <img src="../Classes/public/images/logocc.png"  alt="imagen..."  style=" width: 150px;">
