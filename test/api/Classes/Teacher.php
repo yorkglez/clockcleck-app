@@ -223,10 +223,10 @@
     }
     /*Automatic download finger file*/
     public function getFingerfile($fileName){
-      $path = '../../../Fingerfiles/';
-        $fingerRoute = $path.$fileName.".fpt";
+        $fingerRoute = '../../../Fingerfiles/'.$fileName.'.rar';
         if (file_exists($fingerRoute)) {
             $mm_type="application/octet-stream";
+            header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found", true, 404);
             header("Pragma: public");
             header("Expires: 0");
             header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
