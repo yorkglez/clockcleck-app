@@ -76,20 +76,30 @@
       $stmt->execute();
       $this->config = $stmt->fetch(PDO::FETCH_ASSOC);
       $this->closeConnection();
-
       $startTime = strtotime($this->config['startTime']);
       $endTime = strtotime($this->config['endTime']);
       $durationModule = $this->config['durationModule'];
       $sbreakTime = $this->config['sbreakTime'];
       $durationBreak = $this->config['durationBreak'];
       $modules = (round(abs($endTime - $startTime) / 60) - $durationBreak) / $durationModule;
+
       for ($i=0; $i <$modules+2 ; $i++) {
+
         if(date("H:i",$startTime) ==  $sbreakTime){
           $endTime =  date("H:i", strtotime('+'.$durationBreak.' minutes', $startTime));
+          // echo $endTime;
+          if($sbreakTime < strtotime('12:00'))
+            $tm = ' AM';
+          else
+            $tm = ' PM';
+          $hour['value'] =   $sbreakTime;
+          $hour['hour'] =   $sbreakTime.$tm;
+          $fetch[] = $hour;
           $this->breakTime = ($i);
         }
         else{
           $endTime =  date("H:i", strtotime('+'.$durationModule.' minutes', $startTime));
+          // echo $endTime.'<br>';
           if($startTime < strtotime('12:00'))
             $tm = ' AM';
           else
@@ -104,6 +114,7 @@
           $hour['value'] = date("H:i",$startTime);
           $hour['hour'] = $st.$tm;
           //$hour = ;
+        //  echo $hour['hour'].'<br>';
           $fetch[] = $hour;
         }
         $startTime =  strtotime($endTime);
@@ -138,7 +149,7 @@
             $endTime = strtotime($row['endTime']);
             $modules = round(abs($endTime - $startTime) / 60)/50;
 
-            for ($i=0; $i <=$modules; $i++) {
+            for ($i=0; $i <$modules; $i++) {
               if($row['day'] == 'lunes'){
                 $index = $this->getindex_schedule(date("H:i",$startTime));
                 $list['lunes'][$index] = $row['subjectName'];
@@ -191,7 +202,7 @@
       $sbreakTime = $this->config['sbreakTime'];
       $durationBreak = $this->config['durationBreak'];
       $modules = (round(abs($endTime - $startTime) / 60) - $durationBreak) / $durationModule;
-      $index = 0;
+      $index = null;
       for ($i=0; $i <=$modules; $i++) {
           if($i != 0){
             $dt =  date("H:i", strtotime('+'.$durationModule.' minutes', $startTime));

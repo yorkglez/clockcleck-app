@@ -30,6 +30,9 @@ export class EditSubjectComponent implements OnInit {
   secCode: string = ''
   type: string
   message: string
+  oldcode: string
+  radio:boolean = false
+  isVisble:boolean
   constructor(private _subjectsService: SubjectsService,
               private activatedRoute:ActivatedRoute,
               private _helpersService: HelpersService,
@@ -48,6 +51,11 @@ export class EditSubjectComponent implements OnInit {
         this.model['code'] = data[0].codeSubject
         this.model['name'] = data[0].name
         this.model['credits'] = data[0].credits
+        /*validate if is squence subject*/
+        if(data[0].sequence == '1')
+          this.isVisble = true
+        if(data[1].codeSubject == null)
+          this.isVisble = false
         /* search subjects in list */
         for (let i = 1; i < data.length; i++)
           this.subjectsList.push(data[i]) //add subject to list
@@ -56,7 +64,7 @@ export class EditSubjectComponent implements OnInit {
   }
 
   showSequence(value){
-    if(value == 'true')
+    if(value)
       this.isSequence = true //show sequences subjects
     else
       this.isSequence = false //hide sequences subjects
@@ -104,7 +112,6 @@ export class EditSubjectComponent implements OnInit {
       }
       else
         this.secodeValid = true
-
     }
     else
       this.secodeValid = false
@@ -116,6 +123,7 @@ export class EditSubjectComponent implements OnInit {
       this.subjects['code'] = this.subjectsList[idx].codeSubject
       this.subjects['name'] = this.subjectsList[idx].name
       this.subjects['credits'] = this.subjectsList[idx].credits
+      this.oldcode = this.subjects['code']
   }
 
   updateItem(idx){
@@ -123,7 +131,24 @@ export class EditSubjectComponent implements OnInit {
     this.subjectsList[idx].codeSubject = this.subjects['code']
     this.subjectsList[idx].name = this.subjects['name']
     this.subjectsList[idx].credits = this.subjects['credits']
+    if(this.codeValid && this.secodeValid){
+      this._subjectsService.updateSubject(this.subjects,this.oldcode).subscribe(resp=>{
+        if(resp){
+          this.type  = "success"
+          this.message = 'La materia ha sido actualizada.'
+        }else{
+          this.type  = "error"
+          this.message = 'Ocurrio un error al gurdar.'
+        }
+        this.alertVisible = true
+        setTimeout(() => {
+        this.alertVisible = false
+      }, 1000)
+      })
+    }
+
     this.updateItems = false //hide update boton
+    this.subjects = {}
   }
 
   deleteItem(){
@@ -138,12 +163,25 @@ export class EditSubjectComponent implements OnInit {
   getId(idx){
     this.idx = idx
   }
+
+  addCharater(code){
+    if(code.length == 3)
+      this.model['code'] = code + '-'
+  }
+
+  addCharaterSq(code){
+    if(code != null){
+      if(code.length == 3)
+        this.subjects['code'] = code + '-'
+    }
+  }
+
   Save(form: NgForm){
     if(this.codeValid && this.secodeValid){
       this._subjectsService.updateSubject(this.model,this.id).subscribe(resp=>{
         if(resp){
           this.type  = "success"
-          this.message = 'La materia ha sido actualizada, volver a '
+          this.message = 'La materia ha sido actualizada.'
         }else{
           this.type  = "error"
           this.message = 'Ocurrio un error al gurdar.'

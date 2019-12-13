@@ -18,14 +18,16 @@
    // $carer =  '';
    // $subject = 50;
    //
+   if($subject == 'null')
+    $subject = 0;
    $values = [
-      'week' => $week,
+     'week' => $week,
      'ter' => '',
      'startDate' => $startDate,
      'endDate' => $endDate,
-     'code' =>$code,
+     'code' =>$code ,
      'extension'=>$extension,
-     'subject'=>$subject,
+     'subject'=> $subject 
    ];
   $report= new Report;
   $report->generateReportExcel($values);

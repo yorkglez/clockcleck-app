@@ -9,7 +9,7 @@
       session_start();
       $id =  $_SESSION['id'];
       $values = ['id' => $id];
-      return $this->getData('Users','WHERE NOT idUser = :id',$values);
+      return $this->getData('View_Users','WHERE NOT idUser = :id',$values);
     }
 
     public function createUser($values){
@@ -130,12 +130,14 @@
           $stmt = $this->connect()->prepare($sql);
       }
       $stmt->execute();
-      $fetch = array();
-      while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-          $fetch[] = $row;
+      if($stmt->rowCount() > 0){
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC))
+            $fetch[] = $row;
       }
-      return  json_encode($fetch);
+      else
+        $fetch = false;
       $this->closeConnection();
+      return  json_encode($fetch);
     }
     /**
      * [getPorfile description]

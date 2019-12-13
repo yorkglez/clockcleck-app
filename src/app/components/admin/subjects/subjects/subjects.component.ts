@@ -22,6 +22,7 @@ export class SubjectsComponent implements OnInit {
   subjects= []
   subject:any[]
   alertVisible: boolean = false
+  isLoader: boolean = false
   type: string
   message: string
   // rowCont: number
@@ -34,6 +35,8 @@ export class SubjectsComponent implements OnInit {
     }
 
   ngOnInit() {
+    this._loaderService.display(true)
+    this.isLoader = true
     this.getSubjects('1','','all')
   }
 
@@ -47,8 +50,8 @@ export class SubjectsComponent implements OnInit {
   }
 
   getSubjects(status, ter, sequence){
-   this._loaderService.display(true)
-    this.searchAlert = false
+   // this._loaderService.display(true)
+   //  this.searchAlert = false
     this._subjectsService.getSubjects(status,ter, sequence).subscribe(data=>{
       if(!data && ter != ''){
         this.searchAlert = true
@@ -57,9 +60,13 @@ export class SubjectsComponent implements OnInit {
       }
       else if(!data && ter =='')
         this.subjects = []
-      else
-        this.subjects = data
-        this._loaderService.display(false)
+      else{
+          this.subjects = data
+          this.searchAlert = false
+      }
+
+      this._loaderService.display(false)
+      this.isLoader = false
      })
   }
   showBy(status, ter, type){

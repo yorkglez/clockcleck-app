@@ -10,7 +10,9 @@
 
    require('../../libs/fpdf/fpdf.php');
    require_once('Connection.php');
+   // require_once('Report.php');
    date_default_timezone_set('America/Mexico_City');
+  // class Aux extends Report{}
   class Report extends Connection
   {
       /**
@@ -18,6 +20,8 @@
        * @param  [type] $values [description]
        * @return [type]         [description]
        */
+       // use PhpOffice\PhpSpreadsheet\Spreadsheet;
+       // use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
       public function getReports($values){
         $sql = "CALL getReports(:week,:ter,:startDate,:endDate,:code,:extension,:subject)";//create sentence
         $stmt = $this->connect()->prepare($sql); //prepare sentence
@@ -46,41 +50,62 @@
        * @return [type]         [description]
        */
       public function generateReportExcel($values){
-        $reportType = 'docente'; //reporte type
+      /*get report type*/
+       if($values['code'] != 'null' AND $values['subject'] != 0)
+         $reportType = 'materia'; //reporte type
+       if($values['code'] != 'null' AND $values['subject'] == 0)
+         $reportType = 'docente'; //reporte type
+       if($values['code'] == 'null' AND $values['subject'] == 0)
+         $reportType = 'general'; //reporte type
         /*call class sheet*/
         $spreadsheet = new Spreadsheet(); //Call class
         $spreadsheet->setActiveSheetIndex(0);
         $sheet = $spreadsheet->getActiveSheet(); //Activate sheet
+        // $sheet->setChellValue();
         /*Get teacher name*/
-        // $value = ['code' => '1414'];
-        $value = ['code' => $values['code']];
-        $teacher = json_decode($this->getFirst('Teachers','WHERE codeTeacher =:code',$value));
-        $teacherName = $teacher->name;
-        $teacherName  = $teacherName.' '.$teacher->lastname;
+        if($reportType != 'general'){
+          $value = ['code' => $values['code']];
+          $teacher = json_decode($this->getFirst('view_reports','WHERE codeTeacher =:code',$value));
+          $teacherName = $teacher->nameTeacher;
+          $dep = $teacher->alias;
+        }
+        else
+          $teacherName = 'General';
         /* Styles */
-        $styleTitle = array(
-          'font'  => array(
+        $styleTitle = [
+          'font'  => [
             'bold'  => true,
-            'color' => array('rgb' => '#000000'),
-            'size'  => 14,
+            'color' => ['rgb' => '#000000'],
+            'size'  => 11,
             'name'  => 'Arial'
-          ),
-          'alignment' => array(
-            'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-          )
-        );
-        $styleSubtitle = array(
-          'font'  => array(
-            'bold'  => false,
-            'color' => array('rgb' => '#000000'),
-            'size'  => 12,
+          ],
+          'alignment' => [
+            'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
+          ]
+        ];
+        /*Subtitle styles*/
+        $styleSubtitle = [
+          'font'  => [
+            'bold'  => true,
+            'color' => ['rgb' => '#000000'],
+            'size'  => 11,
             'name'  => 'Arial'
-          ),
-          'alignment' => array(
-            'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-          )
-        );
+          ],
+          'alignment' => [
+            'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
+          ]
+        ];
+        /*Style cells*/
         $styleCells = [
+          'borders' => [
+            'allBorders' => [
+              'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+              'color' => ['argb' => '#000000'],
+            ],
+          ],
+        ];
+        /*Style cell header*/
+        $styleCellsHeader = [
           'borders' => [
             'allBorders' => [
               'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
@@ -92,105 +117,252 @@
           'font'  => [
             'bold'  => true,
             'color' => array('rgb' => '#000000'),
-            'size'  => 12,
+            'size'  => 10,
             'name'  => 'Arial'
           ],
           'alignment' => [
             'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
           ]
         ];
-        /* Header doc */
-        $sheet->mergeCells('A1:I1'); //Combinate cells
-        $sheet->setCellValue('A1', 'INSTITUTO TECNOLOGICO JOSE MARIO MOLINA PASQUEL Y HENRIQUEZ'); //Set value cell
-        $sheet->getStyle('A1')->applyFromArray($styleTitle); //Apply styles
-        // $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); //Apply styles
-        $sheet->mergeCells('A2:H2'); //Combinate cells
-        $sheet->setCellValue('A2', 'Reporte De asistencia personal docente Campus Tala'); //Set value cell
-        $sheet->getStyle('A2')->applyFromArray($styleSubtitle); //Apply styles
-        $sheet->mergeCells('A3:H3'); //Combinate cells
-        if($values['week'] != 'null')
-          $sheet->setCellValue('A3', 'Periodo 2018 al 2019 '.$this->dataBetween($values['week']));
-        else
-          $sheet->setCellValue('A3', 'Periodo 2018 al 2019 typereport del '
-          .date("d-m-Y",strtotime($values['startDate'])).' al '.date("d-m-Y",strtotime($values['endDate'])));
-        $sheet->getStyle('A3')->applyFromArray($styleSubtitle); //Apply styles
-        $sheet->setCellValue('A4','Extension: '.$this->getExtensionName($values['extension'])); //Extension name
-        $sheet->mergeCells('A4:B4'); //Combinate cells
-        $sheet->setCellValue('C4','Tipo de reporte: Por '.$reportType);
-        $sheet->mergeCells('C4:E4'); //Combinate cells
-        $sheet->setCellValue('F4','Docente: '.$teacherName);
-        $sheet->mergeCells('F4:H4'); //Combinate cells
+
+        /*General report config*/
+        if($reportType == 'general'){
+          // $value = ['code' => $values['code']];
+          // $teacher = json_decode($this->getFirst('view_reports','WHERE codeTeacher =:code',$value));
+          // $teacherName = $teacher->nameTeacher;
+          // $dep = $teacher->alias;
+          /*Logo*/
+          $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+          $drawing ->setPath('../../public/images/tecmmlogo.png'); // put your path and image here
+          $drawing ->setCoordinates('A2');
+          $drawing ->setOffsetX(0);
+          $drawing ->setOffsetY(5);
+          $drawing ->getShadow()->setVisible(true);
+          $drawing ->setWorksheet($spreadsheet->getActiveSheet());
+          $sheet->mergeCells('A2:A5'); //Combinate cells
+          $sheet->getStyle('A2:I5')->applyFromArray($styleCellsHeader);
+          // /* Header doc */
+          $sheet->mergeCells('B2:I2'); //Combinate cells
+          $sheet->setCellValue('B2', 'INSTITUTO TECNOLOGICO JOSE MARIO MOLINA PASQUEL Y HENRIQUEZ'); //Set value cell
+          $sheet->getStyle('B2')->applyFromArray($styleTitle); //Apply styles
+          // $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); //Apply styles
+          $sheet->mergeCells('B3:H3'); //Combinate cells
+          $sheet->setCellValue('B3', 'Reporte de asistencia personal docente Campus Tala'); //Set value cell
+          $sheet->getStyle('B3')->applyFromArray($styleSubtitle); //Apply styles
+          $sheet->mergeCells('B4:H4'); //Combinate cells
+          if($values['week'] != 'null')
+            $sheet->setCellValue('B4', 'Periodo 2018 al 2019 '.$this->dataBetween($values['week']));
+          else
+            $sheet->setCellValue('B4', 'Periodo 2018 al 2019 personalizado del '
+            .date("d-m-Y",strtotime($values['startDate'])).' al '.date("d-m-Y",strtotime($values['endDate'])));
+          $sheet->getStyle('B4')->applyFromArray($styleSubtitle); //Apply styles
+          $sheet->setCellValue('B5','Extension: '.$this->getExtensionName($values['extension'])); //Extension name
+          $sheet->mergeCells('B5:E5'); //Combinate cells
+          $sheet->setCellValue('F5','Tipo de reporte: '.$reportType);
+          $sheet->mergeCells('F5:I5'); //Combinate cells
+          /*Header table*/
+          $sheet->setCellValue('A7', 'Departamento');
+          $sheet->mergeCells('A7:A8'); //Combinate cells
+          $sheet->setCellValue('B7', 'Docente');
+          $sheet->mergeCells('B7:B8'); //Combinate cells
+          $sheet->setCellValue('C7', 'Tipo');
+          $sheet->mergeCells('C7:C8'); //Combinate cells
+          $sheet->setCellValue('D7', 'Hora');
+          $sheet->mergeCells('D7:E7'); //Combinate cells
+          /*Table header*/
+          $sheet->setCellValue('D8', 'Entrada');
+          $sheet->setCellValue('E8', 'Salida');
+          $sheet->setCellValue('F7', 'Localidad');
+          $sheet->setCellValue('F8', 'Grupo');
+          $sheet->setCellValue('G7', 'Asistencia');
+          $sheet->mergeCells('G7:G8'); //Combinate cells
+          $sheet->setCellValue('H7', 'Nota');
+          $sheet->mergeCells('H7:H8'); //Combinate cells
+          $sheet->setCellValue('I7', 'Tema/Actividad');
+          $sheet->mergeCells('I7:I8'); //Combinate cells
+          $sheet->setCellValue('J7', 'Materia');
+          $sheet->mergeCells('J7:J8'); //Combinate cells
+          $sheet->setCellValue('K7', 'Total de horas');
+          $sheet->mergeCells('K7:K8'); //Combinate cells
+          $sheet->getStyle('A7:K8')->applyFromArray($styleHeader); //Apply styles
+        }
+        /*Report config*/
+        else{
+          $value = ['code' => $values['code']];
+          $teacher = json_decode($this->getFirst('view_reports','WHERE codeTeacher =:code',$value));
+          $teacherName = $teacher->nameTeacher;
+          $dep = $teacher->alias;
+          /*Logo*/
+          $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+          $drawing ->setPath('../../public/images/tecmmlogo.png'); // put your path and image here
+          $drawing ->setCoordinates('A2');
+          $drawing ->setOffsetX(0);
+          $drawing ->setOffsetY(5);
+          $drawing ->getShadow()->setVisible(true);
+          $drawing ->setWorksheet($spreadsheet->getActiveSheet());
+          // // /* Cells format */
+          $sheet->mergeCells('A2:B5'); //Combinate cells
+          $sheet->getStyle('A2:I5')->applyFromArray($styleCellsHeader);
+          // /* Header doc */
+          $sheet->mergeCells('C2:I2'); //Combinate cells
+          $sheet->setCellValue('C2', 'INSTITUTO TECNOLOGICO JOSE MARIO MOLINA PASQUEL Y HENRIQUEZ'); //Set value cell
+          $sheet->getStyle('C2')->applyFromArray($styleTitle); //Apply styles
+          // // $sheet->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); //Apply styles
+          $sheet->mergeCells('C3:H3'); //Combinate cells
+          $sheet->setCellValue('C3', 'Reporte de asistencia personal docente Campus Tala'); //Set value cell
+          $sheet->getStyle('C3')->applyFromArray($styleSubtitle); //Apply styles
+          $sheet->mergeCells('C4:H4'); //Combinate cells
+          if($values['week'] != 'null')
+            $sheet->setCellValue('C4', 'Periodo del 2019 '.$this->dataBetween($values['week']));
+          else
+            $sheet->setCellValue('C4', 'Periodo personalizado del '
+            .date("d-m-Y",strtotime($values['startDate'])).' al '.date("d-m-Y",strtotime($values['endDate'])));
+          $sheet->getStyle('C4')->applyFromArray($styleSubtitle); //Apply styles
+          /*Report type docente and materia*/
+          // $sheet->setCellValue('A7', 'Tipo');
+          // $sheet->mergeCells('A7:A8'); //Combinate cells
+          $sheet->setCellValue('A7', 'Hora');
+          $sheet->mergeCells('A7:B7'); //Combinate cells
+          /*Table header*/
+          $sheet->setCellValue('A8', 'Entrada');
+          $sheet->setCellValue('B8', 'Salida');
+          $sheet->setCellValue('C7', 'Localidad');
+          $sheet->setCellValue('C8', 'Grupo');
+          $sheet->setCellValue('D7', 'Asistencia');
+          $sheet->mergeCells('D7:D8'); //Combinate cells
+          $sheet->setCellValue('E7', 'Nota');
+          $sheet->mergeCells('E7:E8'); //Combinate cells
+          $sheet->setCellValue('F7', 'Tema/Actividad');
+          $sheet->mergeCells('F7:F8'); //Combinate cells
+          /*Report type docente*/
+          if($reportType == 'docente'){
+            /*Header*/
+            $sheet->setCellValue('C5','Extension: '.$this->getExtensionName($values['extension'])); //Extension name
+            $sheet->mergeCells('C5:D5'); //Combinate cells
+            $sheet->setCellValue('E5','Tipo de reporte: por '.$reportType);
+            $sheet->mergeCells('E5:F5'); //Combinate cells
+            $sheet->setCellValue('G5','Docente: '.$teacherName);
+            $sheet->mergeCells('G5:H5'); //Combinate cells
+            $sheet->setCellValue('I5','Departamento: '.$dep);
+            // $sheet->mergeCells('H5:I5'); //Combinate cells
+            /*Header table*/
+            $sheet->setCellValue('G7', 'Materia');
+            $sheet->mergeCells('G7:G8'); //Combinate cells
+            $sheet->setCellValue('H7', 'Total de horas');
+            $sheet->mergeCells('H7:H8'); //Combinate cellsI
+            $sheet->getStyle('A7:H8')->applyFromArray($styleHeader); //Apply styles
+          }
+          /*Report type materia*/
+          else if($reportType == 'materia'){
+            /*Header*/
+            $sheet->setCellValue('C5','Extension: '.$this->getExtensionName($values['extension'])); //Extension name
+            $sheet->mergeCells('C5:D5'); //Combinate cells
+            $sheet->setCellValue('E5','Tipo de reporte: por '.$reportType);
+            $sheet->mergeCells('E5:F5'); //Combinate cells
+            $sheet->setCellValue('G5','Docente: '.$teacherName);
+            $sheet->mergeCells('G5:H5'); //Combinate cells
+            $sheet->setCellValue('I5','Departamento: '.$dep);
+            $sb = ['code'=>$values['subject']];
+            $subjectName = json_decode($this->getFirst('viewsbName','WHERE idSubjectlist =:code',$sb));
+            $sheet->setCellValue('G06','Materia: '.$subjectName->name);
+            $sheet->mergeCells('G6:I6'); //Combinate cells
+            // /*Header table */
+            $sheet->setCellValue('G7', 'Total de horas');
+            $sheet->mergeCells('G7:G8'); //Combinate cells
+            $sheet->getStyle('A7:G8')->applyFromArray($styleHeader); //Apply styles
+          }
+        }
         /* Date & time  */
-        $sheet->setCellValue('I2','Fecha: '.$this->getDatetimeNow('date'));
-        // $sheet->mergeCells('I2:J2'); //Combinate cells2
-        $sheet->setCellValue('I3','Hora: '.$this->getDatetimeNow('time'));
-        // $sheet->mergeCells('I3:J3'); //Combinate cells
-        /* Header table */
-        $sheet->setCellValue('A6', 'Departamento');
-        $sheet->mergeCells('A6:A7'); //Combinate cells
-        $sheet->setCellValue('B6', 'Docente');
-        $sheet->mergeCells('B6:B7'); //Combinate cells
-        // $sheet->getColumnDimension('A')->setAutoSize(true);
-        $sheet->setCellValue('C6', 'Hora');
-        $sheet->mergeCells('C6:D6'); //Combinate cells
-        // $sheet->mergeCells('E5:D5'); //Combinate cells
-        /*Table header*/
-        $sheet->setCellValue('C7', 'Entrada');
-        $sheet->setCellValue('D7', 'Salida');
-        $sheet->setCellValue('E7', 'Grupo');
-        $sheet->setCellValue('E6', 'Localidad');
-        $sheet->setCellValue('F6', 'Asistencia');
-        $sheet->mergeCells('F6:F7'); //Combinate cells
-        $sheet->setCellValue('G6', 'Tema/Actividad');
-        $sheet->mergeCells('G6:G7'); //Combinate cells
-        /*header for docente type*/
-        if($reportType == 'docente'){
-          $sheet->setCellValue('H6', 'Materia');
-          $sheet->mergeCells('H6:H7'); //Combinate cells
-          $sheet->setCellValue('I6', 'Total de horas');
-          $sheet->mergeCells('I6:I7'); //Combinate cells
-          $sheet->getStyle('A6:I7')->applyFromArray($styleHeader); //Apply styles
-        }
-        else if($reportType == 'materia'){
-          $sheet->setCellValue('H6', 'Total de horas');
-          $sheet->mergeCells('H6:H7'); //Combinate cells
-          $sheet->getStyle('A6:H7')->applyFromArray($styleHeader); //Apply styles
-        }
+        $sheet->setCellValue('I3','Fecha: '.$this->getDatetimeNow('date'));
+        $sheet->setCellValue('I4','Hora: '.$this->getDatetimeNow('time'));
         /* Get report form database*/
         $reports = $this->getReports($values); //get report and cover to array
-        $i = 8; // columns numbers
+        // print_r($values);
+        $i = 9; // columns numbers
         /* get data from database */
         foreach ($reports as $row) {
-          $sheet->setCellValue('A'.$i, $row['alias']);  //Departamento
-          $sheet->setCellValue('B'.$i, 'hello World!');  //Docente type
-          $sheet->setCellValue('C'.$i, $row['checkEntry']);  //Etrada
-          $sheet->setCellValue('D'.$i, $row['checkEnd']);  // Salida
-          $sheet->setCellValue('E'.$i, $row['grade']);   // Grupo
-          $sheet->setCellValue('F'.$i, $row['type']); //Assitencia
-          $sheet->setCellValue('G'.$i, $row['topic']); //Tema
-          $sheet->setCellValue('H'.$i, $row['nameSubject']); //Materia
           /*get total hours*/
           $stTime = strtotime($row['checkEntry']);
           $enTime = strtotime($row['checkEnd']);
           $total = round((abs($stTime-$enTime) / 60)/50);
-          $sheet->setCellValue('I'.$i,  $total); //Materia
+          $sheet->setCellValue('A'.$i, $row['alias']);  //Departamento
+          // $sheet->setCellValue('B'.$i, $row['teacherType']);  //Docente type
+          if($reportType == 'general'){
+            $sheet->setCellValue('B'.$i, $row['nameTeacher']);  //Docente type
+            $sheet->setCellValue('C'.$i, $row['teacherType']);  //Docente type
+            $sheet->setCellValue('D'.$i, $row['checkEntry']);  //Etrada
+            $sheet->setCellValue('E'.$i, $row['checkEnd']);  // Salida
+            $sheet->setCellValue('F'.$i, $row['grade']);   // Grupo
+            $sheet->setCellValue('G'.$i, $row['type']); //Assitencia
+            $sheet->setCellValue('H'.$i, $row['notes']); //Assitencia
+            $sheet->setCellValue('I'.$i, $row['topic']); //Tema
+            $sheet->setCellValue('J'.$i, $row['nameSubject']); //Materia
+            $sheet->setCellValue('K'.$i,  $total); //Materia
+            $lastcell = 'K';
+          }
+          else if($reportType == 'docente'){
+            // $sheet->setCellValue('B'.$i, $row['teacherType']);  //Docente type
+            $sheet->setCellValue('A'.$i, $row['checkEntry']);  //Etrada
+            $sheet->setCellValue('B'.$i, $row['checkEnd']);  // Salida
+            $sheet->setCellValue('C'.$i, $row['grade']);   // Grupo
+            $sheet->setCellValue('D'.$i, $row['type']); //Assitencia
+            $sheet->setCellValue('E'.$i, $row['notes']); //Assitencia
+            // $sheet->setCellValue('F'.$i, 'Revision de presentacion de proyectos'); //Tema
+            $sheet->setCellValue('F'.$i, $row['topic']); //Tema
+            $sheet->setCellValue('G'.$i, $row['nameSubject']); //Materia
+            $sheet->setCellValue('H'.$i,  $total); //Materia
+            $lastcell = 'H';
+          }
+          else if($reportType == 'materia'){
+            // $sheet->setCellValue('B'.$i, $row['teacherType']);  //Docente type
+            $sheet->setCellValue('A'.$i, $row['checkEntry']);  //Etrada
+            $sheet->setCellValue('B'.$i, $row['checkEnd']);  // Salida
+            $sheet->setCellValue('C'.$i, $row['grade']);   // Grupo
+            $sheet->setCellValue('D'.$i, $row['type']); //Assitencia
+            // $sheet->setCellValue('E'.$i, $row['notes']); //Assitencia
+            $sheet->setCellValue('E'.$i,'Incapacitacion'); //Assitencia
+            $sheet->setCellValue('F'.$i,'Realizar examenen de segundo parcial'); //Tema
+            // $sheet->setCellValue('H'.$i, $row['topic']); //Tema
+            $sheet->setCellValue('G'.$i,  $total); //Materia
+            $lastcell = 'G';
+          }
           $i++; //row position
         }
+        // $highestRow = $sheet->getHighestRow();
+        // for ($row = 1; $row <= $highestRow; $row++){
+        //     $sheet->getStyle("H$row")->getAlignment()->setWrapText(true);
+        // }
         /* Cells format */
-        $sheet->getStyle('A6:I'.($i-1))->applyFromArray($styleCells);
+        $sheet->getStyle('A7:'.$lastcell.($i-1))->applyFromArray($styleCells);
         /* Auto size cell */
         $cellIterator = $sheet->getRowIterator()->current()->getCellIterator();
-        $cellIterator->setIterateOnlyExistingCells(true);
-        foreach( range('A','I') as $cell )
-          $sheet->getColumnDimension($cell)->setAutoSize(true);
+        // $cellIterator->setIterateOnlyExistingCells(true);
+        if($reportType != 'general'){
+          foreach( range('A','E') as $cell )
+            $sheet->getColumnDimension($cell)->setAutoSize(true);
+          foreach( range('G','K') as $cell )
+            $sheet->getColumnDimension($cell)->setAutoSize(true);
+          $sheet->getColumnDimension('F')->setWidth(40);
+        }
+        else{
+          foreach( range('A','H') as $cell )
+            $sheet->getColumnDimension($cell)->setAutoSize(true);
+          foreach( range('J','K') as $cell )
+            $sheet->getColumnDimension($cell)->setAutoSize(true);
+          $sheet->getColumnDimension('I')->setWidth(40);
+        }
+        // foreach( range('A','I') as $cell )
+        //   $sheet->getColumnDimension($cell)->setAutoSize(true);
+
         /* Save file */
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
         try {
           $fileName = 'Reporte-'.$teacherName.'-'.date('d-m-Y-i:s');
           //   $writer->save('export.xlsx');
-          header('Content-Type: application/vnd.ms-excel');
-          header('Content-Disposition: attachment; filename="'.$fileName.'.xlsx"');
-          $writer->save("php://output");
+         //
+         header('Content-Type: application/vnd.ms-excel');
+         header('Content-Disposition: attachment; filename="'.$fileName.'.xlsx"');
+         $writer->save("php://output");
           exit;
         } catch (\Exception $e) {
             echo $e->getMessage();
@@ -202,117 +374,137 @@
        * @return [type]         [description]
        */
       public function generateReportPDF($values){
+        /*get report type*/
+         if($values['code'] != 'null' AND $values['subject'] != 0)
+           $reportType = 'materia'; //reporte type
+         if($values['code'] != 'null' AND $values['subject'] == 0)
+           $reportType = 'docente'; //reporte type
+         if($values['code'] == 'null' AND $values['subject'] == 0)
+           $reportType = 'general'; //reporte type
         $subject = $values['subject'];
-        $extension = $this->getExtensionName($values['extension']);
+        $extension = iconv('UTF-8', 'ISO-8859-2',$this->getExtensionName($values['extension']));
+        // $extension = $this->getExtensionName($values['extension']);
         $reports = $this->getReports($values); //get report and cover to array
         $hoursCount = 0;
-        $teacherName = $reports[0]['nameTeacher'];
-        foreach ($reports as $row) {
-          $endTime = strtotime($row['checkEnd']);
-          if($endTime != ''){
-            $startTime = strtotime($row['checkEntry']);
-            $hoursCount = (round(abs($endTime - $startTime) / 60) / 50) + $hoursCount;
+        $teacherName = iconv('UTF-8', 'ISO-8859-2', $reports[0]['nameTeacher']);
+        // $teacherName = $reports[0]['nameTeacher'];
+        if($values['week'] != 'null')
+          $period = 'Periodo del 2019 '.$this->dataBetween($values['week']);
+        else
+          $period = 'Periodo del 2019 personalizado del '.date("d-m-Y",
+          strtotime($values['startDate'])).' al '.date("d-m-Y",strtotime($values['endDate']));
+
+        if($reportType != 'general'){
+          $value = ['code' => $values['code']];
+          $teacher = json_decode($this->getFirst('view_reports','WHERE codeTeacher =:code',$value));
+          $dep = $teacher->alias;
+          $sbName = '';
+          if($reportType == 'materia'){
+            $sb = ['code'=>$values['subject']];
+            $subjectName = json_decode($this->getFirst('viewsbName','WHERE idSubjectlist =:code',$sb));
+            $sbName = $subjectName->name;
           }
+          $data = [
+            'subject' => $subject,
+            'extension' => $extension,
+            'teacherName' => $teacherName,
+            'period' => $period,
+            'dep' => $dep,
+            'subjectName' => $sbName
+          ];
         }
-        $pdf = new FPDF();
+        else{
+          $data = [
+            'extension' => $extension,
+            'period' => $period
+          ];
+        }
+
+        $pdf = new FPDF('L','mm','A4',$reportType,$data);
         $pdf->AliasNbPages();
         $pdf->AddPage(); //addpage
-        /*header*/
-        $pdf->Image('C:/tecmmlogo.png',10,10,25); //Logo header
-        $pdf->Cell(25,20,'',1,0,'L');
-        $pdf->SetFont('Arial','B',15);
-        $pdf->MultiCell(150,10,'INSTITUTO TECNOLOGICO JOSE MARIO MOLINA PASQUEL Y HENRIQUEZ CAMPUS TALA',1,'C',0); // TEC MM Name and campus
-        $pdf->Ln(5);
-        $pdf->SetFont('Arial','B',12);
-        $pdf->Cell(150,10,'Reporte de asitencia personal docente',0,0,'L');
-        /* line date now */
-        $pdf->Cell(15,10,'Fecha:',0,0,'L');
-        $pdf->SetFont('Arial','',12);
-        $pdf->Cell(23,10,$this->getDatetimeNow('date'),0,0,'R'); //date now
-        $pdf->Ln(6);
-        //
-        $pdf->SetFont('Arial','B',12);
-        /* report type */
-        if($values['week'] != 'null')
-          $pdf->Cell(150,10,'Periodo 2018 al 2019 '.$this->dataBetween($values['week']),0,0,'L');
-        else
-          $pdf->Cell(150,10,'Periodo 2018 al 2019 custom del '.date("d-m-Y",
-          strtotime($values['startDate'])).' al '.date("d-m-Y",strtotime($values['endDate'])),0,0,'L');
-        /* line time now */
-        $pdf->Cell(13,10,'Hora:',0,0,'L');
-        $pdf->SetFont('Arial','',12);
-        $pdf->Cell(12,10,$this->getDatetimeNow('time'),0,0,'R');
-        $pdf->Ln(6);
-        /* Line total hours  */
-        $pdf->SetFont('Arial','B',12);
-        $pdf->Cell(31,10,'Total de horas:',0,0,'L');
-        $pdf->SetFont('Arial','',12);
-        $pdf->Cell(10,10,$hoursCount,0,0,'L'); //total hours
-        $pdf->Ln(10);
-        $pdf->SetFont('Arial','B',12);
-        $pdf->Cell(22,10,'Extension:',0,0,'L');
-        $pdf->SetFont('Arial','',12);
-        $pdf->Cell(20,10,$extension,0,0,'L');
-        $pdf->SetFont('Arial','B',12);
-        $pdf->Cell(33,10,'Tipo de reporte:',0,0,'L');
-        $pdf->SetFont('Arial','',12);
-        if($values['subject'] == 'null')
-          $pdf->Cell(30,10,'Por empleado',0,0,'L');
-        else
-            $pdf->Cell(30,10,'Por materia',0,0,'L');
-        $pdf->SetFont('Arial','B',12);
-        $pdf->Cell(20,10,'Docente:',0,0,'L');
-        $pdf->SetFont('Arial','',12);
-        $pdf->Cell(40,10,$teacherName,0,0,'L');
-        $pdf->Ln(10);
-        /*type teacher*/
-        if($subject == 'null'){
-          $pdf->SetFont('Arial','B',11);
-          $pdf->Cell(27,6,'Departamento',1,0,'C',0);
-          $pdf->Cell(16,6,'Entrada',1,0,'C',0);
-          $pdf->Cell(14,6,'Salida',1,0,'C',0);
-          $pdf->Cell(14,6,'Grupo',1,0,'C',0);
-          $pdf->Cell(20,6,'Asistencia',1,0,'C',0);
-          $pdf->Cell(55,6,'Tema/Actividad',1,0,'C',0);
-          $pdf->Cell(55,6,'Materia',1,0,'C',0);
-          // $pdf->Cell(30,6,'Notas',1,0,'C',0);
-          $pdf->Ln(6);
-          $pdf->SetFont('Times','',10);
-          foreach ($repots as $row) {
-            $pdf->Cell(27,6,$row['alias'],1,0,'C',0);
-            $pdf->Cell(16,6,$row['checkEntry'],1,0,'C',0);
-            $pdf->Cell(14,6,$row['checkEnd'],1,0,'C',0);
-            $pdf->Cell(14,6,$row['grade'],1,0,'C',0);
-            $pdf->Cell(20,6,$row['type'],1,0,'C',0);
-            $pdf->Cell(55,6,$row['topic'],1,0,'C',0);
-            $pdf->Cell(55,6,$row['nameSubject'],1,1,'C',0);
-          }
+        /*Table report type docente or materia*/
+        if($reportType != 'general'){
+          foreach ($reports as $row) {
+            $str  = $row['topic'];
+            $charCount = round(strlen($str)/53) + 1;
+            $height = ($charCount * 4);
+            $multiSize = 8;
+            $pdf->Cell(16,$height,$row['checkEntry'],1,0,'C',0);
+            $pdf->Cell(16,$height,$row['checkEnd'],1,0,'C',0);
+            $pdf->Cell(20,$height,$row['grade'],1,0,'C',0);
+            $pdf->Cell(20,$height,$row['type'],1,0,'C',0);
+            // $note = iconv('UTF-8', $row['notes'], $note); //encoding utf-8
+            $note = iconv('UTF-8', 'ISO-8859-2',  $row['notes']);
+            $pdf->Cell(40,$height,$note,1,0,'C',0);
+            $topic = iconv('UTF-8', 'ISO-8859-2',  $row['topic']);
+            // $topic .='                     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                                                                                                                                                                                                                                                                                 ';
+            $pdf->MultiCell(80,$multiSize,$topic,1,'LRB');
+            if($reportType != 'materia'){
+              // $sb = iconv('UTF-8', $row['nameSubject'], $sb); //encoding utf-8
+            //  $sb = iconv('UTF-8', 'ISO-8859-2',  $row['nameSubject']);
+              // $sb = 'subject';
+              $posY = $pdf->getY();
+              $pdf->setY($pdf->getY() - $height);
+              $pdf->setX(202);
+              $pdf->Cell(55,$height,$row['code'],1,0,'C',0);
+              $pdf->setY($posY);
+              $pX = 257;
+              // $pdf->Cell(55,6,$row['nameSubject'],1,0,'C',0);
+            }
+            else
+              $pX = 202;
+            $stTime = strtotime($row['checkEntry']);
+            $enTime = strtotime($row['checkEnd']);
+            $total = round((abs($stTime-$enTime) / 60)/50);
+            $posY = $pdf->getY();
+            $pdf->setY($pdf->getY() - $height);
+            $pdf->SetX($pX);
+            $pdf->Cell(30,$height,$total,1,0,'C',0);
+            $pdf->setY($posY);
+            // break;
+            }
         }
-        /*type subject*/
         else{
-          $pdf->SetFont('Arial','B',11);
-          $pdf->Cell(27,6,'Departamento',1,0,'C',0);
-          $pdf->Cell(16,6,'Entrada',1,0,'C',0);
-          $pdf->Cell(14,6,'Salida',1,0,'C',0);
-          $pdf->Cell(12,6,'Grupo',1,0,'C',0);
-          $pdf->Cell(20,6,'Asistencia',1,0,'C',0);
-          $pdf->Cell(55,6,'Tema/Actividad',1,0,'C',0);
-          $pdf->Cell(55,6,'Materia',1,0,'C',0);
-          // $pdf->Cell(30,6,'Notas',1,0,'C',0);
-          $pdf->Ln(6);
-          $pdf->SetFont('Times','',10);
             foreach ($reports as $row) {
-            $pdf->Cell(27,6,$row['alias'],1,0,'C',0);
-            $pdf->Cell(16,6,$row['checkEntry'],1,0,'C',0);
-            $pdf->Cell(14,6,$row['checkEnd'],1,0,'C',0);
-            $pdf->Cell(12,6,$row['grade'],1,0,'C',0);
-            $pdf->Cell(20,6,$row['type'],1,0,'C',0);
-            $pdf->Cell(55,6,$row['topic'],1,0,'C',0);
-            $pdf->Cell(55,6,$row['nameSubject'],1,1,'C',0);
-          }
-        }
+              $str  = $row['nameTeacher'];
+              $charCount = round(strlen($str)/27);
+              $height = $charCount * 4;
+              $multiSize = 4;
+              if(strlen($str) <= 78)
+                $str .= '  ';
+              $pdf->Cell(15,$height,$row['alias'],1,0,'C',0);
+              $teacher = iconv('UTF-8', 'ISO-8859-2', $row['nameTeacher']);
+              $pdf->MultiCell(55,4,$teacher,1,'LRB');
+              $posY = $pdf->getY();
+              $pdf->setY($pdf->getY() - $height);
+              $pdf->setX(80);
+              $pdf->Cell(16,$height,$row['checkEntry'],1,0,'C',0);
+              $pdf->Cell(16,$height,$row['checkEnd'],1,0,'C',0);
+              $pdf->Cell(20,$height,$row['grade'],1,0,'C',0);
+              $pdf->Cell(20,$height,$row['type'],1,0,'C',0);
+              $note = iconv('UTF-8', 'ISO-8859-2',  $row['notes']);
+              $pdf->Cell(30,$height,$note,1,0,'C',0);
+              $topic = iconv('UTF-8', 'ISO-8859-2',$row['topic'].'ddseadadadadeadadadead');
+              // $pdf->MultiCell(55,$multiSize,$topic,1,'LRB');
+              $pdf->setY($posY);
+              $posY = $pdf->getY();
+              $pdf->setY($pdf->getY() - $height);
+              $pdf->setX(182);
+              // $sb = iconv('UTF-8', 'ISO-8859-2',  $row['nameSubject']);
+              $pdf->Cell(45,$height,$row['code'],1,0,'C',0);
+              $stTime = strtotime($row['checkEntry']);
+              $enTime = strtotime($row['checkEnd']);
+              $total = round((abs($stTime-$enTime) / 60)/50);
+              // $posY = $pdf->getY();
+              // $pdf->setY($pdf->getY() - $height);
+              // $pdf->setX(259);
+              $pdf->Cell(25,$height,$total,1,1,'C',0);
+              break;
+            }
+}
          $this->closeConnection(); //close conection
-         $pdf->Output('reporte-'.date('d-m-Y-i:s').'.pdf','I');
+         $pdf->Output('reporte- '.$reportType.'-'.date('d-m-Y-i:s').'.pdf','I');
          function Footer() {
           $pdf->SetY(-1);
           $pdf->SetFont('Arial','I',8);
@@ -352,13 +544,13 @@
         case '2weeks':
           $startDate = strtotime ('-14 day' ,strtotime($dt->format('d-m-Y')));
           $startDate = date('d-m-Y',$startDate);
-          $date = 'Semanal del '.$startDate.' al '.$dt->format('d-m-Y');
+          $date = 'Quincenal del '.$startDate.' al '.$dt->format('d-m-Y');
           break;
 
         case 'month':
           $startDate = strtotime ('-1 month' ,strtotime($dt->format('d-m-Y')));
           $startDate = date('d-m-Y',$startDate);
-          $date = 'Semanal del '.$startDate.' al '.$dt->format('d-m-Y');
+          $date = 'Mensual del '.$startDate.' al '.$dt->format('d-m-Y');
           break;
       }
       return $date;

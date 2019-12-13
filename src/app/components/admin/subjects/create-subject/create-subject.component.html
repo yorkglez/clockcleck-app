@@ -26,14 +26,15 @@
             name="code"
             [(ngModel)]="model.code"
             #code="ngModel"
-            (focusout)="validateCode(code.value)"
+            (keyup)="validateCode(code.value)"
             (keypress)="addCharater(code.value)"
+            onkeyup="javascript:this.value=this.value.toUpperCase();"
             [ngClass]="{'is-invalid':form.submitted && code.invalid || model.code == '' && code.dirty
             || !codeValid && code.valid || code.invalid && code.dirty,
              'is-valid': code.valid && code.dirty && codeValid }"
             required>
             <div class="invalid-feedback" *ngIf="form.submitted && code.invalid || model.code == '' && code.touched ">
-              Porfavor escriba un codigo.
+              Por favor escriba un codigo.
             </div>
             <div class="valid-feedback" *ngIf="codeValid">
               Codigo valido.
@@ -42,7 +43,7 @@
               Codigo no valido.
             </div>
             <div *ngIf="!codeValid && code.valid" class="invalid-feedback">
-              Este codigo ya existe, porfavor escribe uno valido.
+              Este codigo ya existe, por favor escribe uno valido.
             </div>
           </div>
           <!-- input name -->
@@ -58,7 +59,7 @@
             placeholder="Fundamentos de programacion"
             required>
             <div class="invalid-feedback">
-              Porfavor escriba un nombre.
+              Por favor escriba un nombre.
             </div>
           </div>
           <!-- input credits -->
@@ -75,7 +76,7 @@
             placeholder="5"
             required>
             <div class="invalid-feedback">
-              Porfavor escriba el numero de creditos.
+              Por favor escriba el numero de creditos.
             </div>
           </div>
           <!-- Radio secuence -->
@@ -83,7 +84,8 @@
           <div class="form-group col-md-4">
             <div class="custom-control custom-radio custom-control-inline">
               <input [disabled] ="!codeValid"
-              type="radio" id="customRadio1"
+              type="radio"
+              id="customRadio1"
               name="sequence"
               class="custom-control-input"
               [value]="true"
@@ -114,7 +116,7 @@
       <div *ngIf="isSequence">
         <h5>Agregar las materias de secuencia</h5>
         <hr>
-        <form  (ngSubmit)="formSq.valid && addSubject()" #formSq="ngForm" class="needs-validation" novalidate>
+        <form  (ngSubmit)="formSq.valid && addSubject(formSq)" #formSq="ngForm" class="needs-validation" novalidate>
           <div class="form-row align-items-start">
             <!-- input code -->
             <div class="form-group col-md-4">
@@ -128,14 +130,15 @@
               name="codeSq"
               [(ngModel)]="subjects.code"
               #codeSq="ngModel"
-              (focusout)="validateCodeSc(codeSq.value)"
+              (keyup)="validateCodeSc(codeSq.value)"
               (keypress)="addCharaterSq(codeSq.value)"
-              [ngClass]="{'is-invalid':formSq.submitted && codeSq.invalid && subjects.code != null
+              onkeyup="javascript:this.value=this.value.toUpperCase();"
+              [ngClass]="{'is-invalid':formSq.submitted && codeSq.invalid && subjects.code != ''
               || subjects.code == '' && codeSq.dirty ||  !secodeValid ,
               'is-valid': codeSq.valid && codeSq.dirty && secodeValid }"
-              required>
+              >
               <div class="invalid-feedback" *ngIf="formSq.submitted && codeSq.invalid || subjects.code == null && codeSq.touched">
-                Porfavor escriba un codigo.
+                Por favor escriba un codigo.
               </div>
               <div class="valid-feedback" *ngIf="secodeValid">
                 Codigo valido.
@@ -144,7 +147,7 @@
                 Codigo no valido.
               </div>
               <div *ngIf="!secodeValid && codeSq.valid" class="invalid-feedback">
-                Este codigo ya existe, porfavor escribe uno valido.
+                Este codigo ya existe, por favor escribe uno valido.
               </div>
             </div>
             <!-- input subject secuencie -->
@@ -153,7 +156,7 @@
               <input type="text" class="form-control" name="nameSq" [(ngModel)]="subjects.name" #nameSq="ngModel"
               [ngClass]="{'is-invalid':formSq.submitted && nameSq.invalid && subjects.name != null}" maxlength="48" placeholder="Fundamentos de programacion" required>
               <div class="invalid-feedback">
-                Porfavor escriba un nombre.
+                Por favor escriba un nombre.
               </div>
             </div>
             <!-- input credits secuencie -->
@@ -171,14 +174,14 @@
               placeholder="5"
               required>
               <div class="invalid-feedback">
-                Porfavor escriba el N de creditos.
+                Por favor escriba el N.º de creditos.
               </div>
             </div>
             <div class="form-group" style="position: relative;">
                 <button *ngIf="!updateItems" type="submit" name="btn-add" class="btn btn-success"  style="position: absolute; bottom: -70px;">
-                  <i class="fas fa-plus"></i> Anadir
+                  <i class="fas fa-plus"></i> Añadir
                 </button>
-                <button *ngIf="updateItems" (click)="updateItem(idx)" type="button" name="btn-add" class="btn btn-primary">Actualizar</button>
+                <button *ngIf="updateItems" (click)="updateItem(idx)" type="button" name="btn-add" class="btn btn-primary" style="position: absolute; bottom: -70px;">Actualizar</button>
             </div>
           </div>
         </form>

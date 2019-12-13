@@ -18,6 +18,7 @@ import { LoaderService } from '../../../../services/loader.service';
 export class UsersComponent implements OnInit {
   p: number = 1
   searchAlert: boolean = false
+  isLoader: boolean = false
   users = []
   user:any[]
   ter:string
@@ -35,13 +36,15 @@ export class UsersComponent implements OnInit {
 
  ngOnInit() {
    this._loaderService.display(true) //Show loader
+   this.isLoader = true
     /* get user data from service */
    this._usersService.getData().subscribe(data=>{
      if(!data)
       this.users = []
     else
       this.users = data
-     this._loaderService.display(false) //Hide loader
+    this._loaderService.display(false) //Hide loader
+    this.isLoader = false
   })
 }
 
@@ -59,19 +62,24 @@ getId(user){
   this.user = user; //add user
 }
 
-  searchUser(ter:string,type:string){
-    console.log(ter)
-      this._usersService.Search(ter,type).subscribe(data=>{
-          this.users = data
-          if(this.users.length > 0){
-            this.searchAlert= false
-          }else{
-            this.ter = ter
-            this.searchAlert = true
-          }
+searchUser(ter:string,type:string){
+    this._usersService.Search(ter,type).subscribe(data=>{
+        this.users = data
+                //
+                // this._loaderService.display(true) //Show loader
+                // this.isLoader = true
+        // this._loaderService.display(false) //Show loader
+        // this.isLoader = false
+        if(this.users.length > 0)
+          this.searchAlert= false
+        else{
+          this.ter = ter
+          this.searchAlert = true
         }
-      )
-  }
+
+      }
+    )
+}
 
   Edit(user){
     this.id = user['idUser'] //add user id
@@ -80,12 +88,10 @@ getId(user){
 
   getType(type:string){
     this._usersService.getUserbyType(type).subscribe(data=>{
-      this.users = data
-      if(this.users.length >0){
-        this.searchAlert = false
-      }else{
-        this.searchAlert = true
-      }
+      if(!data)
+        this.users = []
+      else
+        this.users = data
     });
   }
 }

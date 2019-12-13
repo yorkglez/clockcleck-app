@@ -22,6 +22,21 @@
       return $this->getData('Extensions',"WHERE status = '1'");
     }
     /**
+     * [updateExtension description]
+     * @param  [type] $values [description]
+     * @return [type]         [description]
+     */
+    public function updateExtension($values){
+      $sql ="UPDATE Extensions SET name = :name, city = :city, address = :address WHERE idExtension = :idExtension";
+      $stmt = $this->connect()->prepare($sql);
+      if($stmt->execute($values))
+        $resp = true;
+      else
+        $resp = false;
+      $this->closeConnection();
+      return json_encode($resp);
+    }
+    /**
      * [createExtension description]
      * @param  [type] $data [description]
      * @return [type]       [description]

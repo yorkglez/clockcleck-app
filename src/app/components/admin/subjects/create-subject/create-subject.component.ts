@@ -52,7 +52,7 @@ export class CreateSubjectComponent implements OnInit {
           this.isSequence = false
         }else{
           this.type  = "error"//alert type
-          this.message = 'Ocurrio un error al gurdar.'//alert message
+          this.message = 'Ocurrio un error al guardar.'//alert message
         }
         this.alertVisible = true //show alert
         /*hide alert in 2 secunds*/
@@ -75,11 +75,11 @@ export class CreateSubjectComponent implements OnInit {
       this.isSequence = false
   }
 
-  addSubject(){
+  addSubject(form: NgForm){
     this.subjectsList.push(this.subjects) //add subjects to list
     this.subjects = {"code":''} //clear code
+    form.resetForm()
   }
-
 
   deleteItem(idx){
     this.subjectsList.splice(this.subjectsList.indexOf(idx),1) //remove item from list
@@ -93,6 +93,7 @@ export class CreateSubjectComponent implements OnInit {
       this.subjects['credits'] = this.subjectsList[idx].credits
 
   }
+
   updateItem(idx){
     this.subjectsList[idx].code = this.subjects['code']
     this.subjectsList[idx].name = this.subjects['name']
@@ -107,8 +108,16 @@ export class CreateSubjectComponent implements OnInit {
   }
 
   addCharaterSq(code){
-    if(code.length == 3)
-      this.subjects['code'] = code + '-'
+    if(code != null){
+      if(code.length == 3)
+        this.subjects['code'] = code + '-'
+    }
+  }
+  upperCasesq(value){
+    this.subjects['code'] = value.toUpperCase()
+  }
+  upperCase(value){
+    this.model['code'] = value.toUpperCase()
   }
 
   validateCode(code){

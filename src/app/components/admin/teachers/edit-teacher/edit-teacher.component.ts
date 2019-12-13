@@ -66,7 +66,6 @@ export class EditTeacherComponent implements OnInit {
     if (regex.test(code)) {
       if(code != this.id){
         this._helpersService.validateCode(code).subscribe(resp=>{
-          console.log(resp)
           if(!resp)
             this.codeValid = true
           else
@@ -77,27 +76,25 @@ export class EditTeacherComponent implements OnInit {
     else
       this.codeValid = true;
   }
+
   validateEmail(email){
-    if(email != this.oldEmail){
-      let regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-      if(regexp.test(email)){
-        this.data['email'] = email
+    if((email.value != this.oldEmail) && email.valid){
+      // let regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+    //  if(regexp.test(email)){
+        this.data['email'] = email.value
         this.data['code'] = this.model['code']
-        this._helpersService.validateEmail(this.data).subscribe(
+        this._helpersService.validateEmail(email.value).subscribe(
           resp=>{
             if(!resp)
-              this.emailValid = false
-            else
               this.emailValid = true
+            else
+              this.emailValid = false
           })
-      }
-      else
-        this.emailValid = false
+    //  }
+      //else
+      //  this.emailValid = false
     }
     else
       this.emailValid = true
-
-
   }
-
 }

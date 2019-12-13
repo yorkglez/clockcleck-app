@@ -8,6 +8,8 @@
   </div>
   <!-- body -->
   <div class="content-body">
+    <!-- alert -->
+    <app-alerts [type]="type" [message]= "message" [alertVisible]="alertisVisible"  ></app-alerts>
     <!-- table -->
     <div class="table-container">
       <table class="table table-sm mx-auto">
@@ -17,24 +19,21 @@
             <td>{{porfileInfo.codeTeacher}}</td>
           </tr>
           <tr>
-            <th class="title">Nombre</th>
-            <td *ngIf="isEditable">
+            <th class="info-title">Nombre</th>
+            <td *ngIf="isEditable" class="form-editable">
               <input type="text"
               class="form-control"
               name="name"
               ngModel [(ngModel)]="data.name"
               #name="ngModel">
-              <div class="edit-icon">
-                <i *ngIf="isEditable" class="fas fa-edit"></i>
-              </div>
             </td>
             <td *ngIf="!isEditable">{{porfileInfo.name}}</td>
             <td><i *ngIf="isEditable" class="fas fa-edit"></i></td>
           </tr>
-          <tr>
+          <tr class="form-editable">
             <th class="title">Apellidos</th>
             <td *ngIf="!isEditable">{{porfileInfo.lastname}}</td>
-            <td *ngIf="isEditable">
+            <td *ngIf="isEditable" class="form-editable">
               <input type="text"
               class="form-control"
               name="lastname"
@@ -45,7 +44,7 @@
           <tr>
             <th class="title">Email</th>
             <td *ngIf="!isEditable">{{porfileInfo.email}}</td>
-            <td *ngIf="isEditable" class="editable">
+            <td *ngIf="isEditable" class="form-editable">
               <div>
                 <input pattern="^[a-z0-9._+%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                 (focusout)="validateEmail(email.value)"
@@ -63,7 +62,7 @@
                 El email es valido.
               </div> -->
               <div *ngIf="!emailValid && email.valid" class="invalid-feedback">
-                Este email ya existe, porfavor escribe uno valido.
+                Este email ya existe, por favor escribe uno valido.
               </div>
               <div *ngIf="email.errors?.email " class="invalid-feedback">Escribe un email valido.</div>
               <!-- <input  (focusout)="validateEmail(email.value)"  type="email" class="input-porfileInfo" name="email"  ngModel [(ngModel)]="data.email" #email="ngModel">
@@ -80,9 +79,9 @@
     <tr>
       <th>Telefono</th>
       <td *ngIf="!isEditable">{{porfileInfo.phone}}</td>
-      <td *ngIf="isEditable" class="editable">
+      <td *ngIf="isEditable" class="form-editable">
         <div>
-          <label for="phone">Telefono</label>
+          <!-- <label for="phone">Telefono</label> -->
           <input type="tel"
           (keypress)="validatePhone(phone.value)"
           class="form-control input-porfileInfo invalid-input"
@@ -95,10 +94,11 @@
           maxlength="12"
           required>
           <div class="invalid-feedback">
-            Porfavor escriba un numero de telefono valido.
+            Por favor escriba un numero de telefono valido.
           </div>
         </div>
       </td>
+      <td><i *ngIf="isEditable" class="fas fa-edit"></i></td>
     </tr>
     <tr>
       <th class="title">Tipo</th>
@@ -145,7 +145,7 @@
         La contraseña debe contener un minimo de 6 caracteres.
       </div>
       <div *ngIf="form.submitted && oldpassword.errors?.required" class="invalid-feedback">
-        Porfavor escriba su contraseña.
+        Por favor escriba su contraseña.
       </div>
     </div>
   </div>
@@ -160,7 +160,7 @@
     [ngClass]="{'is-invalid': form.submitted && newpassword.invalid || newpassword.errors?.minlength || !passwordsisValid && newpassword.dirty,
     'is-valid': passwordsisValid && repeatpassword.valid}" required minlength="6"/>
     <div  *ngIf="form.submitted && newpassword.errors?.required" class="invalid-feedback">
-      Porfavor escriba una nueva contraseña.
+      Por favor escriba una nueva contraseña.
     </div>
     <div *ngIf="newpassword.invalid && newpassword.errors?.minlength" class="invalid-feedback invalid min-password" >
       La contraseña debe contener un minimo de 6 caracteres.
@@ -178,13 +178,13 @@
     [ngClass]="{'is-invalid':form.submitted && repeatpassword.invalid || repeatpassword.errors?.minlength || !passwordsisValid  && newpassword.dirty,
     'is-valid': passwordsisValid && repeatpassword.valid }" required minlength="6">
     <div  *ngIf="form.submitted && repeatpassword.errors?.required" class="invalid-feedback">
-      Porfavor repita su nueva contrasena.
+      Por favor repita su nueva contraseña.
     </div>
     <div *ngIf="repeatpassword.invalid && repeatpassword?.errors.minlength" class="invalid-feedback invalid min-password" >La contrasena debe contener un minimo de 6 caracteres.</div>
     <div *ngIf="!passwordsisValid" class="invalid-feedback">Las contraseñas no coinciden.</div>
   </div>
   <button [disabled] = "!passwordsisValid"  (click)="changePassword(oldpassword.value, newpassword.value)" class="btn btn-primary"><i class="fas fa-save"></i> Actualizar</button>
 </form>
-<app-alerts [type]="type" [message]= "message" [alertVisible]="alertisVisible"  ></app-alerts>
+
 </div>
 </div>

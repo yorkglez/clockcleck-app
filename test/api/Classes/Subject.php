@@ -134,7 +134,8 @@
     public function getSubjectsList(){
       session_start();
       $code = $_SESSION['id'];
-      $sql = "SELECT s.codeSubject, s.name FROM Subjects s WHERE s.codeSubject NOT IN (SELECT sl.Subjects_codeSubject FROM Subjects_list sl WHERE Teachers_codeTeacher = :code) AND s.status = '1'";
+      $sql = "SELECT s.codeSubject, s.name FROM Subjects s WHERE s.status = '1'";
+      // $sql = "SELECT s.codeSubject, s.name FROM Subjects s WHERE s.codeSubject NOT IN (SELECT sl.Subjects_codeSubject FROM Subjects_list sl WHERE Teachers_codeTeacher = :code) AND s.status = '1'";
       $stmt = $this->connect()->prepare($sql);
       $stmt->bindParam(':code',$code,PDO::PARAM_STR);
       $stmt->execute();
@@ -145,7 +146,7 @@
     }
     public function getSubjectsListTeacher($code){
       $values = ['code' => $code];
-      return $this->getData('viewgetsubjectsteacher','WHERE codeTeacher = :code',$values);
+      return $this->getData('viewgetsubjectsteacher_report','WHERE codeTeacher = :code',$values);
     }
     /**
      * [changeStatus description]
@@ -170,7 +171,6 @@
      * @return [type]       [description]
      */
     public function validateCode($code){
-      $resp = false;
       $sql = "SELECT codeSubject FROM Subjects WHERE codeSubject = :code";
       $stmt = $this->connect()->prepare($sql);
       $stmt->bindParam(':code',$code,PDO::PARAM_STR);

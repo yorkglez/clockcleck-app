@@ -27,7 +27,7 @@ export class ScheduleTeacherComponent implements OnInit {
 
   ngOnInit() {
     /*Call function getScheduleConfig from service*/
-    this._scheduleService.getScheduleConfig('1414').subscribe(data=>{
+    this._scheduleService.getScheduleConfig('null').subscribe(data=>{
       this.hours  = data.hours
       this.bTime = data.breakTime
     })

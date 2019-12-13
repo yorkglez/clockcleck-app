@@ -24,14 +24,15 @@
             name="code"
             [(ngModel)]="model.code"
             #code="ngModel"
-            (focusout)="validateCode(code.value)"
+            (keyup)="validateCode(code.value)"
             (keypress)="addCharacter(code.value)"
+            onkeyup="javascript:this.value=this.value.toUpperCase();"
             [ngClass]="{'is-invalid': form.submitted && code.invalid || model.code == null && code.touched || !codeValid || code.invalid && code.dirty,
             'is-valid': code.valid && code.dirty && codeValid }"
             required>
             <!-- 'is-valid': code.valid && code.dirty && codeValid, 'is-invalid':form.submitted && code.invalid || code.invalid && code.touched|| !codeValid || model.code =='' -->
             <div class="invalid-feedback" *ngIf="form.submitted && code.invalid || model.code == null && code.touched || code.invalid">
-              Porfavor escriba un codigo.
+              Por favor escriba un codigo.
             </div>
             <div class="valid-feedback" *ngIf="codeValid">
               Codigo valido.
@@ -40,7 +41,7 @@
               Codigo no valido.
             </div>
             <div *ngIf="!codeValid" class="invalid-feedback">
-              Este codigo ya existe, porfavor escribe uno valido.
+              Este codigo ya existe, por favor escribe uno valido.
             </div>
           </div>
           <!-- input name -->
@@ -54,7 +55,7 @@
             [ngClass]="{'is-invalid':form.submitted && name.invalid || name.invalid}"
             required>
             <div class="invalid-feedback">
-              Porfavor escriba un nombre.
+              Por favor escriba un nombre.
             </div>
           </div>
           <!-- input alias -->
@@ -65,16 +66,17 @@
             class="form-control"
             name="alias"
             ngModel [(ngModel)]="model.alias"
+            onkeyup="javascript:this.value=this.value.toUpperCase();"
             #alias="ngModel"
             [ngClass]="{'is-invalid':form.submitted && alias.invalid || alias.invalid}"
             required>
             <div class="invalid-feedback">
-              Porfavor escriba un alias.
+              Por favor escriba un alias.
             </div>
           </div>
           <!-- select extension -->
           <div class="form-group col-md-6">
-            <label for="extension">Extencion </label>
+            <label for="extension">Extension </label>
             <select  class="form-control custom-select"
             name="extension"
             ngModel [(ngModel)]="model.extension"

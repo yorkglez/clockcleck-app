@@ -49,7 +49,7 @@ export class LoginteacherComponent implements OnInit {
           localStorage.setItem('email',resp.email)
           localStorage.setItem('type',resp.type)
           localStorage.setItem('extension',resp.extension)
-          console.log(localStorage)
+        //  console.log(localStorage)
         }
         else{
           this._authService.setLoggedIn(false)

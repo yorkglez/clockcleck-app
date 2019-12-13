@@ -24,6 +24,7 @@ export class AcademicloadlistComponent implements OnInit {
   searchAlert: boolean
   aclist = []
   existsSchedule: boolean = false
+  isLoader: boolean = false
   hours: Hour[] = []
   lunes = []
   martes = []
@@ -43,6 +44,7 @@ export class AcademicloadlistComponent implements OnInit {
 
   ngOnInit() {
      this._loaderService.display(true) //Show loader
+     this.isLoader = true
     /*Call function getAcademicloadList from service */
     this._academicloadteacherService.getAcademicloadList().subscribe(data=>{
       /*Validate data*/
@@ -50,6 +52,7 @@ export class AcademicloadlistComponent implements OnInit {
         this.aclist = [] //clear array
       else{
         this._loaderService.display(false) //Hide loader
+        this.isLoader = false
         this.aclist = data //get data
       }
     })

@@ -10,7 +10,7 @@ export class PorfileService {
   constructor(private http: HttpClient) { }
 
   getTeacherinfo():Observable<Teacher[]>{
-    return this.http.get<Teacher[]>('api/queries/Teacher/getinfoporfile.php')
+    return this.http.get<Teacher[]>('api/queries/Teacher/getinfoPorfile.php')
   }
 
   changePassTeacher(model){

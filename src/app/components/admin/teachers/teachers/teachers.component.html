@@ -15,7 +15,7 @@
           type="search"
           placeholder="Buscar..."
           aria-label="Search"
-          (keypress)="filterData(searchText.value,type.value,extension.value); checkInactive(type.value)"
+          (keyup)="filterData(searchText.value,type.value,extension.value); checkInactive(type.value)"
           #searchText>
           <button class="btn-clear" (click)="searchText.value = ''; filterData(searchText.value,type.value,extension.value); checkInactive(type.value)">
            <i class="fa fa-times"></i>
@@ -45,10 +45,10 @@
       </div>
     </form>
     <!-- alerts -->
-    <div class="alert alert-info" role="alert" *ngIf="teachers.length == 0 && !searchAlert">
+    <div class="alert alert-info" role="alert" *ngIf="teachers.length == 0 && !searchAlert  && !isLoader">
         <i class="fas fa-info-circle"></i> No hay registros en la base de datos.
     </div>
-    <div class="alert alert-info" role="alert" *ngIf="searchAlert">
+    <div class="alert alert-info" role="alert" *ngIf="searchAlert  && !isLoader">
         <i class="fas fa-info-circle"></i> No se encontraron resultados con el termino: <b>{{ter}}</b>
     </div>
     <!-- loader  -->
@@ -123,7 +123,7 @@
           </button>
         </div>
         <div class="modal-body">
-          Si eliminas este usuario, no podras deshacer esta accion!.
+          Si eliminas este usuario, no podras deshacer esta accion!
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

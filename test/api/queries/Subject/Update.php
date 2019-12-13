@@ -12,7 +12,7 @@
   ];
 
   $subject = new Subject;
-  $resp = $subject->Update($values); //Get data from database
+  $resp = $subject->updateSubject($values); //Get data from database
   echo $resp; //Send data in json to frontend
 
  ?>

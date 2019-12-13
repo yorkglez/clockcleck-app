@@ -17,12 +17,12 @@
     <!-- alerts -->
    <div class="alert alert-info" role="alert" *ngIf="!comfirmComple">
      <i class="fas fa-info"></i>
-     Para confirmar su email, escriba su nueva contrasena.
+     Para confirmar su email, escriba su nueva contraseña.
    </div>
    <div class="alert alert-success" role="alert" *ngIf="comfirmComple">
      <i class="fas fa-check"></i>
      Su email ha sido confirmado y su contraseña ha sido cambiada correctamente, haz click en finalizar para iniciar sesion.
-     <a routerLink="/login">Finalizar</a>
+     <a [routerLink]="url">Finalizar</a>
    </div>
    <!-- form -->
    <form class="form" (ngSubmit)="form.valid && changePassword()" #form="ngForm"
@@ -40,10 +40,10 @@
               minlength="6"
               required/>
          <div  *ngIf="form.submitted && password.errors?.required" class="invalid-feedback">
-           Porfavor escriba una contraseña.
+           Por favor escriba una contraseña.
          </div>
          <div *ngIf="password.invalid && password.errors.minlength" class="invalid-feedback" >
-           La contrasena debe contener un minimo de 6 caracteres.
+           La contraseña debe contener un minimo de 6 caracteres.
          </div>
      </div>
      <!-- input repeat password -->
@@ -55,10 +55,10 @@
        [ngClass]="{'is-invalid':form.submitted && repeatpassword.invalid || repeatpassword.invalid &&  repeatpassword.dirty || !passwordsValid,
        'is-valid': passwordsValid  && repeatpassword.valid}"  minlength="6" required>
        <div  *ngIf="form.submitted && repeatpassword.errors?.required" class="invalid-feedback">
-         Porfavor escriba una contrasña.
+         Por favor escriba una contrasña.
        </div>
-       <div *ngIf="repeatpassword.invalid && repeatpassword.errors.minlength" class="invalid-feedback" >La contrasena debe contener un minimo de 6 caracteres.</div>
-       <div *ngIf="!passwordsValid" class="invalid-feedback">Las contrasenas no coinciden.</div>
+       <div *ngIf="repeatpassword.invalid && repeatpassword.errors.minlength" class="invalid-feedback" >La contraseña debe contener un minimo de 6 caracteres.</div>
+       <div *ngIf="!passwordsValid" class="invalid-feedback">Las contraseñas no coinciden.</div>
      </div>
      <div class="row">
        <div class="col-md-6 mx-auto">

@@ -1,6 +1,6 @@
 {
   "/api":{
-      "target": "http://localhost:1235",
+      "target": "http://clock.malastareas.com",
       "secure": false,
       "changeOrigin": true
   }

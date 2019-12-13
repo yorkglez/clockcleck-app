@@ -21,7 +21,7 @@
           <input class="form-control"
           type="search" placeholder="Buscar..."
           aria-label="Search"
-          (keypress)="Search(searchText.value,extension.value,status.value)"
+          (keyup)="Search(searchText.value,extension.value,status.value)"
           #searchText>
           <button class="btn-clear" (click)="searchText.value = ''; Search(searchText.value,extension.value,status.value)">
            <i class="fa fa-times"></i>
@@ -68,7 +68,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let carer of carers | paginate: { itemsPerPage: 2, currentPage: p }; let i = index ">
+          <tr *ngFor="let carer of carers | paginate: { itemsPerPage: 20, currentPage: p }; let i = index ">
             <th scope="row">{{carer.codeCarer}}</th>
             <td>{{carer.name}}</td>
             <td>{{carer.alias}}</td>
@@ -92,10 +92,10 @@
       </table>
     </div>
     <!-- alerts -->
-    <div class="alert alert-info" role="alert" *ngIf="carers.length == 0 && !searchAlert">
+    <div class="alert alert-info" role="alert" *ngIf="carers.length == 0 && !searchAlert && !isLoader">
         <i class="fas fa-info-circle"></i> No hay registros en la base de datos.
     </div>
-    <div class="alert alert-info" role="alert" *ngIf="searchAlert">
+    <div class="alert alert-info" role="alert" *ngIf="searchAlert && !isLoader">
         <i class="fas fa-info-circle"></i> No se encontraron resultados con el termino: <b>{{ter}}</b>
     </div>
     <!-- pagination -->
@@ -124,7 +124,7 @@
           </button>
         </div>
         <div class="modal-body">
-          Si eliminas esta carrera sera dada de baja en el sistema!.
+          Si eliminas esta carrera sera dada de baja en el sistema!
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

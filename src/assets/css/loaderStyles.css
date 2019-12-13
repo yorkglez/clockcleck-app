@@ -1,5 +1,9 @@
 /*Loader*/
 .loader-container {
+  position: absolute;
+  height: 80%;
+  width: 100%;
+  top: 60%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -10,18 +14,13 @@
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  position: relative;
-  top: 10px;
-  left: 0;
-  /* background: re; */
-  width: auto;
-  height: 150px; }
+  left: 0; }
 
 .load-text {
   font-weight: 600; }
 
 .loader {
-  /* background: red; */
+  position: relative;
   border: 10px solid #f3f3f3;
   border-top: 10px solid #3498db;
   border-radius: 50%;

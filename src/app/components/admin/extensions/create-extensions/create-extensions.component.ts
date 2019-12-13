@@ -44,13 +44,13 @@ export class CreateExtensionsComponent implements OnInit {
     if(this.nameValid){
       this._extensionsService.saveExtension(this.model).subscribe(resp =>{
         if(resp){
-          form.resetForm()
+           form.resetForm()
            this.type  = "success"
            this.message = 'La extension se ha guardado correctamente.'
         }
         else{
           this.type  = "error"
-          this.message = 'Ocurrio un error al gurdar.'
+          this.message = 'Ocurrio un error al guardar.'
         }
         this.alertVisible = true
         setTimeout(() => {

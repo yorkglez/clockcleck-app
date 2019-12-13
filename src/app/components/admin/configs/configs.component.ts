@@ -89,7 +89,7 @@ export class ConfigsComponent implements OnInit {
         this.isNewconfig = false;
         this.getData()
         this.type  = "success"
-        this.message = 'La configuracion ha sido actualizada!.'
+        this.message = 'La configuracion ha sido actualizada!'
       }
       else{
         this.type  = "error"

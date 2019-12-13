@@ -4,9 +4,8 @@
   require('../../Classes/Teacher.php');
   /**/
   $data = json_decode(file_get_contents("php://input",true));
-  $id = json_decode($data->id,true);
+  $id = $data->id;
   $model = json_decode($data->model,true);
-
   $values = [
     'oldCode' => $id,
     'code' => $model['code'],

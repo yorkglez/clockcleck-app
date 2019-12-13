@@ -43,7 +43,7 @@ export class CreateCarersComponent implements OnInit {
         this.message = 'La carrera se ha guardado correctamente.' //alert message
       }else{
         this.type  = "error" //alert type
-        this.message = 'Ocurrio un error al gurdar.' //alert message
+        this.message = 'Ocurrio un error al guardar.' //alert message
       }
       this.alertVisible = true //show alert
       /*Hide alert in 2 secunds*/

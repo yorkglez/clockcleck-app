@@ -16,6 +16,7 @@ export class ConfirmemailComponent implements OnInit {
   id:string
   type:string
   token: string
+  url: string
   action: string
   model = {}
   passwordsValid: boolean = true
@@ -54,8 +55,15 @@ export class ConfirmemailComponent implements OnInit {
     if(this.passwordsValid){
       /*Call function changePassword from service*/
       this._authService.changePassword(this.model).subscribe(resp=>{
-        if(resp)
+        if(resp){
           this.comfirmComple = true //show complete message
+          if(this.type == 'user')
+            this.url = '/login'
+          else
+            this.url = '/loginteacher'
+
+        }
+
       })
     }
   }

@@ -55,8 +55,8 @@ export class EditUserComponent implements OnInit {
   }
   validateEmail(email){
     /* Call function validaEmail from services */
-    if(this.oldEmail != email){
-      this._helpersService.validateEmail(email).subscribe(resp =>{
+    if((this.oldEmail != email.value) && email.valid){
+      this._helpersService.validateEmail(email.value).subscribe(resp =>{
         /*Validate response*/
         if(!resp)
           this.emaiisValid = true // email is invalid
@@ -72,7 +72,6 @@ export class EditUserComponent implements OnInit {
       if(resp){
         this.router.navigate(['/users'])
       }
-
     })
   }
 }

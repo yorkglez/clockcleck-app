@@ -1,8 +1,8 @@
 <?php
   include('../../Headers.php');
-  require('../../Classes/Operations.php');
+  require('../../Classes/Extension.php');
 
-  $op = new Operations;
+  $op = new Extension;
   $data = json_decode(file_get_contents("php://input",true));
   $values = [
     'name'=> $data->name,
@@ -10,6 +10,6 @@
     'address'=> $data->address,
     'idExtension'=> $data->id
   ];
-  $resp = $op->Update('Extensions',$values);
+  $resp = $op->updateExtension($values);
   echo $resp;
  ?>

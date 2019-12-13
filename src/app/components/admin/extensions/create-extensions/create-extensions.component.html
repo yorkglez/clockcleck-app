@@ -26,12 +26,12 @@
             || !nameValid || name.invalid && name.dirty,
             'is-valid': name.valid && name.dirty && nameValid }"
             #name="ngModel"
-            (focusout)="validateName(name.value)"
+            (keyup)="validateName(name.value)"
             [ngClass]="{'is-invalid':form.submitted && name.invalid}"
             placeholder="Tala"
             required>
             <div class="invalid-feedback" *ngIf="form.submitted && name.invalid || model.name == '' && name.dirty">
-              Porfavor escriba un nombre.
+              Por favor escriba un nombre.
             </div>
             <div class="valid-feedback" *ngIf="nameValid">
               Nombre valido.
@@ -40,7 +40,7 @@
               Nombre no valido.
             </div>
             <div *ngIf="!nameValid" class="invalid-feedback">
-              Esta extension ya existe, porfavor escribe uno valido.
+              Esta extension ya existe, por favor escribe una valida.
             </div>
           </div>
           <!-- input city -->
@@ -53,7 +53,7 @@
             placeholder="Tala Jalisco"
             required>
             <div class="invalid-feedback">
-              Porfavor escriba una ciudad.
+              Por favor escriba una ciudad.
             </div>
           </div>
           <!-- input address -->
@@ -68,7 +68,7 @@
             placeholder="Abasolo #12 "
             required>
             <div class="invalid-feedback">
-              Porfavor escriba una direccion.
+              Por favor escriba una direccion.
             </div>
           </div>
         </div>

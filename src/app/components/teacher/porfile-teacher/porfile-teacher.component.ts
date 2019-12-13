@@ -8,7 +8,8 @@ import { Title } from '@angular/platform-browser';
   selector: 'app-porfile-teacher',
   templateUrl: './porfile-teacher.component.html',
   styleUrls: ['../../../../assets/css/porfileStyles.css',
-'../../../../assets/css/panelStyles.css']
+'../../../../assets/css/panelStyles.css',
+'../../../../assets/css/containerStyles.css']
 })
 export class PorfileTeacherComponent implements OnInit {
   porfileInfo:any = []

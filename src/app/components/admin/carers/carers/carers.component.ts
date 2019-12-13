@@ -25,6 +25,7 @@ export class CarersComponent implements OnInit {
   extension: string
   searchAlert: boolean = false
   inactive: boolean = false
+  isLoader: boolean = false
   carers = []
   carer: Carer
   extensions: any = []
@@ -39,10 +40,12 @@ export class CarersComponent implements OnInit {
 
   ngOnInit() {
     this._loaderService.display(true)// show loader
+    this.isLoader = true
     /* Call function getData from service */
     this._carersService.getData(localStorage.getItem('extension'),'active').subscribe(data=>{
       this.carers = data //add carers
       this._loaderService.display(false) //hide loader
+      this.isLoader = false
     })
     /* Call function getExtwension from service*/
     this._extensionsService.getExtension().subscribe(data=>{

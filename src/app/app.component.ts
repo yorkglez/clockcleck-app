@@ -22,6 +22,7 @@ import {
 export class AppComponent  implements OnInit {
   title = 'app';
   username:string
+  type:string = ''
   showSidebar: boolean = false
   sidebar: boolean = false
   admin: boolean = false
@@ -37,17 +38,23 @@ export class AppComponent  implements OnInit {
   }
 
   onActivate() {
-    this.title = 'hello World!'
+
+  //  this.title = 'hello World!'
     // console.log(localStorage)
+
     this.username = localStorage.getItem('username')
-    let type = localStorage.getItem('type')
-    // console.log(type)
-    if(type == 'admin' || type == 'normal')
+    this.type = localStorage.getItem('type')
+
+   //console.log(this.type)
+    if(this.type == 'admin' || this.type == 'normal'){
+      this.admin = true
       this.sidebar = true
+    }
+  //    this.sidebar = true
     else
       this.sidebar = false
-    if(type == 'admin')
-      this.admin = true
+//    if(type == 'admin')
+  //    this.admin = true
     // this.sidebar = true
   }
   ngOnInit(){

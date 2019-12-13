@@ -8,7 +8,7 @@
     <form class="options-panel">
       <div class="form-row  align-items-end">
         <div class= "form-group col-sm-12 col-2 col-md-auto">
-          <h1 class="title">Extenciones</h1>
+          <h1 class="title">Extensiones</h1>
         </div>
         <div class="form-group col-2 col-sm-auto col-md-auto search-container">
           <button class="btn btn-success col-sd-2" [routerLink]="['/createextension']">
@@ -20,7 +20,7 @@
           <input class="form-control"
           type="search" placeholder="Buscar..."
           aria-label="Search"
-          (keypress)="Search(searchText.value,type.value)"
+          (keyup)="Search(searchText.value,type.value)"
           #searchText>
           <button class="btn-clear" (click)="searchText.value = ''; Search(searchText.value,type.value)">
             <i class="fa fa-times"></i>
@@ -34,25 +34,25 @@
         <!-- select status -->
         <div class="form-group col-md-auto col-sm-4">
           <select id="showType" class="form-control custom-select" (change)="getType(type.value)" #type>
-            <option value="1" >Activos</option>
-            <option value="0">Inactivos</option>
+            <option value="1" >Activas</option>
+            <option value="0">Inactivas</option>
           </select>
         </div>
       </div>
     </form>
     <div class="content-table">
       <!-- alerts -->
-      <div class="alert alert-info" role="alert" *ngIf="extensions.length == 0 && !searchAlert">
+      <div class="alert alert-info" role="alert" *ngIf="extensions.length == 0 && !searchAlert && !isLoader">
         <i class="fas fa-info-circle"></i> No hay registros en la base de datos.
       </div>
-      <div class="alert alert-info" role="alert" *ngIf="searchAlert">
+      <div class="alert alert-info" role="alert" *ngIf="searchAlert && !isLoader">
           <i class="fas fa-info-circle"></i> No se encontraron resultados con el termino: <b>{{ter}}</b>
       </div>
       <!-- loader  -->
       <app-loader></app-loader>
       <!-- table -->
-      <div class="table-responsive-md">
-        <table class="table table-sm" *ngIf="extensions.length > 0">
+      <div class="table-responsive-md" *ngIf="extensions.length > 0">
+        <table class="table table-sm" >
           <thead>
             <tr class="tb-head">
               <th scope="col">Nombre</th>
@@ -111,7 +111,7 @@
           </button>
         </div>
         <div class="modal-body">
-          Si eliminas esta extension, sera dada de baja en el sistema!.
+          Si eliminas esta extension, sera dada de baja en el sistema!
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

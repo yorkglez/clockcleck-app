@@ -215,8 +215,8 @@ export class AcademicloadTeacherComponent implements OnInit {
       }
 
       Delete(){
-        // console.log(this.subject.idSubjectlist)
-        this._academicloadService.Delete(this.subject.idSubjectlist).subscribe(resp=>{
+        // console.log(this.subject.idSchedule)
+        this._academicloadService.Delete(this.subject.idSchedule).subscribe(resp=>{
           if(resp)
             this.academicload.splice(this.academicload.indexOf(this.subject),1)
         })

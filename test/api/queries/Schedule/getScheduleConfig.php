@@ -4,12 +4,12 @@
   require('../../Headers.php');
   require('../../Classes/Schedule.php');
   /**/
-  if(!isset($_GET['code'])){
+ if($_GET['code'] == 'null'){
     session_start();
     $code = $_SESSION['id'];
-  }
-  else
-    $code = $_GET['code'];
+ }
+ else
+   $code = $_GET['code'];
   $schedule = new Schedule;
   $resp = $schedule->getScheduleConfig($code);
   echo $resp;

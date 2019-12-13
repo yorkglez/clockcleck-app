@@ -12,7 +12,7 @@
       <div class="form-row align-items-end">
         <!-- input extension -->
         <div class="form-group col-md-auto col-sm-4" *ngIf="isAdmin">
-          <label for="showType">Extencion</label>
+          <label for="showType">Extensión</label>
           <select
           class="form-control custom-select"
           (change)="getTeachers(extension.value); getCarers(extension.value)"
@@ -185,8 +185,11 @@
         </div>
       </form>
     </form>
+
     <!-- table   -->
     <div class="table-responsive-md"  id="reportContainer" #reportContainer >
+      <!-- loader  -->
+      <app-loader></app-loader>
       <table class="table table-sm" >
         <thead>
           <tr class="tb-head">
@@ -198,7 +201,7 @@
             <th scope="col">Asistencia</th>
             <th scope="col">Notas</th>
             <th scope="col">Grupo</th>
-            <th scope="col">Tema/Actividad</th>
+            <!-- <th scope="col">Tema/Actividad</th> -->
             <th scope="col">Materia</th>
             <th scope="col">Fecha</th>
             <!-- <th scope="col">Acciones</th> -->
@@ -252,9 +255,9 @@
               </div>
             </td>
             <td>{{report.grade}}</td>
-            <td>{{report.topic}}</td>
+            <!-- <td>{{report.topic}}</td> -->
             <td>{{report.nameSubject}}</td>
-            <td> {{date | date:'dd-MM-yyyy'}}</td>
+            <td> {{report.date_At}}</td>
             <!-- <td> -->
               <!-- <button *ngIf="id != report.idAttendance" class="btn btn-warning" (click)="Edit(report, i)"><i class="fas fa-pencil-alt"></i> Editar</button> -->
               <!-- <button *ngIf="id == report.idAttendance && editable"  class="btn btn-primary" (click)="saveChanges()"> -->

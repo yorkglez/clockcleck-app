@@ -38,12 +38,13 @@
     public function updatePorfile($values){
       session_start();
       $id = $_SESSION['id'];
-      $sql = "UPDATE Teachers SET name = :name, lastname = :lastname, email = :email phone = :phone WHERE codeTeacher = :id";
+      $sql = "UPDATE Teachers SET name = :name, lastname = :lastname, email = :email, phone = :phone WHERE codeTeacher = :id";
       $stmt = $this->connect()->prepare($sql);
-      $stmt->bindParam(':id',$id,PDO::PARAM_INT);
+      $stmt->bindParam(':id',$id,PDO::PARAM_STR);
       $stmt->bindParam(':name',$values->name,PDO::PARAM_STR);
       $stmt->bindParam(':lastname',$values->lastname,PDO::PARAM_STR);
       $stmt->bindParam(':email',$values->email,PDO::PARAM_STR);
+      $stmt->bindParam(':phone',$values->phone,PDO::PARAM_STR);
       if($stmt->execute())
         $resp = true;
       else
@@ -155,14 +156,11 @@
       $stmt->bindParam(':code',$code,PDO::PARAM_STR);
       $stmt->execute();
       if($stmt->rowCount() > 0){
-        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC))
             $fetch[] = $row;
-        }
       }
-
-      else{
+      else
           $fetch = false;
-      }
       $this->closeConnection();
       return  json_encode($fetch);
     }
@@ -182,6 +180,7 @@
           $ids[] = $row;
         $cad =  implode(',',$ids);
         $this->closeConnection();
+
         /*get day number*/
         $timestamp = strtotime($dateAt);
         $dayName = date("l", $timestamp);
@@ -202,9 +201,9 @@
       }
       else{
         $this->closeConnection();
-        $daynum = date("N", strtotime(date('l')));
-        $daynum = 3;
-        // echo $daynum;
+        $daynum = (int)date("N", strtotime(date('l')));
+        // $daynum = 1;
+        //echo $daynum;
         $sql = "SELECT idSchedule AS id, concat(startTime, ' - ', endTime) as hours FROM Schedule
         WHERE Subjects_list_idSubjectlist = :idsl AND day = :day";
         $stmt = $this->connect()->prepare($sql);
@@ -226,7 +225,7 @@
         $fingerRoute = '../../../Fingerfiles/'.$fileName.'.rar';
         if (file_exists($fingerRoute)) {
             $mm_type="application/octet-stream";
-            header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found", true, 404);
+          //  header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found", true, 404);
             header("Pragma: public");
             header("Expires: 0");
             header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
@@ -242,8 +241,6 @@
         else {
           print 'Sorry, we could not find requested download file.';
         }
-    //  }
-
     }
     /**
      * [changePassword description]
@@ -272,7 +269,6 @@
        $this->closeConnection();
        return  json_encode($resp);
      }
-
 
     public function saveTeacher($values){
     //  include_once('/Helpers.php');
@@ -324,7 +320,7 @@
               "
           >Activar cuenta</a>
         ';
-        $resp = $helper->sendMail($email,'Activar email',$body);
+        $resp = $helper->sendMail($email,'Activar cuenta',$body);
       }
       else
         $resp = false;
@@ -410,14 +406,17 @@
       return  json_encode($fetch);
       $this->closeConnection();
     }
+    public function changeStatus($table,$id,$idName,$status){
+      return $this->changeSt('Teachers',$id,'codeTeacher',$status); //Get data from database
+    }
     /**/
     public function updateTeacher($values){
-      $resp = false;
       $sql = "CALL updateTeachers(:oldCode,:code,:name,:lastname,:type,:email,:phone,'H','f',:extension,'web')";
       $stmt = $this->connect()->prepare($sql);
-      if($stmt->execute($values)){
+      if($stmt->execute($values))
         $resp = true;
-      }
+      else
+        $resp = false;
       $this->closeConnection();
       return $resp;
     }

@@ -1,7 +1,7 @@
 <?php
  //require '././vendor/autoload.php';
 //use  Faker\Factor::create();
-  //require_once('Connection.php');
+//  require_once('Connection.php');
   class Operations {
 
     /**
@@ -64,8 +64,8 @@
       if (  $stmt->execute($values)) {
         $resp = true;
       }
-      return '{"resp": '.$resp.'}';
       $this->closeConnection();
+      return '{"resp": '.$resp.'}';
     }
     /**
      * [This function call stored procedure]
@@ -175,6 +175,7 @@
      * @return [type]         [description]
      */
     public function changeSt($table,$id,$idName,$status){
+    //    $this->closeConnection(); //close conection
         $sql ="UPDATE ".$table." SET status = :status WHERE ".$idName."  = :id"; //create sentence
         $stmt = $this->connect()->prepare($sql); //prepare sentence
         $stmt->bindParam(':id',$id); //add param

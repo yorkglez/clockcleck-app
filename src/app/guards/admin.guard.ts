@@ -44,7 +44,9 @@ export class AdminGuard implements CanActivate {
         return false
       }
       else{
+        this._authService.setLoggedIn(false); // users is logged
         this.router.navigate(['login']) // rederect to login
+        localStorage.clear()
         return false
       }
     }))

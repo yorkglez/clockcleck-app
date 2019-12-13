@@ -10,7 +10,7 @@ export class ScheduleService {
   private semesters = ['1','2','3','4','5','6','7','8','9','10']
 
   constructor(private http: HttpClient) { }
-  
+
   getHours():Observable<Hours[]>{
     return this.http.get<Hours[]>('api/queries/Schedule/getHoursList.php')
   }
@@ -28,7 +28,7 @@ export class ScheduleService {
   }
 
   getScheduleTeacherbyId(code):Observable<Sc>{
-      return this.http.get<Sc>('api/queries/Schedule/getScheduleTeacherbyid.php',{params:{code:code}})
+      return this.http.get<Sc>('api/queries/Schedule/getScheduleTeacherbyId.php',{params:{code:code}})
   }
 
 }

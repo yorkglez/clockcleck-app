@@ -14,7 +14,7 @@
       <app-alerts [type]="type" [message]= "message" [alertVisible]="alertVisible" ></app-alerts>
       <form  (ngSubmit)="form.valid && Save(form)" #form="ngForm" class="needs-validation" novalidate>
         <!-- {{subjects | json}} -->
-        <div class="form-row align-items-end">
+        <div class="form-row">
           <!-- input code -->
           <div class="form-group col-md-2">
             <label for="code">Codigo</label>
@@ -27,12 +27,14 @@
             name="code"
             [(ngModel)]="model.code"
             #code="ngModel"
-            (focusout)="validateCode(code.value)"
+            (keyup)="validateCode(code.value)"
+            onkeyup="javascript:this.value=this.value.toUpperCase();"
+            (keypress)="addCharater(code.value)"
             [ngClass]="{'is-invalid':form.submitted && code.invalid || model.code == null && code.touched || !codeValid || code.invalid && code.dirty, 'is-valid': code.valid && code.dirty && codeValid }"
             required>
             <!-- 'is-valid': code.valid && code.dirty && codeValid, 'is-invalid':form.submitted && code.invalid || code.invalid && code.touched|| !codeValid || model.code =='' -->
             <div class="invalid-feedback" *ngIf="form.submitted && code.invalid || model.code == null && code.touched">
-              Porfavor escriba un codigo.
+              Por favor escriba un codigo.
             </div>
             <div class="valid-feedback" *ngIf="codeValid">
               Codigo valido.
@@ -41,7 +43,7 @@
               Codigo no valido.
             </div>
             <div *ngIf="!codeValid && code.valid" class="invalid-feedback">
-              Este codigo ya existe, porfavor escribe uno valido.
+              Este codigo ya existe, por favor escribe uno valido.
             </div>
           </div>
           <!-- input name -->
@@ -50,7 +52,7 @@
             <input type="text" class="form-control" name="name" id="name" [(ngModel)]="model.name" #name="ngModel"
             [ngClass]="{'is-invalid':form.submitted && name.invalid}" maxlength="48" placeholder="Fundamentos de programacion" required>
             <div class="invalid-feedback">
-              Porfavor escriba un nombre.
+              Por favor escriba un nombre.
             </div>
           </div>
           <!-- input credits -->
@@ -59,23 +61,40 @@
             <input type="number" class="form-control" name="credits" id="credits" ngModel [(ngModel)]="model.credits" #credits="ngModel"
             [ngClass]="{'is-invalid':form.submitted && credits.invalid}" maxlength="1" placeholder="5" required>
             <div class="invalid-feedback">
-              Porfavor escriba el N de creditos.
+              Por favor escriba el numero de creditos.
             </div>
           </div>
-          <div class="form-group col-md-auto">
-            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar</button>
+          <div class="form-group col-md-auto" style="position: relative;">
+            <button type="submit" class="btn btn-primary" style="position: relative; top: 30px;">
+            Actualizar
+            </button>
           </div>
           <!-- Radio secuence -->
-
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-8"  style="position: relative;" *ngIf="isVisble">
             <label for="">Mostrar secuencias <span> </span></label>
             <br>
             <div class="custom-control custom-radio custom-control-inline">
-              <input [disabled] ="!codeValid" type="radio" id="customRadio1" name="sequence" class="custom-control-input" value="true" (change)="showSequence(sequence.value)" ngModel #sequence="ngModel">
+              <input [disabled] ="!codeValid"
+              type="radio"
+              id="customRadio1"
+              name="sequence"
+              class="custom-control-input"
+              [value]="true"
+              (change)="showSequence(sequence.value)"
+              ngModel
+              #sequence="ngModel">
               <label class="custom-control-label" for="customRadio1">Si</label>
            </div>
            <div class="custom-control custom-radio custom-control-inline">
-             <input type="radio" id="customRadio2" name="sequence" class="custom-control-input" value="false" (change)="showSequence(sequence.value)" ngModel #sequence="ngModel">
+             <input type="radio"
+             id="customRadio2"
+             name="sequence"
+             class="custom-control-input"
+             [value]='false'
+             (change)="showSequence(sequence.value)"
+             [(ngModel)]="radio"
+             #sequence="ngModel"
+             checked>
              <label class="custom-control-label" for="customRadio2">No</label>
            </div>
           </div>
@@ -91,18 +110,20 @@
             <div class="form-group col-md-2">
               <label for="code">Codigo</label>
               <input type="text"
-              (focusout)="validateCodeSc(codeSq.value)"
+              (keyup)="validateCodeSc(codeSq.value)"
               class="form-control"
               name="codeSq"
               [(ngModel)]="subjects.code"
               #codeSq="ngModel"
               [ngClass]="{'is-invalid':formSq.submitted && codeSq.invalid && subjects.code != null  || subjects.code == '' && codeSq.dirty ||  !secodeValid ,
               'is-valid': codeSq.valid && codeSq.dirty && secodeValid }"
+              onkeyup="javascript:this.value=this.value.toUpperCase();"
+              (keypress)="addCharaterSq(codeSq.value)"
               maxlength="8"
               placeholder="ACF-0905"
               required>
               <div class="invalid-feedback" *ngIf="formSq.submitted && codeSq.invalid || subjects.code == null && codeSq.touched">
-                Porfavor escriba un codigo.
+                Por favor escriba un codigo.
               </div>
               <div class="valid-feedback" *ngIf="secodeValid">
                 Codigo valido.
@@ -111,7 +132,7 @@
                 Codigo no valido.
               </div>
               <div *ngIf="!secodeValid && codeSq.valid" class="invalid-feedback">
-                Este codigo ya existe, porfavor escribe uno valido.
+                Este codigo ya existe, por favor escribe uno valido.
               </div>
             </div>
             <!-- input subject secuencie -->
@@ -120,7 +141,7 @@
               <input type="text" class="form-control" name="name" id="name" [(ngModel)]="subjects.name" #name="ngModel"
               [ngClass]="{'is-invalid':form.submitted && name.invalid}" maxlength="48" placeholder="Fundamentos de programacion" required>
               <div class="invalid-feedback">
-                Porfavor escriba un nombre.
+                Por favor escriba un nombre.
               </div>
             </div>
             <!-- input credits secuencie -->
@@ -129,11 +150,11 @@
               <input type="text" class="form-control" name="credits" id="credits" ngModel [(ngModel)]="subjects.credits" #credits="ngModel"
               [ngClass]="{'is-invalid':form.submitted && credits.invalid}" maxlength="1" placeholder="5" required>
               <div class="invalid-feedback">
-                Porfavor escriba el N de creditos.
+                Porfavor escriba el numero de creditos.
               </div>
             </div>
             <div class="form-group" style="position: relative;">
-              <button *ngIf="!updateItems" (click)="addSubject()" type="button" name="btn-add" style="position: absolute; bottom: -70px;" class="btn btn-success">Anadir</button>
+              <button *ngIf="!updateItems" (click)="addSubject()" type="button" name="btn-add" style="position: absolute; bottom: -70px;" class="btn btn-success">Añadir</button>
               <button *ngIf="updateItems" (click)="updateItem(idx)" type="button" name="btn-add" style="position: absolute; bottom: -70px;" class="btn btn-primary">Actualizar</button>
             </div>
           </div>

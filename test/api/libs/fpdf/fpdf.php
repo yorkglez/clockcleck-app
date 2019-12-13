@@ -66,12 +66,13 @@ protected $ZoomMode;           // zoom display mode
 protected $LayoutMode;         // layout display mode
 protected $metadata;           // document properties
 protected $PDFVersion;         // PDF version number
-
+public $type;
+public $data;
 /*******************************************************************************
 *                               Public methods                                 *
 *******************************************************************************/
 
-function __construct($orientation='P', $unit='mm', $size='A4')
+function __construct($orientation='P', $unit='mm', $size='A4', $type, $data = '')
 {
 	// Some checks
 	$this->_dochecks();
@@ -101,6 +102,8 @@ function __construct($orientation='P', $unit='mm', $size='A4')
 	$this->ColorFlag = false;
 	$this->WithAlpha = false;
 	$this->ws = 0;
+	$this->type = $type;
+	$this->data = $data;
 	// Font path
 	if(defined('FPDF_FONTPATH'))
 	{
@@ -357,14 +360,130 @@ function AddPage($orientation='', $size='', $rotation=0)
 	$this->ColorFlag = $cf;
 }
 
-function Header()
+function Header ()
 {
 	// To be implemented in your own inherited class
+	if($this->type =='general'){
+		  $this->Image('../../public/images/tecmmlogo.png',47,12,28); //Logo header.
+			$this->SetX(47);    // s
+			$this->Cell(28,24,'',1,0,'L');
+			$this->SetFont('Arial','B',11);
+			$this->Cell(185,6,'INSTITUTO TECNOLOGICO JOSE MARIO MOLINA PASQUEL Y HENRIQUEZ',1,0,'L');
+			$this->Ln(6);
+			$this->SetX(75);    // set the cursor at X position
+			$this->SetFont('Arial','B',11);
+			$this->Cell(150,6,'Reporte de asitencia personal docente',1,0,'L');
+			$this->SetX(-72);
+			$this->SetFont('Arial','B',10);
+			$this->Cell(35,6,'Fecha: '.$this->getDatetimeNow('date'),1,0,'L');
+			$this->Ln(6);
+			$this->SetX(75);    // s
+			$this->SetFont('Arial','B',10);
+			// /* report type */
+		  $this->Cell(150,6,$this->data['period'],1,0,'L');
+			// /* line time now */
+			$this->SetX(-72);
+			$this->Cell(35,6,'Hora: '.$this->getDatetimeNow('time'),1,0,'L');
+			$this->Ln(6);
+			$this->SetX(75);    //
+			$this->SetFont('Arial','B',10);
+			$this->Cell(95,6,'Extension: '.$this->data['extension'],1,0,'L');
+			$this->Cell(90,6,'Tipo de reporte: '.$this->type ,1,0,'L');//report type`
+
+			$this->Ln(10);
+			$this->SetFont('Arial','B',10);
+			$this->Cell(15,12,'Dpto',1,0,'C',0);
+			$this->Cell(55,12,'Docente',1,0,'C',0);
+			// $pdf->Cell(12,6,'Tipo',1,0,'C',0);
+			$this->Cell(32,6,'Hora',1,0,'C',0);
+			$this->Cell(20,6,'Localidad',1,0,'C',0);
+			$this->Cell(20,12,'Asistencia',1,0,'C',0);
+			$this->Cell(30,12,'Nota',1,0,'C',0);
+			// $this->Cell(55,12,'Tema/Actividad',1,0,'C',0);
+			$this->Cell(45,12,'Codigo de materia',1,0,'C',0);
+			$this->Cell(25,12,'Total de horas',1,0,'C',0);
+			$this->Ln(6);
+			$this->SetX(80);    // s
+			$this->Cell(16,6,'Entrada',1,0,'C',0);
+			$this->Cell(16,6,'Salida',1,0,'C',0);
+			$this->Cell(20,6,'Grupo',1,0,'C',0);
+			$this->Ln(6);
+			$this->SetFont('Arial','',9);
+	}
+	else{
+	  $this->Image('../../public/images/tecmmlogo.png',47,15,28); //Logo header.
+		$this->SetX(47);    // s
+		$this->Cell(28,30,'',1,0,'L');
+		$this->SetFont('Arial','B',11);
+		$this->Cell(185,6,'INSTITUTO TECNOLOGICO JOSE MARIO MOLINA PASQUEL Y HENRIQUEZ',1,0,'L');
+		$this->Ln(6);
+		$this->SetX(75);    // set the cursor at X position
+		$this->SetFont('Arial','B',11);
+		$this->Cell(150,6,'Reporte de asitencia personal docente',1,0,'L');
+		$this->SetX(-72);
+		$this->SetFont('Arial','B',10);
+		$this->Cell(35,6,'Fecha: '.$this->getDatetimeNow('date'),1,0,'L');
+		$this->Ln(6);
+		$this->SetX(75);    // s
+		$this->SetFont('Arial','B',10);
+		$this->Cell(150,6,$this->data['period'],1,0,'L');
+		$this->SetX(-72);
+		$this->Cell(35,6,'Hora: '.$this->getDatetimeNow('time'),1,0,'L');
+		$this->Ln(6);
+		$this->SetX(75);    //
+		$this->SetFont('Arial','B',10);
+		$this->Cell(65,6,'Extension: '.$this->data['extension'],1,0,'L');
+		$this->Cell(60,6,'Tipo de reporte: por '.$this->type,1,0,'L');//report type`
+		$this->Cell(60,6,'Departamento: '.$this->data['dep'],1,0,'L');//departament
+		$this->Ln(6);
+		$this->SetX(75);    // s
+		if($this->type == 'docente')
+			$pX = 185;
+		else
+			$pX = 80;
+		$this->Cell($pX,6,'Docente: '.$this->data['teacherName'],1,0,'L');//departament
+
+		if($this->type == 'materia')
+		  $this->Cell(105,6,'Materia: '.$this->data['subjectName'],1,0,'L');//departament
+		  $this->Ln(10);
+			// $this->setX(30);
+		  $this->SetFont('Arial','B',11);
+		  $this->Cell(32,6,'Hora',1,0,'C',0);
+		  $this->Cell(20,6,'Localidad',1,0,'C',0);
+		  $this->Cell(20,12,'Asistencia',1,0,'C',0);
+		  $this->Cell(40,12,'Nota',1,0,'C',0);
+		  $this->Cell(80,12,'Tema/Actividad',1,0,'C',0);
+
+		  if($this->type != 'materia')
+		    $this->Cell(55,12,'Codigo de materia',1,0,'C',0);
+		  $this->Cell(30,12,'Total de horas',1,0,'C',0);
+		  $this->Ln(6);
+			// $this->setX(30);
+		  $this->Cell(16,6,'Entrada',1,0,'C',0);
+		  $this->Cell(16,6,'Salida',1,0,'C',0);
+		  $this->Cell(20,6,'Grupo',1,0,'C',0);
+		  $this->Ln(6);
+		  $this->SetFont('Times','',10);
+		  }
+}
+
+private function getDatetimeNow($type){
+	$tz_object = new DateTimeZone('America/Mexico_City');
+//date_default_timezone_set('Brazil/East');
+ $datetime = new DateTime();
+ $datetime->setTimezone($tz_object);
+ if ($type == 'date')
+	 return $datetime->format('d-m-Y');
+else if($type == 'time')
+	 return $datetime->format('H:i');
 }
 
 function Footer()
 {
 	// To be implemented in your own inherited class
+	$this->setY(-15);
+	$this->SetFont('Arial','',8);
+	$this->cell(0,10,'Pagina '.$this->pageNo(),0,0,'C');
 }
 
 function PageNo()

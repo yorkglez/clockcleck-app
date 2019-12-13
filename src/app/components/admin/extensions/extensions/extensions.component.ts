@@ -19,6 +19,7 @@ export class ExtensionsComponent implements OnInit {
   ter:string
   searchAlert: boolean
   inactive: boolean = false
+  isLoader: boolean = false
   extensions = []
   extension:any[]
   itemsPerPage: number = 10
@@ -31,17 +32,24 @@ export class ExtensionsComponent implements OnInit {
 
   ngOnInit() {
    this._loaderService.display(true) //show loader
+   this.isLoader = true
    /* Call function getData from service*/
     this._extensionsService.getData('1').subscribe(data=>{
       this.extensions = data //add data
       this._loaderService.display(false)//hide loader
+      this.isLoader = false
     })
   }
   getId(extension){
     this.extension = extension;
   }
   getType(type){
-    this._extensionsService.getData(type).subscribe(data=>{this.extensions = data})
+    this._extensionsService.getData(type).subscribe(data=>{
+      if(!data)
+        this.extensions = []
+      else
+        this.extensions = data
+    })
   }
   Search(ter, type){
     this.searchAlert = false //hide search searchAlert

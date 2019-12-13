@@ -13,6 +13,7 @@ import {PopoverModule} from "ngx-popover";
 import { HttpClient } from '@angular/common/http';
 import { SubjectsService } from '../../../../services/subjects.service';
 import { Title } from '@angular/platform-browser';
+import { LoaderService } from '../../../../services/loader.service';
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
@@ -23,7 +24,6 @@ import { Title } from '@angular/platform-browser';
   '../../../../../assets/css/tableStyles.css',
   '../../../../../assets/css/reportStyles.css',
   '../../../../../assets/css/containerStyles.css'
-
 ]
 })
 export class ReportsComponent implements OnInit {
@@ -31,14 +31,13 @@ export class ReportsComponent implements OnInit {
   idx: number
   p: number = 1
   id: number
-
   ter:string
   type: string
   message: string
   extension: string = localStorage.getItem('extension')
 
   model = {"week": "day","note": "", "search": "",
-  "startDate": "null", "endDate": "null","extension": this.extension,"atType":"","teachersSelect": "","subjectCode": null}
+  "startDate": "null", "endDate": "null","extension": this.extension,"atType":"","teachersSelect": null,"subjectCode": null}
 
   modelJust = {}
   searchAlert: boolean
@@ -49,7 +48,7 @@ export class ReportsComponent implements OnInit {
   notes: boolean = false
   alertVisible: boolean = false
   isAdmin: boolean = false
-  isJustification: boolean = true
+  isJustification: boolean = false
   date
   dateNow
   teachers: TeacherSelect [] = []
@@ -65,7 +64,7 @@ export class ReportsComponent implements OnInit {
               private _extensionsService: ExtensionsService,
               private _carersService: CarersService,
               private _subjectsService: SubjectsService,
-
+              private _loaderService: LoaderService,
               private http: HttpClient,
               private _titleService: Title) {
                   this._titleService.setTitle('Reportes')
@@ -77,6 +76,7 @@ export class ReportsComponent implements OnInit {
               //   this.carers = data
               // })
   ngOnInit() {
+       // this._loaderService.display(true) //Show loader
     this._extensionsService.getExtension().subscribe(data=>{this.extensions = data})//get extension
     /*get teachers*/
     this._reportsService.getselectTeacher(this.extension).subscribe(data=>{
@@ -117,11 +117,13 @@ export class ReportsComponent implements OnInit {
     else
       route = 'generateExcel.php?'
     //download report
-    window.open('http://localhost/clockcleck-app/test/api/queries/Report/'+route+params)
+    window.open('http://clock.malastareas.com/api/queries/Report/'+route+params)
   }
+  /**/
   Notes(){
     this.notes = true
   }
+  /**/
   saveChanges(){
     if(this.model.note == '')
       this.model.note = this.reports[this.idx].notes
@@ -142,9 +144,8 @@ export class ReportsComponent implements OnInit {
     this.idx = 0
     this.id = 0
     this.model.note = ""
-
   }
-
+  /**/
   getSubjectbyDate(date){
     /*get subjects*/
     this._reportsService.getSubjectbyDate(date,this.model['teachersSelect']).subscribe(data=>{

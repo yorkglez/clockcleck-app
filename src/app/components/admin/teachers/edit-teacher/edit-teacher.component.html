@@ -24,12 +24,12 @@
              name="code"
              [(ngModel)]="model.code"
              #code="ngModel"
-             (focusout)="validateCode(code.value)"
+             (keyup)="validateCode(code.value)"
              [ngClass]="{'is-valid': code.valid && code.dirty && codeValid,
              'is-invalid':form.submitted && code.invalid || code.invalid || !codeValid || model.code ==''}"
              required>
             <div class="invalid-feedback"  *ngIf="form.submitted && model.code ==''">
-              Porfavor escriba un codigo.
+              Por favor escriba un codigo.
             </div>
             <div class="valid-feedback"  *ngIf="codeValid">
               Codigo valido.
@@ -38,7 +38,7 @@
               Codigo no valido.
             </div>
             <div *ngIf="!codeValid" class="invalid-feedback">
-              Este codigo ya existe, porfavor escribe uno valido.
+              Este codigo ya existe, por favor escribe uno valido.
             </div>
           </div>
           <!-- name -->
@@ -60,14 +60,14 @@
               [ngClass]="{'is-valid': lastname.valid && lastname.dirty, 'is-invalid': model.lastname ==''}"
               [(ngModel)]="model.lastname" #lastname="ngModel" required>
             <div class="invalid-feedback">
-                 Porfavor escriba una apellido.
+                 Por favor escriba una apellido.
             </div>
           </div>
           <!-- email -->
           <div class="form-group col-md-6">
             <label for="email">Email</label>
             <input pattern="^[a-z0-9._+%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-                  (focusout)="validateEmail(email.value)"
+                  (keyup)="validateEmail(email)"
                   type="email"
                   class="form-control invalid-input"
                   name="email"
@@ -77,7 +77,7 @@
                   'is-valid': emailValid && email.valid && email.dirty}"
                   [email]="model.email !==''" required>
             <div class="invalid-feedback" *ngIf="form.submitted || model.email ==''">
-              Porfavor escriba un email.
+              Por favor escriba un email.
             </div>
             <div class="valid-feedback" *ngIf="emailValid"  >
               El email es valido.
@@ -101,7 +101,7 @@
             maxlength="12"
             required>
             <div class="invalid-feedback">
-              Porfavor escriba un numero de telefono valido.
+              Por favor escriba un numero de telefono valido.
             </div>
           </div>
           <!-- type -->
@@ -114,7 +114,7 @@
             </select>
           </div>
           <div class="form-group col-md-6">
-            <label for="extension">Extencion </label>
+            <label for="extension">Extension </label>
             <select  class="form-control custom-select"  name="extension" required>
               <option *ngFor="let extension of extensions;"   [value]="extension.idExtension">{{extension.name}}</option>
             </select>

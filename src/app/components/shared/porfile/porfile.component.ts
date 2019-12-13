@@ -39,11 +39,11 @@ export class PorfileComponent implements OnInit {
   }
 
   validateEmail(email){
+
     let oldEmail = this.porfileInfo.email
-    if(oldEmail != email){
-      this._helpersService.validateEmail(email).subscribe(
-        resp=>{
-          if(resp)
+    if((oldEmail != email.value) && email.valid){
+      this._helpersService.validateEmail(email.value).subscribe(resp=>{
+          if(!resp)
             this.emailisValid = true
           else
             this.emailisValid = false

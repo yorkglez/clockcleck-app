@@ -22,6 +22,7 @@ export class TeachersComponent implements OnInit {
   ter:string
   searchAlert: boolean
   isInactive: boolean = false
+  isLoader: boolean = false
   teachers = []
   extensions = []
   teacher:any[]
@@ -38,13 +39,17 @@ export class TeachersComponent implements OnInit {
     this._extensionsService.getExtension().subscribe(data=>{this.extensions = data})
     this.  model = {"extension": localStorage.getItem('extension')}
      this._loaderService.display(true) //Show loader
+     this.isLoader = true
     this._teachersService.getData('','all',localStorage.getItem('extension')).subscribe(data=>{
       if(!data){
         this.teachers = []
+        this._loaderService.display(false) //Hide loader
+        this.isLoader = false
       }
       else{
         this.teachers = data
         this._loaderService.display(false) //Hide loader
+        this.isLoader = false
       }
     })
   }
@@ -54,7 +59,9 @@ export class TeachersComponent implements OnInit {
   }
   filterData(ter:string,type:string,extension:string){
     this.searchAlert = false
+    // this.isLoader = false
     this._teachersService.getData(ter,type,extension).subscribe(data=>{
+      // this._loaderService.display(true)
       if(ter !='' && !data){
         this.ter = ter
         this.searchAlert = true
@@ -65,7 +72,9 @@ export class TeachersComponent implements OnInit {
       }
       else
         this.teachers = data
+      // this._loaderService.display(false)
     })
+
   }
   Delete(){
     this._teachersService.changeStatus(this.teacher['codeTeacher'],'0').subscribe(resp=>{

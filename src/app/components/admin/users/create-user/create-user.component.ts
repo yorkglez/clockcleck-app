@@ -17,7 +17,7 @@ export class CreateUserComponent implements OnInit {
   // passwordsValid: boolean = true
   emaiisValid: boolean = true
   alertisVisible: boolean = false
-  type: string
+  types: string
   message: string
   constructor(private http: HttpClient,
               private _usersService: UsersService,
@@ -44,25 +44,27 @@ export class CreateUserComponent implements OnInit {
   //   }
   // }
   validateEmail(email){
-    /* Call function validaEmail from services */
-    this._helpersService.validateEmail(email).subscribe(resp =>{
-      /*Validate response*/
-      if(!resp)
-        this.emaiisValid = true // email is invalid
-      else
-        this.emaiisValid = false //email is valid
-    })
+    if(email.valid){
+      /* Call function validaEmail from services */
+      this._helpersService.validateEmail(email.value).subscribe(resp =>{
+        /*Validate response*/
+        if(!resp)
+          this.emaiisValid = true // email is invalid
+        else
+          this.emaiisValid = false //email is valid
+      })
+    }
   }
   Save(form: NgForm){
      this._usersService.Save(this.model).subscribe(resp =>{
        if(resp){
          form.resetForm()
-          this.type  = "success"
+          this.types  = "success"
           this.message = 'El usuario se ha guardado correctamente.'
        }
        else{
-         this.type  = "error"
-         this.message = 'Ocurrio un error al gurdar.'
+         this.types  = "error"
+         this.message = 'Ocurrió un error al guardar.'
        }
        this.alertisVisible = true
        setTimeout(() => {
